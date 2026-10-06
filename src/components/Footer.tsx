@@ -1,7 +1,7 @@
-import { footerServices, meshLinks, site, socialLinks, zones } from "@/data/site";
+import { featuredZones, footerServices, meshLinks, site, socialLinks } from "@/data/site";
 
 export default function Footer() {
-  const footerZoneTags = zones.map((z) => {
+  const footerZoneTags = featuredZones.map((z) => {
     const match = z.label.match(/^(.+?) (\d{5})$/);
     const label = match ? `Nettoyage ${match[1]} (${match[2]})` : `Nettoyage ${z.label}`;
     return { href: z.href, label };
@@ -120,12 +120,15 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer-zones">
-        <span className="fz-label">Toutes nos zones :</span>
+        <span className="fz-label">Principales zones :</span>
         {footerZoneTags.map((z) => (
           <a key={z.href} href={z.href} className="ztag">
             {z.label}
           </a>
         ))}
+        <a href="/zones-intervention/" className="ztag ztag-more">
+          Toutes nos communes →
+        </a>
       </div>
       <div className="footer-mesh">
         <span className="fz-label">Nos services par département&nbsp;:</span>

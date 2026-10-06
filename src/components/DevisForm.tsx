@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { serviceOptions, site } from "@/data/site";
+import { profilePresets, serviceOptions, site } from "@/data/site";
+import { useEffect, useRef, useState } from "react";
 
 type DevisFormProps = {
   idPrefix: string;
   pageSource?: string;
   defaultService?: string;
+  defaultProfile?: string;
 };
 
 const clientTypes = [
@@ -30,35 +31,43 @@ const urgencyOptions = [
   "Flexible",
 ];
 
-function formatPhotoLabel(count: number) {
-  if (count === 0) return "Aucune photo ajoutée";
-  if (count === 1) return "1 photo ajoutée";
-  return `${count} photos ajoutées`;
+function readProfileFromUrl(defaultProfile: string) {
+  if (typeof window === "undefined") return defaultProfile;
+  return new URLSearchParams(window.location.search).get("profil") || defaultProfile;
 }
 
-export default function DevisForm({ idPrefix, pageSource = "/", defaultService = "" }: DevisFormProps) {
+export default function DevisForm({
+  idPrefix,
+  pageSource = "/",
+  defaultService = "",
+  defaultProfile = "",
+}: DevisFormProps) {
   const [step, setStep] = useState(1);
   const [clientType, setClientType] = useState("");
-  const [photos, setPhotos] = useState<File[]>([]);
+  const [service, setService] = useState(defaultService);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
-  const photoInputRef = useRef<HTMLInputElement>(null);
 
-  function onPhotosChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const files = event.target.files ? Array.from(event.target.files) : [];
-    setPhotos(files);
-  }
+  useEffect(() => {
+    const profileKey = readProfileFromUrl(defaultProfile);
+    const preset = profileKey ? profilePresets[profileKey] : undefined;
+    if (preset) {
+      setClientType(preset.clientType);
+      setService(preset.service);
+    }
+  }, [defaultProfile]);
 
-  function removePhoto(index: number) {
-    setPhotos((prev) => {
-      const next = prev.filter((_, i) => i !== index);
-      if (photoInputRef.current) {
-        const dt = new DataTransfer();
-        next.forEach((file) => dt.items.add(file));
-        photoInputRef.current.files = dt.files;
-      }
-      return next;
+  useEffect(() => {
+    const form = formRef.current;
+    if (!form || typeof window === "undefined") return;
+    const fields = ["utm_source", "utm_medium", "utm_campaign", "gclid", "last_referrer", "landing_page"] as const;
+    fields.forEach((name) => {
+      const el = form.elements.namedItem(name) as HTMLInputElement | null;
+      const val = sessionStorage.getItem(name);
+      if (el && val) el.value = val;
     });
-  }
+  }, []);
 
   function goToStep2() {
     const form = formRef.current;
@@ -68,15 +77,75 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
       firstClient?.focus();
       return;
     }
-    const service = form.elements.namedItem("service") as HTMLSelectElement | null;
+    const serviceEl = form.elements.namedItem("service") as HTMLSelectElement | null;
     const ville = form.elements.namedItem("ville") as HTMLInputElement | null;
-    if (!service?.value || !ville?.value.trim()) {
-      if (!service?.value) service?.focus();
-      else ville?.focus();
+    const urgence = form.elements.namedItem("urgence") as HTMLSelectElement | null;
+    if (!serviceEl?.value || !ville?.value.trim() || !urgence?.value) {
+      if (!serviceEl?.value) serviceEl?.focus();
+      else if (!ville?.value.trim()) ville?.focus();
+      else urgence?.focus();
       form.reportValidity();
       return;
     }
     setStep(2);
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    setStatus("loading");
+    setErrorMessage("");
+
+    const fd = new FormData(form);
+    const payload = Object.fromEntries(fd.entries()) as Record<string, string>;
+    payload.client_type = clientType;
+
+    try {
+      const res = await fetch("/api/devis/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json()) as { ok?: boolean; error?: string };
+
+      if (!res.ok) {
+        setStatus("error");
+        setErrorMessage(json.error || "Envoi impossible. Appelez le " + site.phone);
+        return;
+      }
+
+      setStatus("success");
+      if (typeof window !== "undefined" && "gtag" in window) {
+        (window as Window & { gtag?: (...args: unknown[]) => void }).gtag?.("event", "generate_lead", {
+          event_category: "devis",
+          event_label: payload.service,
+        });
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("Connexion impossible. Appelez le " + site.phone);
+    }
+  }
+
+  if (status === "success") {
+    return (
+      <div className="cf-wrap cf-success">
+        <div className="cf-success-icon" aria-hidden="true">
+          ✓
+        </div>
+        <h3>Demande reçue</h3>
+        <p>
+          Merci ! {site.owner.split(" ")[0]} ou son équipe vous rappelle sous <strong>24 h</strong> au numéro indiqué.
+        </p>
+        <p className="cf-hint">
+          Vous avez des photos ? Envoyez-les par SMS ou WhatsApp au{" "}
+          <a href={`tel:${site.phoneTel}`}>{site.phone}</a>.
+        </p>
+        <a href={`tel:${site.phoneTel}`} className="btn-or" style={{ display: "inline-flex", marginTop: "12px" }}>
+          📞 Appeler maintenant
+        </a>
+      </div>
+    );
   }
 
   return (
@@ -106,7 +175,14 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
           2. Contact
         </button>
       </div>
-      <form className="cform" action="#" method="POST" ref={formRef}>
+      <form
+        className="cform"
+        method="POST"
+        ref={formRef}
+        onSubmit={handleSubmit}
+        data-react-form="true"
+        noValidate={false}
+      >
         <input type="text" name="_honey" style={{ display: "none" }} tabIndex={-1} autoComplete="off" readOnly />
         <input type="hidden" name="page_source" value={pageSource} />
         <input type="hidden" name="utm_source" />
@@ -115,7 +191,6 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
         <input type="hidden" name="gclid" />
         <input type="hidden" name="last_referrer" />
         <input type="hidden" name="landing_page" />
-        <input type="hidden" name="client_type" value={clientType} />
 
         {step === 1 && (
           <div id={`${idPrefix}-panel-1`} role="tabpanel" aria-labelledby={`${idPrefix}-step-1`}>
@@ -139,7 +214,13 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
             </fieldset>
             <div className="cf">
               <label htmlFor={`${idPrefix}-service`}>Prestation *</label>
-              <select id={`${idPrefix}-service`} name="service" defaultValue={defaultService} required>
+              <select
+                id={`${idPrefix}-service`}
+                name="service"
+                value={service}
+                onChange={(e) => setService(e.target.value)}
+                required
+              >
                 <option value="">Choisir une prestation…</option>
                 {serviceOptions.map((option) => (
                   <option key={option} value={option}>
@@ -159,73 +240,16 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
                 autoComplete="address-level2"
               />
             </div>
-            <div className="form-row">
-              <div className="cf">
-                <label htmlFor={`${idPrefix}-surface`}>Surface approximative</label>
-                <select id={`${idPrefix}-surface`} name="surface" defaultValue="">
-                  <option value="">Choisir…</option>
-                  {surfaceOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="cf">
-                <label htmlFor={`${idPrefix}-urgence`}>Quand ?</label>
-                <select id={`${idPrefix}-urgence`} name="urgence" defaultValue="">
-                  <option value="">Choisir…</option>
-                  {urgencyOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
             <div className="cf">
-              <span className="cf-file-label">Photos (facultatif)</span>
-              <div className="cf-file">
-                <input
-                  ref={photoInputRef}
-                  type="file"
-                  id={`${idPrefix}-photos`}
-                  name="photos"
-                  className="cf-file-input"
-                  accept="image/jpeg,image/png,image/webp,image/heic"
-                  multiple
-                  onChange={onPhotosChange}
-                />
-                <label htmlFor={`${idPrefix}-photos`} className="cf-file-zone">
-                  <span className="cf-file-icon" aria-hidden="true">
-                    📷
-                  </span>
-                  <span className="cf-file-title">Ajouter des photos</span>
-                  <span className="cf-file-sub">Glissez-déposez ou cliquez pour parcourir</span>
-                  <span className="cf-file-meta">JPG, PNG · 2 à 3 photos recommandées</span>
-                </label>
-                <p className="cf-file-status">{formatPhotoLabel(photos.length)}</p>
-                {photos.length > 0 && (
-                  <ul className="cf-file-list">
-                    {photos.map((file, index) => (
-                      <li key={`${file.name}-${index}`}>
-                        <span className="cf-file-name" title={file.name}>
-                          {file.name}
-                        </span>
-                        <button
-                          type="button"
-                          className="cf-file-remove"
-                          onClick={() => removePhoto(index)}
-                          aria-label={`Retirer ${file.name}`}
-                        >
-                          Retirer
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <p className="cf-hint">Des photos de l&apos;état du logement ou du chantier nous aident à chiffrer plus précisément.</p>
+              <label htmlFor={`${idPrefix}-urgence`}>Quand ? *</label>
+              <select id={`${idPrefix}-urgence`} name="urgence" defaultValue="" required>
+                <option value="">Choisir…</option>
+                {urgencyOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
             </div>
             <button type="button" className="btn-submit" onClick={goToStep2}>
               Continuer →
@@ -250,15 +274,27 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
               <input type="email" id={`${idPrefix}-email`} name="email" placeholder="votre@email.fr" autoComplete="email" />
             </div>
             <div className="cf">
+              <label htmlFor={`${idPrefix}-surface`}>Surface approximative (facultatif)</label>
+              <select id={`${idPrefix}-surface`} name="surface" defaultValue="">
+                <option value="">Choisir…</option>
+                {surfaceOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="cf">
               <label htmlFor={`${idPrefix}-msg`}>Précisions (facultatif)</label>
               <textarea id={`${idPrefix}-msg`} name="message" placeholder="Accès, étage, contraintes de planning…" />
             </div>
+            {status === "error" && <p className="cf-error">{errorMessage}</p>}
             <div className="cf-actions">
               <button type="button" className="btn-wh btn-back" onClick={() => setStep(1)}>
                 ← Retour
               </button>
-              <button type="submit" className="btn-submit">
-                Recevoir mon devis gratuit sous 24 h
+              <button type="submit" className="btn-submit" disabled={status === "loading"}>
+                {status === "loading" ? "Envoi en cours…" : "Recevoir mon devis gratuit sous 24 h"}
               </button>
             </div>
             <p className="cf-note">
@@ -270,3 +306,5 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
     </div>
   );
 }
+
+export type { DevisFormProps };

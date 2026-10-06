@@ -735,6 +735,76 @@ footer {
   color: var(--blue-primary);
   font-weight: 600;
 }
+.hero-sub-short {
+  display: none;
+}
+@media (max-width: 960px) {
+  .hero-sub-full {
+    display: none;
+  }
+  .hero-sub-short {
+    display: block;
+  }
+  .hero-devis-scroll {
+    display: inline-flex !important;
+  }
+}
+@media (min-width: 961px) {
+  .hero-devis-scroll {
+    display: none !important;
+  }
+}
+
+.why-card-simple {
+  text-align: center;
+}
+.why-card-lead {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.why-card-hours {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.cf-success {
+  text-align: center;
+  padding: 8px 0;
+}
+.cf-success-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: var(--badge-bg);
+  color: var(--blue-primary);
+  font-size: 1.4rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cf-error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 10px 12px;
+  background: #fef2f2;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+}
+
+.ztag-more {
+  font-weight: 700;
+}
+
+@media (max-width: 960px) {
+  .logo-text {
+    display: none !important;
+  }
+}
 
 .services-grid-primary {
   grid-template-columns: repeat(3, 1fr);

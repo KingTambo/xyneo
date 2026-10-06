@@ -37,29 +37,34 @@ export default function HomeContent() {
             <h1 id="h1-hero">
               Nettoyage après travaux, avant état des lieux ou logement encombré à {site.city}
             </h1>
-            <p className="hero-sub">
+            <p className="hero-sub hero-sub-full">
               Votre chantier livré propre pour la réception, votre logement prêt à relouer, ou un logement très
               encombré remis en état en toute discrétion. Devis gratuit sous 24 h, intervention {site.hours} dans
               l&apos;Ain, le Rhône et la Saône-et-Loire.
             </p>
+            <p className="hero-sub hero-sub-short">
+              Chantier, relocation ou logement difficile — devis gratuit sous 24 h · {site.region}
+            </p>
             <div className="hero-badges">
-              <span className="badge">Depuis {site.since}</span>
               <span className="badge">Devis gratuit 24 h</span>
-              <span className="badge">RC Pro — attestation sur demande</span>
+              <span className="badge">RC Pro sur demande</span>
             </div>
             <div className="hero-segments" role="navigation" aria-label="Choisir votre profil">
-              <a href="/nettoyage-de-fin-de-chantier/" className="hero-seg">
+              <a href="/?profil=btp#hero-form" className="hero-seg">
                 Je suis pro du bâtiment
               </a>
-              <a href="/remise-en-etat-locative/" className="hero-seg">
+              <a href="/?profil=agence#hero-form" className="hero-seg">
                 Je loue ou gère un logement
               </a>
-              <a href="/nettoyage-diogene/" className="hero-seg hero-seg-discreet">
-                Logement encombré ou après décès
+              <a href="/?profil=diogene#hero-form" className="hero-seg">
+                Logement encombré
+              </a>
+              <a href="/?profil=deces#hero-form" className="hero-seg hero-seg-discreet">
+                Après décès
               </a>
             </div>
             <div className="hero-btns">
-              <a href="#devis" className="btn-or">
+              <a href="#hero-form" className="btn-or hero-devis-scroll">
                 Recevoir mon devis sous 24 h
               </a>
               <a href={`tel:${site.phoneTel}`} className="btn-wh">
@@ -72,7 +77,7 @@ export default function HomeContent() {
               </a>
             </p>
           </div>
-          <div className="hero-form-col">
+          <div className="hero-form-col" id="hero-form">
             <DevisForm idPrefix="hero-cf" />
           </div>
         </div>
@@ -80,10 +85,8 @@ export default function HomeContent() {
 
       <div className="reass">
         <div className="reass-inner">
-          <span className="reass-item">📅 Depuis {site.since}</span>
-          <span className="reass-item">🛡️ Assuré RC Pro</span>
-          <span className="reass-item">📍 Basé à {site.city}</span>
-          <span className="reass-item">💳 CB / Visa acceptés</span>
+          <span className="reass-item">💳 CB, virement, facture pro</span>
+          <span className="reass-item">✅ Avance immédiate crédit d&apos;impôt (ménage)</span>
         </div>
       </div>
 
@@ -140,8 +143,8 @@ export default function HomeContent() {
               <span className="why-label">Pourquoi nous choisir ?</span>
               <h2 id="h2-why">Un seul interlocuteur, du devis à la fin du chantier</h2>
               <p style={{ color: "#525252", marginBottom: "24px", lineHeight: 1.7 }}>
-                {site.name}, c&apos;est {site.owner} : il évalue chaque chantier lui-même et reste votre contact
-                unique. Son équipe intervient sans sous-traitance, 7j/7 de 7h30 à 21h.
+                {site.name}, c&apos;est {site.owner} et son équipe, basés à {site.city}. Un interlocuteur unique
+                du devis à la fin de l&apos;intervention, 7j/7 de 7h30 à 21h.
               </p>
               <div className="why-items">
                 {whyItems.map((item) => (
@@ -156,31 +159,12 @@ export default function HomeContent() {
               </div>
             </div>
             <div>
-              <div className="why-card">
-                <div className="big-num">{site.rating}/5</div>
-                <div className="big-lbl">{site.reviews} avis Google</div>
-                <div className="sub-stats">
-                  <div className="sub-stat">
-                    <strong>{site.since}</strong>
-                    <span>En activité depuis</span>
-                  </div>
-                  <div className="sub-stat">
-                    <strong>24h</strong>
-                    <span>Devis rapide</span>
-                  </div>
-                </div>
+              <div className="why-card why-card-simple">
+                <p className="why-card-lead">Une question ? Appelez directement {site.owner.split(" ")[0]}.</p>
                 <a href={`tel:${site.phoneTel}`} className="cta-tel">
                   📞 {site.phone}
                 </a>
-                <p>{site.hours}</p>
-                <a
-                  href={site.googleReviewsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="why-google-link"
-                >
-                  Voir les avis sur Google →
-                </a>
+                <p className="why-card-hours">{site.hours}</p>
               </div>
             </div>
           </div>
@@ -192,7 +176,7 @@ export default function HomeContent() {
           <div className="sec-title">
             <span className="pill">Zones d&apos;intervention</span>
             <h2 id="h2-zones">Intervention autour de {site.city}</h2>
-            <p>Déplacement inclus dans l&apos;Ain, le Rhône et la Saône-et-Loire · Devis gratuit sous 24 h</p>
+            <p>Intervention dans l&apos;Ain, le Rhône et la Saône-et-Loire · Devis gratuit sous 24 h</p>
           </div>
           <div className="zones-pills">
             {featuredZones.map((zone) => (
@@ -223,17 +207,9 @@ export default function HomeContent() {
               <span className="pill">Votre interlocuteur</span>
               <h2 id="h2-artisan-trust">{site.owner}, votre contact unique à {site.city}</h2>
               <p>
-                Je viens évaluer moi-même chaque chantier et je reste votre seul interlocuteur jusqu&apos;à la fin.
-                Mon équipe intervient avec le matériel professionnel adapté — fin de chantier, remise en état ou
-                situation difficile.
+                {site.owner} reste votre interlocuteur du premier appel à la fin de l&apos;intervention. Fin de
+                chantier, remise en état ou situation difficile — devis gratuit sur place.
               </p>
-              <p>Devis gratuit sur place, prix ferme après visite, sans sous-traitance.</p>
-              <div className="artisan-trust-badges">
-                <span className="at-badge">📅 Depuis {site.since}</span>
-                <span className="at-badge">🛡️ RC Pro</span>
-                <span className="at-badge">⭐ {site.rating}/5 · {site.reviews} avis</span>
-                <span className="at-badge">🏠 {site.city}</span>
-              </div>
               <a href={`tel:${site.phoneTel}`} className="btn-or" style={{ display: "inline-flex", marginTop: "24px", gap: "8px" }}>
                 📞 Appeler {site.owner.split(" ")[0]} : {site.phone}
               </a>
@@ -295,8 +271,8 @@ export default function HomeContent() {
         <div className="section-wrap">
           <div className="sec-title">
             <span className="pill">Tarifs</span>
-            <h2 id="h2-rp">Fourchettes indicatives — 3 prestations phares</h2>
-            <p>Prix indicatifs TTC · Prix ferme après visite gratuite sur place</p>
+            <h2 id="h2-rp">Prix de départ — 3 prestations phares</h2>
+            <p>Tarifs indicatifs TTC · Devis personnalisé gratuit après visite sur place</p>
           </div>
         </div>
         <div className="rp-blocks-wrap">
