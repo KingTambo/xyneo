@@ -101,11 +101,17 @@ export default function DevisForm({
     });
   }, []);
 
-  function validatePhoneField() {
+  function validatePhoneField(requireValue = false) {
     const form = formRef.current;
     const telEl = form?.elements.namedItem("tel") as HTMLInputElement | null;
     if (!telEl) return true;
-    if (!isValidFrPhone(telEl.value)) {
+    const value = telEl.value.trim();
+    if (!value && !requireValue) {
+      setPhoneError("");
+      telEl.setCustomValidity("");
+      return true;
+    }
+    if (!isValidFrPhone(value)) {
       setPhoneError(PHONE_ERROR_MSG);
       telEl.setCustomValidity(PHONE_ERROR_MSG);
       return false;
@@ -113,6 +119,22 @@ export default function DevisForm({
     setPhoneError("");
     telEl.setCustomValidity("");
     return true;
+  }
+
+  function handlePhoneBlur() {
+    const telEl = formRef.current?.elements.namedItem("tel") as HTMLInputElement | null;
+    if (!telEl?.value.trim()) return;
+    validatePhoneField(true);
+  }
+
+  function handlePhoneChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const telEl = event.currentTarget;
+    if (isValidFrPhone(telEl.value)) {
+      setPhoneError("");
+      telEl.setCustomValidity("");
+    } else if (phoneError) {
+      validatePhoneField(true);
+    }
   }
 
   function goToStep2() {
@@ -139,7 +161,7 @@ export default function DevisForm({
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
-    if (!validatePhoneField()) {
+    if (!validatePhoneField(true)) {
       form.reportValidity();
       return;
     }
@@ -161,14 +183,14 @@ export default function DevisForm({
 
       if (!res.ok) {
         setStatus("error");
-        setErrorMessage(json.error || "Envoi impossible. Appelez " + site.ownerFormal + " au " + site.phone);
+        setErrorMessage(json.error || "Envoi impossible. Appelez " + site.ownerFirst + " au " + site.phone);
         return;
       }
 
       router.push("/merci/");
     } catch {
       setStatus("error");
-      setErrorMessage("Connexion impossible. Appelez " + site.ownerFormal + " au " + site.phone);
+      setErrorMessage("Connexion impossible. Appelez " + site.ownerFirst + " au " + site.phone);
     }
   }
 
@@ -338,10 +360,8 @@ export default function DevisForm({
                   autoComplete="tel"
                   aria-invalid={phoneError ? "true" : undefined}
                   aria-describedby={phoneError ? `${idPrefix}-tel-error` : undefined}
-                  onBlur={validatePhoneField}
-                  onChange={() => {
-                    if (phoneError) validatePhoneField();
-                  }}
+                  onBlur={handlePhoneBlur}
+                  onChange={handlePhoneChange}
                 />
                 {phoneError && (
                   <p className="cf-field-error" id={`${idPrefix}-tel-error`} role="alert">

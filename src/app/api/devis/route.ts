@@ -51,7 +51,7 @@ function formatProspectEmail(data: DevisPayload) {
     `Bonjour ${data.nom || ""},`.trim(),
     "",
     "Nous avons bien reçu votre demande de devis.",
-    `${site.ownerFormal} ou son équipe vous rappelle sous 24 h au numéro indiqué.`,
+    `${site.ownerFirst} ou son équipe vous rappelle sous 24 h au numéro indiqué.`,
     "",
     "Pour nous envoyer des photos de votre logement ou chantier, répondez à cet email ou écrivez-nous par SMS/WhatsApp.",
     "",

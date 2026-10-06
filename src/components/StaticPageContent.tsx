@@ -70,7 +70,7 @@ export default function StaticPageContent({ page }: StaticPageContentProps) {
                   et surface. En attendant, contactez-nous pour des références sur votre secteur.
                 </p>
                 <a href={`tel:${site.phoneTel}`} className="btn-or" style={{ display: "inline-flex", marginTop: "20px" }}>
-                  Appeler {site.ownerFormal}
+                  Appeler {site.ownerFirst}
                 </a>
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function StaticPageContent({ page }: StaticPageContentProps) {
               <h1 style={{ fontSize: "1.8rem", marginBottom: "24px" }}>Mentions légales</h1>
               <h2>Éditeur du site</h2>
               <p>
-                {site.name} — {site.ownerFormal}
+                {site.name} — {site.ownerFirst}
                 <br />
                 {site.address}
                 <br />

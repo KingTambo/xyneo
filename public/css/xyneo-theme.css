@@ -695,6 +695,16 @@ footer {
   gap: 6px;
   margin-bottom: 12px;
 }
+@media (min-width: 768px) {
+  .hero-segments {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .hero-seg {
+    width: 100%;
+  }
+}
 .hero-seg {
   display: inline-flex;
   align-items: center;
@@ -738,7 +748,7 @@ footer {
 .hero-sub-short {
   display: none;
 }
-@media (max-width: 960px) {
+@media (max-width: 767px) {
   .hero-sub-full {
     display: none;
   }
@@ -749,9 +759,23 @@ footer {
     display: inline-flex !important;
   }
 }
-@media (min-width: 961px) {
+@media (min-width: 768px) {
+  .hero-sub-full {
+    display: block;
+  }
+  .hero-sub-short {
+    display: none;
+  }
   .hero-devis-scroll {
     display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-height: 680px) {
+  .hero-sub-full {
+    display: none;
+  }
+  .hero-sub-short {
+    display: block;
   }
 }
 
@@ -1101,16 +1125,10 @@ footer {
   line-height: 1.1;
   text-align: center;
 }
-.hero-ratings-portrait .ph-slot-block {
+.hero-ratings-portrait .ph-photo-portrait {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border-style: dashed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  font-size: 0.45rem;
 }
 .hero-ratings-text {
   font-size: 0.84rem;
@@ -1174,7 +1192,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.72rem;
+  overflow: hidden;
 }
 .chantier-label {
   display: block;
@@ -1284,15 +1302,11 @@ footer {
   gap: 48px;
   align-items: center;
 }
-.engagements-photo .ph-slot-block {
+.engagements-photo .ph-photo-frame {
   aspect-ratio: 4 / 5;
   min-height: 320px;
   border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.88rem;
-  padding: 24px;
+  width: 100%;
 }
 .engagements-content .pill {
   margin-bottom: 12px;
@@ -1335,10 +1349,115 @@ footer {
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .engagements-photo .ph-slot-block {
+  .engagements-photo .ph-photo-frame {
     min-height: 240px;
     aspect-ratio: 16 / 10;
   }
+}
+
+/* ── Emplacements photo (icône + étiquette) ── */
+.ph-photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(20, 38, 53, 0.35);
+  background: rgba(255, 255, 255, 0.55);
+  color: #9ca3af;
+  box-sizing: border-box;
+}
+.ph-photo-frame {
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  border-radius: inherit;
+}
+.ph-photo-portrait {
+  border-radius: 50%;
+  background: var(--surface-alt);
+}
+.ph-photo-icon {
+  width: 42%;
+  max-width: 56px;
+  height: auto;
+}
+.ph-photo-portrait .ph-photo-icon {
+  width: 58%;
+  max-width: 28px;
+}
+.ph-photo-tag {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px dashed rgba(20, 38, 53, 0.28);
+  border-radius: 4px;
+  padding: 2px 6px;
+  line-height: 1.3;
+  z-index: 1;
+}
+
+/* ── Carte service discrète (Diogène, après décès) ── */
+.sc-discreet {
+  display: flex;
+  flex-direction: column;
+}
+.sc-top-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+.sc-foot-discreet {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin: 0 20px 22px;
+  padding-top: 12px;
+  border-top: 1px solid var(--card-border);
+}
+.sc-lnk-discreet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--blue-primary);
+  color: #fff !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.35;
+}
+.sc-lnk-discreet:hover {
+  background: var(--blue-primary-hover);
+  color: #fff !important;
+}
+.sc-lnk-tel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  color: var(--blue-deep) !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.sc-lnk-tel:hover {
+  border-color: var(--blue-primary);
+  color: var(--blue-primary) !important;
 }
 
 /* ── CTA pair unifiés ── */
@@ -1553,7 +1672,11 @@ body {
     position: static;
     padding: 12px 14px;
   }
-  .hero-extra {
+  .hero-ratings,
+  .hero-badges,
+  .hero-segments-block,
+  .hero-btns,
+  .hero-google-link {
     order: 3;
   }
   .hero-form-col .cf-wrap h3,
@@ -1588,15 +1711,91 @@ body {
 @media (min-width: 768px) {
   .hero-split {
     display: grid;
-    grid-template-columns: 1fr min(420px, 42%);
+    grid-template-columns: 1fr min(400px, 40%);
+    padding: 10px 24px 20px;
+    gap: 16px;
+    align-items: start;
   }
   .hero-main {
     display: flex;
     flex-direction: column;
     gap: 0;
   }
-  .hero-extra {
-    order: -1;
+  .hero h1 {
+    font-size: clamp(1.38rem, 1.85vw, 1.72rem);
+    line-height: 1.17;
+    margin-bottom: 6px;
+  }
+  .hero-sub-full,
+  .hero-sub-short {
+    font-size: 0.84rem;
+    line-height: 1.42;
+    margin-bottom: 8px;
+    max-width: 520px;
+  }
+  .hero-ratings {
+    margin-bottom: 8px;
+  }
+  .hero-badges {
+    margin-bottom: 8px;
+  }
+  .hero-segments-wrap,
+  .hero-segments-block {
+    margin-bottom: 8px;
+  }
+  .hero-google-link {
+    margin-top: 4px;
+  }
+  .hero-ratings-portrait {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+}
+@media (min-width: 768px) and (max-height: 680px) {
+  .hero-split {
+    padding-top: 8px;
+    padding-bottom: 16px;
+    gap: 12px;
+  }
+  .hero h1 {
+    font-size: 1.26rem;
+    margin-bottom: 4px;
+  }
+  .hero-sub-full,
+  .hero-sub-short {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+  .hero-ratings {
+    padding: 6px 12px 6px 6px;
+    margin-bottom: 6px;
+  }
+  .hero-ratings-portrait {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+  .hero-ratings-text {
+    font-size: 0.78rem;
+  }
+  .hero-badges {
+    margin-bottom: 6px;
+  }
+  .badge {
+    font-size: 0.74rem;
+    padding: 4px 8px;
+  }
+  .hero-segments-wrap {
+    margin-bottom: 6px;
+  }
+  .hero-segments-label {
+    margin-bottom: 4px;
+    font-size: 0.78rem;
+  }
+  .hero-seg {
+    padding: 6px 10px;
+    font-size: 0.76rem;
   }
 }
 
@@ -1673,5 +1872,356 @@ body {
   }
   .page-sidebar {
     position: static;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Accueil mobile uniquement (< 768 px)
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  /* Barre fixe — texte court, rien de coupé */
+  .mob-bar {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+  .mob-bar a {
+    min-height: 48px;
+    padding: 10px 8px;
+    font-size: 0.74rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  .mob-tel {
+    flex: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .mob-dev {
+    flex: 0.85;
+  }
+
+  /* Topbar téléphone + burger menu */
+  .topbar {
+    padding: 0;
+  }
+  .topbar-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .topbar-mobile a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 8px 14px;
+    font-weight: 700;
+  }
+  .hbg {
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  /* Sections accueil compactes */
+  .services-sec,
+  .chantiers-sec,
+  .engagements-sec,
+  .zones-sec,
+  .testi-sec,
+  .rp-sec,
+  .faq-sec,
+  .page-devis-sec {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  .sec-title {
+    margin-bottom: 20px;
+  }
+  .sec-title h2 {
+    font-size: 1.22rem;
+    line-height: 1.25;
+  }
+  .sec-title p {
+    font-size: 0.84rem;
+  }
+
+  /* Services — cartes compactes (~1 300 px section) */
+  .services-sec {
+    max-height: none;
+  }
+  .services-grid-primary {
+    gap: 14px;
+  }
+  .sc-img {
+    height: 160px !important;
+    max-height: 160px !important;
+    min-height: 0 !important;
+  }
+  .sc-body {
+    padding: 14px 16px 16px;
+  }
+  .sc-body h3 {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .sc-tagline {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    line-height: 1.45;
+  }
+  .sc-compris-desktop {
+    display: none;
+  }
+  .sc-compris-details {
+    margin: 0 0 10px;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: var(--surface-alt);
+    overflow: hidden;
+  }
+  .sc-compris-details summary {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--blue-deep);
+    cursor: pointer;
+    list-style: none;
+  }
+  .sc-compris-details summary::-webkit-details-marker {
+    display: none;
+  }
+  .sc-compris-details .sc-compris {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid var(--card-border);
+    padding: 10px 12px 12px;
+  }
+  .sc-foot-discreet {
+    margin: 0 16px 16px;
+  }
+  .services-also {
+    margin-top: 16px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .services-also-item a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 6px 4px;
+  }
+
+  /* Chantiers — carrousel horizontal */
+  .chantiers-scroll {
+    margin: 0 -16px;
+    padding: 0 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .chantiers-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .chantiers-grid {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .chantier-card {
+    flex: 0 0 92%;
+    scroll-snap-align: start;
+  }
+
+  /* Avis — carrousel + points (cible ~900 px section) */
+  .testi-sec .sec-title {
+    margin-bottom: 14px;
+  }
+  .testi-tabs {
+    margin-bottom: 14px;
+    gap: 6px;
+  }
+  .testi-tab {
+    padding: 8px 12px;
+    font-size: 0.76rem;
+  }
+  .testi-carousel-wrap {
+    margin: 0 -16px;
+  }
+  .testi-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 16px 4px;
+  }
+  .testi-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .testi-card {
+    flex: 0 0 88%;
+    scroll-snap-align: start;
+    max-height: 420px;
+    overflow: hidden;
+  }
+  .testi-card .testi-body {
+    padding-top: 16px;
+  }
+  .testi-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .testi-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 12px 16px 0;
+    padding-bottom: 4px;
+  }
+  .testi-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: var(--card-border);
+    cursor: pointer;
+    min-height: 0;
+  }
+  .testi-dot.active {
+    background: var(--blue-primary);
+    transform: scale(1.15);
+  }
+  .testi-sec .section-cta {
+    margin-top: 16px;
+  }
+
+  /* Zones — lien communes */
+  .zones-more-link a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 8px 0;
+  }
+  .zones-map-full iframe {
+    height: 180px;
+  }
+
+  /* Tarifs — accordéon unique */
+  .rp-full-link {
+    text-align: center;
+    margin-top: 16px;
+  }
+  .rp-full-link a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 8px 0;
+  }
+
+  /* CTAs intermédiaires masqués (barre fixe + formulaire bas) */
+  .services-sec .section-cta,
+  .chantiers-sec .section-cta,
+  .engagements-sec .section-cta,
+  .testi-sec .section-cta,
+  .rp-sec .section-cta {
+    display: none;
+  }
+
+  /* Engagements — photo masquée pour gagner en hauteur */
+  .engagements-photo {
+    display: none;
+  }
+  .engagements-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* Chantiers — carte pro ref compacte */
+  .pro-ref-card {
+    padding: 12px 14px;
+    margin-bottom: 0;
+  }
+  .pro-ref-card .ph-slot-block {
+    font-size: 0.82rem;
+    padding: 10px;
+  }
+
+  /* Devis bas — bandeau confiance compact */
+  .devis-trust-strip {
+    gap: 6px 12px;
+    font-size: 0.76rem;
+  }
+  .devis-trust-item {
+    flex: 1 1 45%;
+  }
+
+  /* Footer compact */
+  .footer-inner {
+    padding: 32px 16px 20px !important;
+    gap: 20px !important;
+  }
+  .footer-map iframe {
+    height: 120px !important;
+  }
+  .f-brand-desc {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  /* FAQ lien */
+  .faq-sec p[style] a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 8px 0;
+  }
+
+  /* Footer — zones tactiles */
+  footer li a,
+  .f-legal-line a,
+  .footer-bot a,
+  .footer-zones .ztag,
+  .footer-mesh .ztag,
+  .f-contact-text a,
+  .footer-map a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 8px 0;
+  }
+  .footer-zones .ztag,
+  .footer-mesh .ztag {
+    padding: 8px 10px;
+  }
+}
+
+/* Desktop / tablette ≥ 768 px — compris toujours visible */
+@media (min-width: 768px) {
+  .sc-compris-details {
+    display: none;
+  }
+  .testi-dots {
+    display: none;
+  }
+  .chantiers-scroll {
+    overflow: visible;
   }
 }

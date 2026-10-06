@@ -132,7 +132,7 @@ export const serviceContent: Record<string, ServiceContent> = {
       {
         h2: "Une intervention menée par un ancien infirmier",
         paragraphs: [
-          `${site.name} a été fondée par ${site.ownerFormal}, ancien infirmier. Les situations de fragilité, le respect de la personne, la confidentialité et les règles d'hygiène face aux risques biologiques font partie de son quotidien depuis longtemps.`,
+          `${site.name} a été fondée par ${site.owner}, ancien infirmier. Les situations de fragilité, le respect de la personne, la confidentialité et les règles d'hygiène face aux risques biologiques font partie de son quotidien depuis longtemps.`,
           "Entreprise locale basée à Bourg-en-Bresse, Xyneo commence chaque intervention Diogène par une visite discrète sur place pour évaluer la situation et établir un devis gratuit, en lien avec la personne concernée ou sa famille.",
         ],
       },
@@ -190,7 +190,7 @@ export const serviceContent: Record<string, ServiceContent> = {
       {
         h2: "Une intervention menée par un ancien infirmier",
         paragraphs: [
-          `${site.name} a été fondée par ${site.ownerFormal}, ancien infirmier. La confrontation à des situations difficiles, le respect de la personne et des familles, la rigueur face aux risques biologiques font partie de son quotidien depuis longtemps.`,
+          `${site.name} a été fondée par ${site.owner}, ancien infirmier. La confrontation à des situations difficiles, le respect de la personne et des familles, la rigueur face aux risques biologiques font partie de son quotidien depuis longtemps.`,
         ],
       },
       {
@@ -417,7 +417,7 @@ export const serviceContent: Record<string, ServiceContent> = {
       {
         h2: "Nettoyage de vitres et baies vitrées",
         paragraphs: [
-          `Baies vitrées, huisseries, volets roulants : ${site.ownerFormal} et l'équipe Xyneo interviennent minutieusement et proprement, comme le confirment nos avis Google.`,
+          `Baies vitrées, huisseries, volets roulants : ${site.ownerFirst} et l'équipe Xyneo interviennent minutieusement et proprement, comme le confirment nos avis Google.`,
           "Nous utilisons un matériel professionnel adapté pour un résultat sans traces ni auréoles, chez les particuliers comme les professionnels.",
         ],
         list: [

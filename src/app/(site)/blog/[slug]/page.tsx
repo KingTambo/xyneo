@@ -12,7 +12,7 @@ type BlogPostPageProps = {
 const postBodies: Record<string, string[]> = {
   "nettoyage-apres-deces-bourg-en-bresse": [
     "Il y a des appels qu'on garde en tête. Celui-ci venait de la petite-fille d'un habitant d'un immeuble de Bourg-en-Bresse. Son grand-père était décédé depuis plusieurs jours et la famille avait besoin d'une intervention rapide, discrète et respectueuse.",
-    `Chez Xyneo, ce type de situation demande une double compétence : technique et humaine. Fondée par ${site.ownerFormal}, ancien infirmier, notre entreprise intervient avec la rigueur nécessaire face aux risques biologiques, et le respect dû à la famille.`,
+    `Chez Xyneo, ce type de situation demande une double compétence : technique et humaine. Fondée par ${site.owner}, ancien infirmier, notre entreprise intervient avec la rigueur nécessaire face aux risques biologiques, et le respect dû à la famille.`,
     "L'intervention se déroule en deux temps : d'abord une évaluation confidentielle sur place et un devis gratuit, puis la désinfection complète, le traitement des odeurs et la remise en état du logement — prêt à être vendu, loué ou restitué.",
   ],
 };

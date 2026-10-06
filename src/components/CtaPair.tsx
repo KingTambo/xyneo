@@ -26,7 +26,7 @@ export default function CtaPair({ formHref = "#hero-form", variant = "default", 
         {primaryLabel}
       </a>
       <a href={`tel:${site.phoneTel}`} className="btn-wh">
-        Appeler {site.ownerFormal}
+        Appeler {site.ownerFirst}
       </a>
     </div>
   );

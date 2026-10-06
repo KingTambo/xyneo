@@ -1,7 +1,6 @@
 import {
   featuredZones,
   homepageFaqs,
-  homepagePricingBlocks,
   primaryServices,
   commitments,
   proReference,
@@ -13,7 +12,10 @@ import ClientPlaceholder from "./ClientPlaceholder";
 import CtaPair from "./CtaPair";
 import DevisForm from "./DevisForm";
 import HeroSegments from "./HeroSegments";
+import PhotoPlaceholder from "./PhotoPlaceholder";
 import SectionCta from "./SectionCta";
+import ServicePrimaryCard from "./ServicePrimaryCard";
+import HomePricingSection from "./HomePricingSection";
 import TestimonialSection from "./TestimonialSection";
 
 export default function HomeContent() {
@@ -35,7 +37,18 @@ export default function HomeContent() {
         />
         <div className="hero-split">
           <div className="hero-main">
-            <div className="hero-intro">
+            <div className="hero-ratings hero-main-block">
+              <div className="hero-ratings-portrait">
+                <PhotoPlaceholder variant="portrait" />
+              </div>
+              <span className="hero-ratings-text">
+                <span className="stars" aria-hidden="true">
+                  ★
+                </span>{" "}
+                {ratingDisplay}/5 · {site.reviews} avis Google · {site.owner}, {site.ownerRole}
+              </span>
+            </div>
+            <div className="hero-intro hero-main-block">
               <h1 id="h1-hero">
                 Nettoyage après travaux, avant état des lieux ou logement encombré à {site.city}
               </h1>
@@ -48,31 +61,20 @@ export default function HomeContent() {
                 Chantier, relocation ou logement difficile — devis gratuit sous 24 h · {site.region}
               </p>
             </div>
-            <div className="hero-extra">
-              <div className="hero-ratings">
-                <div className="hero-ratings-portrait" title="[À FOURNIR] Portrait M. Ringuet">
-                  <ClientPlaceholder block>[À FOURNIR] Portrait {site.ownerFormal}</ClientPlaceholder>
-                </div>
-                <span className="hero-ratings-text">
-                  <span className="stars" aria-hidden="true">
-                    ★
-                  </span>{" "}
-                  {ratingDisplay}/5 · {site.reviews} avis Google · {site.ownerFormal}, {site.ownerRole}
-                </span>
-              </div>
-              <div className="hero-badges">
-                <span className="badge">Devis écrit sous 24 h</span>
-                <span className="badge">Assuré RC Pro</span>
-                <span className="badge">7j/7</span>
-              </div>
-              <HeroSegments />
-              <CtaPair formHref="#hero-form" className="hero-btns hero-devis-scroll" />
-              <p className="hero-google-link">
-                <a href={site.googleReviewsUrl} target="_blank" rel="noopener noreferrer">
-                  Voir les {site.reviews} avis sur Google →
-                </a>
-              </p>
+            <div className="hero-badges hero-main-block">
+              <span className="badge">Devis écrit sous 24 h</span>
+              <span className="badge">Assuré RC Pro</span>
+              <span className="badge">7j/7</span>
             </div>
+            <div className="hero-segments-block hero-main-block">
+              <HeroSegments />
+            </div>
+            <CtaPair formHref="#hero-form" className="hero-btns hero-devis-scroll hero-main-block" />
+            <p className="hero-google-link hero-main-block">
+              <a href={site.googleReviewsUrl} target="_blank" rel="noopener noreferrer">
+                Voir les {site.reviews} avis sur Google →
+              </a>
+            </p>
           </div>
           <div className="hero-form-col" id="hero-form">
             <DevisForm idPrefix="hero-cf" />
@@ -93,7 +95,7 @@ export default function HomeContent() {
         </div>
       </div>
 
-      <section className="services-sec" aria-labelledby="h2-svs-mini" style={{ padding: "72px 0" }}>
+      <section className="services-sec" aria-labelledby="h2-svs-mini">
         <div className="section-wrap">
           <div className="sec-title">
             <span className="pill">Nos prestations phares</span>
@@ -104,36 +106,14 @@ export default function HomeContent() {
           </div>
           <div className="services-grid services-grid-primary">
             {primaryServices.map((service) => (
-              <a key={service.title} href={service.href} className="sc-link">
-                <article className="sc">
-                  <div className={`sc-img ${service.imgClass}`} role="img" aria-label={service.title}>
-                    <span className="sc-badge">{service.badge}</span>
-                  </div>
-                  <div className="sc-body">
-                    <h3>{service.title}</h3>
-                    <p className="sc-tagline">{service.tagline}</p>
-                    <div className="sc-compris">
-                      <p className="sc-compris-title">{service.comprisTitle}</p>
-                      <ul className="sc-checklist">
-                        {service.checklist.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="sc-foot">
-                      <span className="sc-lnk">Devis pour ce service</span>
-                      <span className="sc-arr">→</span>
-                    </div>
-                  </div>
-                </article>
-              </a>
+              <ServicePrimaryCard key={service.title} service={service} />
             ))}
           </div>
           <p className="services-also">
             Aussi :{" "}
             {secondaryServiceLinks.map((link, i) => (
-              <span key={link.href}>
-                {i > 0 && " · "}
+              <span key={link.href} className="services-also-item">
+                {i > 0 && <span className="services-also-sep" aria-hidden="true"> · </span>}
                 <a href={link.href}>{link.label}</a>
               </span>
             ))}
@@ -149,19 +129,20 @@ export default function HomeContent() {
             <h2 id="h2-chantiers">Chantiers récents</h2>
             <p>Avant / après sur des interventions réelles — photos à venir</p>
           </div>
-          <div className="chantiers-grid">
+          <div className="chantiers-scroll">
+            <div className="chantiers-grid">
             {recentChantiers.map((chantier) => (
               <article className="chantier-card" key={chantier.id}>
                 <div className="chantier-photos">
                   <figure className="chantier-photo">
-                    <div className="chantier-photo-slot ph-slot">
-                      <ClientPlaceholder block>[À FOURNIR]</ClientPlaceholder>
+                    <div className="chantier-photo-slot">
+                      <PhotoPlaceholder />
                     </div>
                     <figcaption className="chantier-label">Avant</figcaption>
                   </figure>
                   <figure className="chantier-photo">
-                    <div className="chantier-photo-slot ph-slot">
-                      <ClientPlaceholder block>[À FOURNIR]</ClientPlaceholder>
+                    <div className="chantier-photo-slot">
+                      <PhotoPlaceholder />
                     </div>
                     <figcaption className="chantier-label">Après</figcaption>
                   </figure>
@@ -171,6 +152,7 @@ export default function HomeContent() {
                 </div>
               </article>
             ))}
+            </div>
           </div>
           <article className="pro-ref-card" aria-labelledby="h3-pro-ref">
             <span className="pill">Référence professionnelle</span>
@@ -187,7 +169,7 @@ export default function HomeContent() {
         <div className="section-wrap">
           <div className="engagements-grid">
             <div className="engagements-photo">
-              <ClientPlaceholder block>[À FOURNIR] {site.ownerFormal} sur un chantier</ClientPlaceholder>
+              <PhotoPlaceholder />
             </div>
             <div className="engagements-content">
               <span className="pill">Nos engagements</span>
@@ -237,54 +219,7 @@ export default function HomeContent() {
 
       <TestimonialSection />
 
-      <section className="rp-sec" aria-labelledby="h2-rp">
-        <div className="section-wrap">
-          <div className="sec-title">
-            <span className="pill">Tarifs</span>
-            <h2 id="h2-rp">Combien ça coûte ? Nos prix de départ</h2>
-            <p>Tarifs indicatifs TTC · Devis personnalisé gratuit après visite sur place</p>
-          </div>
-        </div>
-        <div className="rp-blocks-wrap">
-          {homepagePricingBlocks.map((block) => (
-            <details className="rp-block" key={block.title} open>
-              <summary className="rp-summary">
-                <h3>{block.title}</h3>
-                <span className="rp-chevron" aria-hidden="true">
-                  ▾
-                </span>
-              </summary>
-              <div className="rp-content">
-                <table className="rp-table">
-                  <thead>
-                    <tr>
-                      <th>Critère / Prestation</th>
-                      <th>Tarif indicatif TTC</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {block.rows.map(([label, price, muted], rowIndex) => (
-                      <tr key={`${block.title}-${rowIndex}`} className={muted ? "rp-muted" : undefined}>
-                        <td>{label}</td>
-                        <td>
-                          <span className="rp-price-val">{price}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </details>
-          ))}
-        </div>
-        <p className="rp-disclaimer">Tarifs indicatifs TTC. Devis gratuit et personnalisé sous 24 h.</p>
-        <div className="section-wrap">
-          <SectionCta formHref="#hero-form" />
-          <p style={{ textAlign: "center", marginTop: "16px" }}>
-            <a href="/prix/">Voir la grille tarifaire complète →</a>
-          </p>
-        </div>
-      </section>
+      <HomePricingSection />
 
       <section className="page-devis-sec" id="devis" aria-labelledby="devis-h2">
         <div className="section-wrap">

@@ -70,8 +70,8 @@ export default function Header() {
         <a href={`tel:${site.phoneTel}`} className="mob-tel">
           📞 {site.phone}
         </a>
-        <a href="/#hero-form" className="mob-dev">
-          Recevoir mon devis sous 24 h
+        <a href="/#hero-form" className="mob-dev" aria-label="Recevoir mon devis sous 24 h">
+          Mon devis 24 h
         </a>
       </div>
     </>

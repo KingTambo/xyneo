@@ -6,8 +6,7 @@ export const site = {
   email: "contact@xyneo.fr",
   address: "1 rue Alfred Bertholet, 01000 Bourg-en-Bresse",
   owner: "Abel Ringuet",
-  /** Affichage public — M. + nom de famille (sans prénom) */
-  ownerFormal: "M. Ringuet",
+  ownerFirst: "Abel",
   ownerRole: "gérant",
   since: "2018",
   rating: "4.9",
