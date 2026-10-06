@@ -1,5 +1,4 @@
 import {
-  beforeAfter,
   blogPosts,
   pricingBlocks,
   type StaticPageData,
@@ -65,12 +64,14 @@ export default function StaticPageContent({ page }: StaticPageContentProps) {
           />
           <section className="ba-sec">
             <div className="section-wrap">
-              <div className="ba-grid">
-                {beforeAfter.map((img) => (
-                  <figure className="ba-item" key={img.src}>
-                    <img src={img.src} alt={img.alt} loading="lazy" width={400} height={300} />
-                  </figure>
-                ))}
+              <div className="content" style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center", padding: "48px 0" }}>
+                <p>
+                  Nos photos avant/après de chantiers réels seront publiées prochainement, avec ville, type de prestation
+                  et surface. En attendant, contactez-nous pour des références sur votre secteur.
+                </p>
+                <a href={`tel:${site.phoneTel}`} className="btn-or" style={{ display: "inline-flex", marginTop: "20px" }}>
+                  📞 {site.phone}
+                </a>
               </div>
             </div>
           </section>

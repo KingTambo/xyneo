@@ -16,13 +16,13 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Nettoyage professionnel Ain, Rhône, Saône-et-Loire | Xyneo",
+  title: "Nettoyage fin de chantier & remise en état à Bourg-en-Bresse | Xyneo",
   description:
     "Xyneo, nettoyage à Bourg-en-Bresse : fin de chantier, remise en état locative, Diogène. Ain, Rhône, Saône-et-Loire. Devis gratuit sous 24 h.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#035456",
+  themeColor: "#142635",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

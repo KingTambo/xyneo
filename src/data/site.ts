@@ -15,13 +15,17 @@ export const site = {
   city: "Bourg-en-Bresse",
   hours: "7h30 – 21h · 7j/7",
   website: "https://xyneo.fr",
+  googleReviewsUrl: "https://share.google/IlnvBucdew1zoqnNX",
+  /** À compléter — affiché dans le footer quand renseigné */
+  siret: "",
+  legalName: "Xyneo",
 };
 
 export const services = [
   {
     href: "/nettoyage-de-fin-de-chantier/",
     imgClass: "sc1",
-    badge: "À partir de 600€",
+    badge: "Dès 600€ (≈60 m²)",
     title: "Nettoyage de fin de chantier",
     tagline: "Après travaux, avant réception (OPR) : poussières fines, vitres, sols, sanitaires.",
     comprisTitle: "Compris dans votre prestation fin de chantier",
@@ -111,10 +115,34 @@ export const navLinks = [
 ];
 
 export const whyItems = [
-  { icon: "🏅", title: "Professionnels qualifiés", text: "Équipement professionnel, méthodes éprouvées et travail soigné sur chaque intervention" },
-  { icon: "⚡", title: "Réponse sous 24 h", text: "Devis gratuit et rapide, intervention planifiée selon vos contraintes de chantier ou de location" },
-  { icon: "🤝", title: "Interlocuteur local", text: "Abel Ringuet et son équipe, basés à Bourg-en-Bresse, à votre écoute sur tout le secteur" },
-  { icon: "💰", title: "Devis 100% gratuit", text: "Estimation transparente, sans engagement, par téléphone ou formulaire" },
+  { icon: "👤", title: "Un seul interlocuteur", text: "Abel vient évaluer chaque chantier lui-même. Son équipe réalise le travail, sans sous-traitance." },
+  { icon: "🕐", title: "Interventions 7j/7", text: "De 7h30 à 21h, y compris le week-end — pour tenir votre planning de réception ou de relocation." },
+  { icon: "🚛", title: "Déchets évacués", text: "Encombrants et déchets de chantier évacués : vous n'avez rien à gérer après notre passage." },
+  { icon: "📋", title: "Prix ferme après visite", text: "Devis gratuit sur place, prix transparent et ferme une fois la prestation définie." },
+];
+
+/** 3 services principaux — accueil */
+export const primaryServices = services.slice(0, 3);
+
+/** Services secondaires — ligne « Aussi » sur l'accueil */
+export const secondaryServiceLinks = [
+  { href: "/nettoyage-apres-deces/", label: "Après décès" },
+  { href: "/nettoyage-canape/", label: "Canapés & textile" },
+  { href: "/nettoyage-vitres-et-baies-vitrees/", label: "Vitres" },
+  { href: "/nettoyage-dappartement-ou-maison/", label: "Ménage ponctuel" },
+  { href: "/menage-a-domicile-avance-immediate/", label: "Ménage à domicile" },
+];
+
+/** 8 villes phares — accueil (sans Drôme) */
+export const featuredZones = [
+  { href: "/nettoyage-bourg-en-bresse-01000/", label: "Bourg-en-Bresse 01000" },
+  { href: "/nettoyage-oyonnax-01100/", label: "Oyonnax 01100" },
+  { href: "/nettoyage-amberieu-en-bugey-01500/", label: "Ambérieu-en-Bugey 01500" },
+  { href: "/nettoyage-belley-01300/", label: "Belley 01300" },
+  { href: "/nettoyage-macon-71000/", label: "Mâcon 71000" },
+  { href: "/nettoyage-chalon-sur-saone-71100/", label: "Chalon-sur-Saône 71100" },
+  { href: "/nettoyage-lyon-69000/", label: "Lyon 69000" },
+  { href: "/nettoyage-villefranche-sur-saone-69400/", label: "Villefranche-sur-Saône 69400" },
 ];
 
 export const zones = [
@@ -151,10 +179,10 @@ export const zones = [
 ];
 
 export const testimonials = [
-  { img: "/img/review-1.webp", initials: "SD", name: "S. D.", city: "Ain", text: "« Personne très sérieuse et sympathique. Très contente de son travail, je le recommande. »", tag: "Nettoyage professionnel" },
-  { img: "/img/review-2.webp", initials: "AB", name: "Antoine Blanc", city: "Ain", text: "« Travail très sérieux, Abel est super sympa, en plein déménagement il m'a même proposé de m'aider à descendre l'ancien canapé, je recommande. »", tag: "Aide déménagement" },
-  { img: "/img/review-3.webp", initials: "DG", name: "Déborah GAGET", city: "Ain", text: "« J'ai contacté Xyneo pour le nettoyage de moquettes en très mauvais état, j'ai été très satisfaite à tout point de vue : disponibilité, efficacité, professionnalisme, je recommande ! »", tag: "Nettoyage moquette" },
   { img: "/img/review-4.webp", initials: "CM", name: "Cécile Maussang", city: "Ain", text: "« Intervention au top, Abel est très sympathique et professionnel, le nettoyage de mon appart après travaux (sol, baies vitrées et poutres) est nickel. Encore merci pour votre disponibilité rapide. »", tag: "Fin de chantier" },
+  { img: "/img/review-1.webp", initials: "SD", name: "S. D.", city: "Ain", text: "« Personne très sérieuse et sympathique. Très contente de son travail, je le recommande. »", tag: "Nettoyage professionnel" },
+  { img: "/img/review-2.webp", initials: "AB", name: "Antoine Blanc", city: "Ain", text: "« Travail très sérieux, Abel est super sympa, en plein déménagement il m'a même proposé de m'aider à descendre l'ancien canapé, je recommande. »", tag: "Nettoyage professionnel" },
+  { img: "/img/review-3.webp", initials: "DG", name: "Déborah GAGET", city: "Ain", text: "« J'ai contacté Xyneo pour le nettoyage de moquettes en très mauvais état, j'ai été très satisfaite à tout point de vue : disponibilité, efficacité, professionnalisme, je recommande ! »", tag: "Nettoyage moquette" },
   { img: "/img/review-5.webp", initials: "GP", name: "Gerard PACCOUD", city: "Ain", text: "« Répond très rapidement à notre demande. Travail effectué consciencieusement et efficacement. Contact très agréable et sympathique. À recommander. »", tag: "Nettoyage professionnel" },
   { img: "/img/review-6.webp", initials: "MD", name: "Maria Isabel Diaz", city: "Ain", text: "« M. Abel Ringuet, de Xyneo, a fait les vitres, les huisseries, et les volets roulants chez moi. Il travaille minutieusement et proprement ; il est sérieux, efficace, et très sympathique. Je le recommande ! »", tag: "Nettoyage vitres" },
   { img: "/img/review-7.webp", initials: "VP", name: "Véronique Perrier", city: "Ain", text: "« Mon canapé a reçu de l'urine de chat hier matin, monsieur est venu dans l'après-midi ! Conseil et nettoyage rapide avec traitement anti-odeur. Le canapé est comme neuf. Merci. »", tag: "Nettoyage canapé" },
@@ -288,7 +316,7 @@ export const pricingBlocks = [
 ];
 
 export const faqs = [
-  { q: "Combien coûte un nettoyage de fin de chantier à Bourg-en-Bresse ?", a: "Chez Xyneo, un nettoyage de fin de chantier démarre à 600 €, selon la surface, l'état du chantier et les délais. Le devis précis est établi après une visite gratuite sur place, sous 24 h." },
+  { q: "Combien coûte un nettoyage de fin de chantier à Bourg-en-Bresse ?", a: "Chez Xyneo, un nettoyage de fin de chantier démarre à 600 € (logement jusqu'à environ 60 m²), selon la surface, l'état du chantier et les délais. Le devis précis est établi après une visite gratuite sur place, sous 24 h." },
   { q: "Combien coûte une remise en état locative à Bourg-en-Bresse ?", a: "Chez Xyneo, une remise en état locative démarre à 200 € pour un studio, selon la surface et l'état du logement. Le devis précis est établi après une visite gratuite sur place." },
   { q: "Comment obtenir un devis pour un nettoyage à Bourg-en-Bresse ?", a: `Il vous suffit de nous contacter au ${site.phone} ou via le formulaire. Nous nous déplaçons dans l'Ain, le Rhône et la Saône-et-Loire pour évaluer vos besoins et vous remettre un devis clair sous 24 h.` },
   { q: "Intervenez-vous en urgence pour une remise en état locative ?", a: `Oui, nous assurons des interventions rapides sur l'ensemble de notre secteur, notamment entre deux locataires ou avant un état des lieux. Contactez-nous au ${site.phone} pour une prise en charge rapide.` },
@@ -297,6 +325,24 @@ export const faqs = [
   { q: "Comment fonctionne l'avance immédiate du crédit d'impôt ?", a: "Pour le ménage à domicile, vous ne payez que 50 % du montant grâce à l'avance immédiate du crédit d'impôt. Nous nous occupons des démarches administratives pour vous." },
   { q: "Nettoyez-vous les canapés, tapis et matelas à domicile ?", a: "Oui, nous utilisons la méthode injection-extraction professionnelle pour éliminer taches, acariens et odeurs. Le résultat est visible immédiatement après l'intervention." },
   { q: "Combien de temps dure une intervention de fin de chantier ?", a: "La durée varie selon la surface : quelques heures pour un studio, une journée pour un T3/T4, plusieurs jours pour un local commercial. Nous vous communiquons un planning précis dans le devis." },
+  { q: "Êtes-vous assurés ?", a: "Oui, Xyneo dispose d'une assurance responsabilité civile professionnelle. L'attestation est transmise sur demande pour les professionnels, syndics et agences." },
+  { q: "Dois-je être présent pendant l'intervention ?", a: "Pour un fin de chantier ou une remise en état, votre présence n'est pas obligatoire si l'accès au logement est organisé. Pour une situation Diogène ou après décès, nous nous adaptons à votre situation — vous n'avez pas besoin d'être sur place." },
+  { q: "Sous quel délai pouvez-vous intervenir ?", a: `Le devis vous est remis sous 24 h. Pour l'intervention, nous planifions selon l'urgence : sous 72 h en cas d'urgence, ou à la date qui vous convient. Appelez le ${site.phone} pour un créneau rapide.` },
+];
+
+/** 4 questions clés — accueil allégé */
+export const homepageFaqs = [
+  faqs.find((f) => f.q.startsWith("Êtes-vous"))!,
+  faqs.find((f) => f.q.startsWith("Dois-je"))!,
+  faqs.find((f) => f.q.startsWith("Sous quel"))!,
+  faqs.find((f) => f.q.startsWith("Combien coûte un nettoyage de fin"))!,
+];
+
+/** 3 grilles tarifaires ouvertes par défaut — accueil */
+export const homepagePricingBlocks = [
+  pricingBlocks[0],
+  pricingBlocks[1],
+  pricingBlocks[2],
 ];
 
 export const footerServices = services.slice(0, 8).map((s) => ({

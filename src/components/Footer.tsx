@@ -21,7 +21,17 @@ export default function Footer() {
             </div>
           </div>
           <p className="f-brand-desc">
-            {site.name} est votre entreprise de nettoyage professionnel à {site.city}, en activité depuis {site.since}. Fin de chantier, remise en état locative, Diogène et nettoyage textile dans l&apos;Ain, le Rhône et la Saône-et-Loire.
+            Nettoyage professionnel à {site.city} depuis {site.since} — fin de chantier, remise en état et Diogène dans l&apos;Ain, le Rhône et la Saône-et-Loire.
+          </p>
+          {site.siret ? (
+            <p className="f-legal-line">
+              {site.legalName} · SIRET {site.siret}
+            </p>
+          ) : null}
+          <p className="f-legal-line">
+            <a href={site.googleReviewsUrl} target="_blank" rel="noopener noreferrer">
+              Voir nos {site.reviews} avis Google →
+            </a>
           </p>
           <span className="f-contacts-label">Nos contacts</span>
           <div className="f-contact-item">

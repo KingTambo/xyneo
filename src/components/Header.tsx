@@ -4,9 +4,14 @@ export default function Header() {
   return (
     <>
       <div className="topbar">
-        Intervention dans l&apos;Ain, le Rhône et la Saône-et-Loire &nbsp;·&nbsp;
-        <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
-        &nbsp;·&nbsp; {site.hours}
+        <span className="topbar-full">
+          Intervention dans l&apos;Ain, le Rhône et la Saône-et-Loire &nbsp;·&nbsp;
+          <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
+          &nbsp;·&nbsp; {site.hours}
+        </span>
+        <span className="topbar-mobile">
+          <a href={`tel:${site.phoneTel}`}>{site.phone}</a> · 7j/7
+        </span>
       </div>
       <nav aria-label="Navigation principale">
         <div className="nav-inner">
@@ -47,8 +52,8 @@ export default function Header() {
               ),
             )}
             <li role="none">
-              <a href="/contactez-nous/#devis" className="nav-cta">
-                Devis Gratuit
+              <a href="/#devis" className="nav-cta">
+                Mon devis en 24 h
               </a>
             </li>
           </ul>
@@ -58,8 +63,8 @@ export default function Header() {
         <a href={`tel:${site.phoneTel}`} className="mob-tel">
           📞 {site.phone}
         </a>
-        <a href="/contactez-nous/#devis" className="mob-dev">
-          Devis Gratuit
+        <a href="/#devis" className="mob-dev">
+          Mon devis en 24 h
         </a>
       </div>
     </>
