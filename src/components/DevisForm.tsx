@@ -62,10 +62,17 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
 
   function goToStep2() {
     const form = formRef.current;
-    if (!form || !clientType) return;
+    if (!form) return;
+    if (!clientType) {
+      const firstClient = form.querySelector(`input[name="${idPrefix}-client"]`) as HTMLInputElement | null;
+      firstClient?.focus();
+      return;
+    }
     const service = form.elements.namedItem("service") as HTMLSelectElement | null;
     const ville = form.elements.namedItem("ville") as HTMLInputElement | null;
     if (!service?.value || !ville?.value.trim()) {
+      if (!service?.value) service?.focus();
+      else ville?.focus();
       form.reportValidity();
       return;
     }
@@ -75,9 +82,29 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
   return (
     <div className="cf-wrap">
       <h3>{step === 1 ? "Décrivez votre besoin" : "Vos coordonnées"}</h3>
-      <div className="cf-steps" aria-hidden="true">
-        <span className={step === 1 ? "cf-step active" : "cf-step"}>1. Besoin</span>
-        <span className={step === 2 ? "cf-step active" : "cf-step"}>2. Contact</span>
+      <div className="cf-steps" role="tablist" aria-label="Étapes du formulaire">
+        <button
+          type="button"
+          role="tab"
+          id={`${idPrefix}-step-1`}
+          aria-selected={step === 1}
+          aria-controls={`${idPrefix}-panel-1`}
+          className={`cf-step${step === 1 ? " active" : ""}${step === 2 ? " done" : ""}`}
+          onClick={() => setStep(1)}
+        >
+          1. Besoin
+        </button>
+        <button
+          type="button"
+          role="tab"
+          id={`${idPrefix}-step-2`}
+          aria-selected={step === 2}
+          aria-controls={`${idPrefix}-panel-2`}
+          className={`cf-step${step === 2 ? " active" : ""}`}
+          onClick={goToStep2}
+        >
+          2. Contact
+        </button>
       </div>
       <form className="cform" action="#" method="POST" ref={formRef}>
         <input type="text" name="_honey" style={{ display: "none" }} tabIndex={-1} autoComplete="off" readOnly />
@@ -91,7 +118,7 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
         <input type="hidden" name="client_type" value={clientType} />
 
         {step === 1 && (
-          <>
+          <div id={`${idPrefix}-panel-1`} role="tabpanel" aria-labelledby={`${idPrefix}-step-1`}>
             <fieldset className="cf-fieldset">
               <legend>Vous êtes *</legend>
               <div className="cf-chips">
@@ -203,11 +230,11 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
             <button type="button" className="btn-submit" onClick={goToStep2}>
               Continuer →
             </button>
-          </>
+          </div>
         )}
 
         {step === 2 && (
-          <>
+          <div id={`${idPrefix}-panel-2`} role="tabpanel" aria-labelledby={`${idPrefix}-step-2`}>
             <div className="form-row">
               <div className="cf">
                 <label htmlFor={`${idPrefix}-nom`}>Votre nom *</label>
@@ -237,7 +264,7 @@ export default function DevisForm({ idPrefix, pageSource = "/", defaultService =
             <p className="cf-note">
               {site.owner} vous rappelle sous 24 h. Gratuit, sans engagement. Vos informations restent confidentielles.
             </p>
-          </>
+          </div>
         )}
       </form>
     </div>
