@@ -1,7 +1,10 @@
 "use client";
 
-import { profilePresets, serviceOptions, site } from "@/data/site";
-import { useEffect, useRef, useState } from "react";
+import { FORM_PRESET_EVENT, readFormPresetFromUrl, type FormPreset } from "@/lib/form-presets";
+import { isValidFrPhone, PHONE_ERROR_MSG } from "@/lib/phone";
+import { formSocialProof, serviceOptions, site } from "@/data/site";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type DevisFormProps = {
   idPrefix: string;
@@ -31,9 +34,15 @@ const urgencyOptions = [
   "Flexible",
 ];
 
-function readProfileFromUrl(defaultProfile: string) {
-  if (typeof window === "undefined") return defaultProfile;
-  return new URLSearchParams(window.location.search).get("profil") || defaultProfile;
+const DIOGENE_SERVICE = "Nettoyage Diogène";
+
+function applyPreset(
+  preset: FormPreset,
+  setClientType: (v: string) => void,
+  setService: (v: string) => void,
+) {
+  if (preset.clientType) setClientType(preset.clientType);
+  if (preset.service) setService(preset.service);
 }
 
 export default function DevisForm({
@@ -42,21 +51,44 @@ export default function DevisForm({
   defaultService = "",
   defaultProfile = "",
 }: DevisFormProps) {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [clientType, setClientType] = useState("");
   const [service, setService] = useState(defaultService);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
-    const profileKey = readProfileFromUrl(defaultProfile);
-    const preset = profileKey ? profilePresets[profileKey] : undefined;
-    if (preset) {
-      setClientType(preset.clientType);
-      setService(preset.service);
+  const loadPresetsFromUrl = useCallback(() => {
+    const preset = readFormPresetFromUrl();
+    if (preset.clientType || preset.service) {
+      applyPreset(preset, setClientType, setService);
+      return;
+    }
+    if (defaultProfile && typeof window !== "undefined") {
+      const profil = new URLSearchParams(window.location.search).get("profil") || defaultProfile;
+      const fromProfil = readFormPresetFromUrl(`?profil=${profil}`);
+      applyPreset(fromProfil, setClientType, setService);
     }
   }, [defaultProfile]);
+
+  useEffect(() => {
+    if (defaultService) setService(defaultService);
+  }, [defaultService]);
+
+  useEffect(() => {
+    loadPresetsFromUrl();
+  }, [loadPresetsFromUrl]);
+
+  useEffect(() => {
+    function onPreset(event: Event) {
+      const detail = (event as CustomEvent<FormPreset>).detail;
+      if (detail) applyPreset(detail, setClientType, setService);
+    }
+    window.addEventListener(FORM_PRESET_EVENT, onPreset);
+    return () => window.removeEventListener(FORM_PRESET_EVENT, onPreset);
+  }, []);
 
   useEffect(() => {
     const form = formRef.current;
@@ -68,6 +100,20 @@ export default function DevisForm({
       if (el && val) el.value = val;
     });
   }, []);
+
+  function validatePhoneField() {
+    const form = formRef.current;
+    const telEl = form?.elements.namedItem("tel") as HTMLInputElement | null;
+    if (!telEl) return true;
+    if (!isValidFrPhone(telEl.value)) {
+      setPhoneError(PHONE_ERROR_MSG);
+      telEl.setCustomValidity(PHONE_ERROR_MSG);
+      return false;
+    }
+    setPhoneError("");
+    telEl.setCustomValidity("");
+    return true;
+  }
 
   function goToStep2() {
     const form = formRef.current;
@@ -93,6 +139,11 @@ export default function DevisForm({
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
+    if (!validatePhoneField()) {
+      form.reportValidity();
+      return;
+    }
+
     setStatus("loading");
     setErrorMessage("");
 
@@ -110,46 +161,22 @@ export default function DevisForm({
 
       if (!res.ok) {
         setStatus("error");
-        setErrorMessage(json.error || "Envoi impossible. Appelez le " + site.phone);
+        setErrorMessage(json.error || "Envoi impossible. Appelez " + site.ownerFormal + " au " + site.phone);
         return;
       }
 
-      setStatus("success");
-      if (typeof window !== "undefined" && "gtag" in window) {
-        (window as Window & { gtag?: (...args: unknown[]) => void }).gtag?.("event", "generate_lead", {
-          event_category: "devis",
-          event_label: payload.service,
-        });
-      }
+      router.push("/merci/");
     } catch {
       setStatus("error");
-      setErrorMessage("Connexion impossible. Appelez le " + site.phone);
+      setErrorMessage("Connexion impossible. Appelez " + site.ownerFormal + " au " + site.phone);
     }
   }
 
-  if (status === "success") {
-    return (
-      <div className="cf-wrap cf-success">
-        <div className="cf-success-icon" aria-hidden="true">
-          ✓
-        </div>
-        <h3>Demande reçue</h3>
-        <p>
-          Merci ! {site.owner.split(" ")[0]} ou son équipe vous rappelle sous <strong>24 h</strong> au numéro indiqué.
-        </p>
-        <p className="cf-hint">
-          Vous avez des photos ? Envoyez-les par SMS ou WhatsApp au{" "}
-          <a href={`tel:${site.phoneTel}`}>{site.phone}</a>.
-        </p>
-        <a href={`tel:${site.phoneTel}`} className="btn-or" style={{ display: "inline-flex", marginTop: "12px" }}>
-          📞 Appeler maintenant
-        </a>
-      </div>
-    );
-  }
+  const ratingLine = `★ ${site.rating.replace(".", ",")}/5 · ${site.reviews} avis Google`;
 
   return (
-    <div className="cf-wrap">
+    <div className="cf-wrap" data-devis-form="true">
+      <p className="cf-step-meta">Étape {step}/2 · 30 secondes</p>
       <h3>{step === 1 ? "Décrivez votre besoin" : "Vos coordonnées"}</h3>
       <div className="cf-steps" role="tablist" aria-label="Étapes du formulaire">
         <button
@@ -229,6 +256,35 @@ export default function DevisForm({
                 ))}
               </select>
             </div>
+            {clientType === "btp" && (
+              <div className="cf">
+                <label htmlFor={`${idPrefix}-date-reception`}>Date de réception prévue (facultatif)</label>
+                <input type="date" id={`${idPrefix}-date-reception`} name="date_reception" />
+              </div>
+            )}
+            {service === DIOGENE_SERVICE && (
+              <>
+                <div className="cf">
+                  <label htmlFor={`${idPrefix}-pieces`}>Nombre de pièces concernées (facultatif)</label>
+                  <input
+                    type="text"
+                    id={`${idPrefix}-pieces`}
+                    name="pieces_diogene"
+                    placeholder="Ex. 3 pièces"
+                    inputMode="numeric"
+                  />
+                </div>
+                <div className="cf">
+                  <label htmlFor={`${idPrefix}-etage`}>Étage / ascenseur (facultatif)</label>
+                  <input
+                    type="text"
+                    id={`${idPrefix}-etage`}
+                    name="etage_ascenseur"
+                    placeholder="Ex. 3e sans ascenseur"
+                  />
+                </div>
+              </>
+            )}
             <div className="cf">
               <label htmlFor={`${idPrefix}-ville`}>Ville ou code postal *</label>
               <input
@@ -262,16 +318,47 @@ export default function DevisForm({
             <div className="form-row">
               <div className="cf">
                 <label htmlFor={`${idPrefix}-nom`}>Votre nom *</label>
-                <input type="text" id={`${idPrefix}-nom`} name="nom" placeholder="Jean Dupont" required autoComplete="name" />
+                <input
+                  type="text"
+                  id={`${idPrefix}-nom`}
+                  name="nom"
+                  placeholder="Jean Dupont"
+                  required
+                  autoComplete="name"
+                />
               </div>
               <div className="cf">
                 <label htmlFor={`${idPrefix}-tel`}>Téléphone *</label>
-                <input type="tel" id={`${idPrefix}-tel`} name="tel" placeholder="06 XX XX XX XX" required autoComplete="tel" />
+                <input
+                  type="tel"
+                  id={`${idPrefix}-tel`}
+                  name="tel"
+                  placeholder="06 66 90 39 61"
+                  required
+                  autoComplete="tel"
+                  aria-invalid={phoneError ? "true" : undefined}
+                  aria-describedby={phoneError ? `${idPrefix}-tel-error` : undefined}
+                  onBlur={validatePhoneField}
+                  onChange={() => {
+                    if (phoneError) validatePhoneField();
+                  }}
+                />
+                {phoneError && (
+                  <p className="cf-field-error" id={`${idPrefix}-tel-error`} role="alert">
+                    {phoneError}
+                  </p>
+                )}
               </div>
             </div>
             <div className="cf">
               <label htmlFor={`${idPrefix}-email`}>Email</label>
-              <input type="email" id={`${idPrefix}-email`} name="email" placeholder="votre@email.fr" autoComplete="email" />
+              <input
+                type="email"
+                id={`${idPrefix}-email`}
+                name="email"
+                placeholder="votre@email.fr"
+                autoComplete="email"
+              />
             </div>
             <div className="cf">
               <label htmlFor={`${idPrefix}-surface`}>Surface approximative (facultatif)</label>
@@ -294,12 +381,15 @@ export default function DevisForm({
                 ← Retour
               </button>
               <button type="submit" className="btn-submit" disabled={status === "loading"}>
-                {status === "loading" ? "Envoi en cours…" : "Recevoir mon devis gratuit sous 24 h"}
+                {status === "loading" ? "Envoi en cours…" : "Recevoir mon devis sous 24 h"}
               </button>
             </div>
-            <p className="cf-note">
-              {site.owner} vous rappelle sous 24 h. Gratuit, sans engagement. Vos informations restent confidentielles.
-            </p>
+            <div className="cf-social-proof">
+              <p className="cf-social-rating">{ratingLine}</p>
+              <blockquote className="cf-social-quote">
+                {formSocialProof.excerpt} — {formSocialProof.author}
+              </blockquote>
+            </div>
           </div>
         )}
       </form>

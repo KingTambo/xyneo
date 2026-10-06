@@ -1,6 +1,7 @@
 import { type ZonePageData } from "@/data/pages";
 import { site } from "@/data/site";
 import Breadcrumb from "./Breadcrumb";
+import CtaPair from "./CtaPair";
 import InnerPageHero from "./InnerPageHero";
 import PageDevisSection from "./PageDevisSection";
 
@@ -70,12 +71,7 @@ export default function ZonePageContent({ page }: ZonePageContentProps) {
             <p style={{ fontSize: ".85rem", color: "#6b6b6b", marginBottom: "12px" }}>
               Décrivez votre besoin, nous vous rappelons sous 24 h.
             </p>
-            <a href="#devis" className="btn-or" style={{ display: "block", textAlign: "center" }}>
-              Devis gratuit
-            </a>
-            <a href={`tel:${site.phoneTel}`} className="sidebar-tel">
-              📞 {site.phone}
-            </a>
+            <CtaPair formHref="#devis" />
           </div>
           <div className="sidebar-box">
             <h4>Communes voisines ({page.department})</h4>

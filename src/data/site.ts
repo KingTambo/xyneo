@@ -6,6 +6,9 @@ export const site = {
   email: "contact@xyneo.fr",
   address: "1 rue Alfred Bertholet, 01000 Bourg-en-Bresse",
   owner: "Abel Ringuet",
+  /** Affichage public — M. + nom de famille (sans prénom) */
+  ownerFormal: "M. Ringuet",
+  ownerRole: "gérant",
   since: "2018",
   rating: "4.9",
   reviews: "29",
@@ -25,7 +28,7 @@ export const services = [
   {
     href: "/nettoyage-de-fin-de-chantier/",
     imgClass: "sc1",
-    badge: "À partir de 600€",
+    badge: "À partir de 600 €",
     title: "Nettoyage de fin de chantier",
     tagline: "Après travaux, avant réception (OPR) : poussières fines, vitres, sols, sanitaires.",
     comprisTitle: "Compris dans votre prestation fin de chantier",
@@ -114,12 +117,18 @@ export const navLinks = [
   { href: "/contactez-nous/", label: "Contact" },
 ];
 
-export const whyItems = [
-  { icon: "👤", title: "Un interlocuteur dédié", text: "Abel vous accompagne du premier contact à la fin de l'intervention, avec une équipe sur le terrain." },
-  { icon: "🕐", title: "Interventions 7j/7", text: "De 7h30 à 21h, y compris le week-end — pour tenir votre planning de réception ou de relocation." },
-  { icon: "🚛", title: "Déchets évacués", text: "Encombrants et déchets de chantier évacués lorsque la prestation le prévoit." },
-  { icon: "📋", title: "Devis sur place", text: "Visite gratuite et devis détaillé avant intervention." },
+/** 3 engagements — accueil (promesses à valider par le client) */
+export const commitments = [
+  "Devis écrit sous 24 h, après visite gratuite sur place",
+  "Intervention possible sous 72 h, week-end compris, pour tenir votre date de réception ou d'état des lieux",
+  "Logement rendu prêt à livrer ou à relouer. S'il manque quelque chose, on revient gratuitement.",
 ];
+
+/** Extrait d'avis sous le formulaire — Cécile Maussang (Google) */
+export const formSocialProof = {
+  excerpt: "« Intervention au top… le nettoyage de mon appart après travaux est nickel. »",
+  author: "Cécile M.",
+};
 
 /** Pré-remplissage formulaire depuis ?profil= */
 export const profilePresets: Record<string, { clientType: string; service: string }> = {
@@ -196,6 +205,26 @@ export const testimonials = [
   { img: "/img/review-7.webp", initials: "VP", name: "Véronique Perrier", city: "Ain", text: "« Mon canapé a reçu de l'urine de chat hier matin, monsieur est venu dans l'après-midi ! Conseil et nettoyage rapide avec traitement anti-odeur. Le canapé est comme neuf. Merci. »", tag: "Nettoyage canapé" },
   { img: "/img/review-8.webp", initials: "JV", name: "Jimmy Verne", city: "Ain", text: "« Très professionnel, canapé et chaises revenus comme avant. Il prend le temps de faire son travail. Je recommande à 100 %. »", tag: "Nettoyage textile" },
 ];
+
+export type TestimonialFilterId = "all" | "fin-chantier" | "remise" | "textile";
+
+export const testimonialFilters: { id: TestimonialFilterId; label: string }[] = [
+  { id: "all", label: "Tous" },
+  { id: "fin-chantier", label: "Fin de chantier" },
+  { id: "remise", label: "Remise en état" },
+  { id: "textile", label: "Textile" },
+];
+
+/** Chantiers récents — légendes et photos à fournir par le client */
+export const recentChantiers = [
+  { id: 1, legend: "[Type] · [Ville] · [m²] · réalisé en [durée]" },
+  { id: 2, legend: "[Type] · [Ville] · [m²] · réalisé en [durée]" },
+  { id: 3, legend: "[Type] · [Ville] · [m²] · réalisé en [durée]" },
+];
+
+export const proReference = {
+  text: "Fin de chantier — [X] logements à [ville], livrés avant la réception [À FOURNIR]",
+};
 
 export const beforeAfter = [
   { src: "/img/avant-apres-1.webp", alt: "Résultat nettoyage fin de chantier — Xyneo" },
@@ -352,8 +381,9 @@ export const homepagePricingBlocks = [
     title: "Nettoyage de fin de chantier",
     href: "/nettoyage-de-fin-de-chantier/",
     rows: [
-      ["Appartement / maison", "à partir de 600 €"],
-      ["Selon surface et état", "sur devis"],
+      ["T1–T2", "[X–Y] € [À VALIDER]"],
+      ["T3–T4", "[X–Y] € [À VALIDER]"],
+      ["Maison", "sur devis"],
       ["Visite et devis sur place", "Gratuit", true],
     ],
   },

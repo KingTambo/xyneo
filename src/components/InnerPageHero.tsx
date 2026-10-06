@@ -1,12 +1,21 @@
 import { site } from "@/data/site";
+import CtaPair from "./CtaPair";
 
 type InnerPageHeroProps = {
   title: string;
   subtitle: string;
   badges?: string[];
+  formHref?: string;
+  variant?: "default" | "discreet";
 };
 
-export default function InnerPageHero({ title, subtitle, badges }: InnerPageHeroProps) {
+export default function InnerPageHero({
+  title,
+  subtitle,
+  badges,
+  formHref = "#devis",
+  variant = "default",
+}: InnerPageHeroProps) {
   return (
     <section className="page-hero">
       <div className="section-wrap">
@@ -21,14 +30,7 @@ export default function InnerPageHero({ title, subtitle, badges }: InnerPageHero
         )}
         <h1>{title}</h1>
         <p className="sub">{subtitle}</p>
-        <div className="hero-btns">
-          <a href="#devis" className="btn-or">
-            Demander un devis gratuit
-          </a>
-          <a href={`tel:${site.phoneTel}`} className="btn-wh">
-            📞 {site.phone}
-          </a>
-        </div>
+        <CtaPair formHref={formHref} variant={variant} />
         <div className="page-stats">
           <div className="stat">
             <strong>{site.rating} ★</strong>

@@ -1,16 +1,21 @@
 import { site } from "@/data/site";
+import CtaPair from "./CtaPair";
 import DevisForm from "./DevisForm";
 
 type PageDevisSectionProps = {
   pageSource: string;
   title?: string;
   subtitle?: string;
+  defaultService?: string;
+  variant?: "default" | "discreet";
 };
 
 export default function PageDevisSection({
   pageSource,
   title = "Un devis gratuit sous 24 h",
   subtitle = "Décrivez votre besoin et recevez une estimation transparente, sans engagement.",
+  defaultService = "",
+  variant = "default",
 }: PageDevisSectionProps) {
   return (
     <section className="page-devis-sec" id="devis" aria-labelledby="devis-h2">
@@ -25,11 +30,13 @@ export default function PageDevisSection({
               <span className="devis-trust-item">✓ Sans engagement</span>
               <span className="devis-trust-item">✓ {site.region}</span>
             </div>
-            <a href={`tel:${site.phoneTel}`} className="cta-tel" style={{ marginTop: "20px" }}>
-              📞 {site.phone}
-            </a>
+            <CtaPair formHref="#devis" variant={variant} className="devis-text-cta" />
           </div>
-          <DevisForm idPrefix="page-cf" pageSource={pageSource} />
+          <DevisForm
+            idPrefix="page-cf"
+            pageSource={pageSource}
+            defaultService={defaultService}
+          />
         </div>
       </div>
     </section>

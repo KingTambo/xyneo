@@ -21,7 +21,7 @@ function buildZoneContent(city: string, postalCode: string, department: string):
         h2: `Entreprise de nettoyage à ${city}`,
         paragraphs: [
           `${site.name}, entreprise locale basée à ${site.city}, intervient à ${city} (${postalCode}) ${deptPhrase}. Particuliers, agences immobilières, entreprises du BTP, syndics et professionnels : nous nous déplaçons sur place pour évaluer votre besoin et établir un devis gratuit sous 24 h.`,
-          `Que vous ayez besoin d'un nettoyage de fin de chantier, d'une remise en état locative avant état des lieux, d'une intervention Diogène ou d'un nettoyage textile à domicile, ${site.owner} et son équipe adaptent chaque prestation à votre calendrier.`,
+          `Que vous ayez besoin d'un nettoyage de fin de chantier, d'une remise en état locative avant état des lieux, d'une intervention Diogène ou d'un nettoyage textile à domicile, ${site.ownerFormal} et son équipe adaptent chaque prestation à votre calendrier.`,
         ],
       },
       {
@@ -45,7 +45,7 @@ function buildZoneContent(city: string, postalCode: string, department: string):
           `Avec ${site.reviews} avis Google et une note de ${site.rating}/5, ${site.name} est l'interlocuteur de confiance pour vos chantiers et logements à ${city}. Déplacement gratuit, devis transparent et intervention ${site.hours.toLowerCase()}.`,
         ],
         list: [
-          `Entreprise locale — ${site.owner}`,
+          `Entreprise locale — ${site.ownerFormal}`,
           "Devis gratuit sous 24 h",
           "Intervention rapide et planifiée",
           "Matériel professionnel (autolaveuse, injection-extraction…)",

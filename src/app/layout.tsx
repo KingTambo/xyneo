@@ -29,9 +29,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="fr" className={`${inter.variable} ${outfit.variable}`}>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: "window.dataLayer=window.dataLayer||[];" }} />
         <link rel="stylesheet" href="/css/style.css" />
         <link rel="stylesheet" href="/css/xyneo-theme.css" />
         <link rel="icon" href="/img/xyneo-logo.webp" />
+        <link rel="preload" as="image" href="/img/hero.webp" type="image/webp" />
       </head>
       <body>
         {children}

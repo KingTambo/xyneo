@@ -1,4 +1,5 @@
 import { featuredZones, footerServices, meshLinks, site, socialLinks } from "@/data/site";
+import ClientPlaceholder from "./ClientPlaceholder";
 
 export default function Footer() {
   const footerZoneTags = featuredZones.map((z) => {
@@ -13,7 +14,15 @@ export default function Footer() {
         <div className="footer-brand">
           <div className="footer-logo-wrap">
             <a href="/">
-              <img src="/img/xyneo-logo.webp" alt={site.name} className="footer-logo-img" loading="lazy" style={{ filter: "brightness(0) invert(1)" }} />
+              <img
+                src="/img/xyneo-logo.webp"
+                alt={site.name}
+                className="footer-logo-img"
+                width={120}
+                height={44}
+                loading="lazy"
+                style={{ filter: "brightness(0) invert(1)" }}
+              />
             </a>
             <div className="f-brand-text">
               <strong>{site.name}</strong>
@@ -23,11 +32,23 @@ export default function Footer() {
           <p className="f-brand-desc">
             Nettoyage professionnel à {site.city} depuis {site.since} — fin de chantier, remise en état et Diogène dans l&apos;Ain, le Rhône et la Saône-et-Loire.
           </p>
-          {site.siret ? (
-            <p className="f-legal-line">
-              {site.legalName} · SIRET {site.siret}
-            </p>
-          ) : null}
+          <p className="f-legal-line">
+            SIRET{" "}
+            {site.siret ? (
+              site.siret
+            ) : (
+              <ClientPlaceholder>[À FOURNIR]</ClientPlaceholder>
+            )}{" "}
+            ·{" "}
+            {site.siret && site.legalName ? (
+              site.legalName
+            ) : (
+              <ClientPlaceholder>[Raison sociale À FOURNIR]</ClientPlaceholder>
+            )}
+          </p>
+          <p className="f-legal-line">
+            <a href="/mentions-legales/">Mentions légales</a>
+          </p>
           <p className="f-legal-line">
             <a href={site.googleReviewsUrl} target="_blank" rel="noopener noreferrer">
               Voir nos {site.reviews} avis Google →

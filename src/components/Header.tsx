@@ -16,7 +16,14 @@ export default function Header() {
       <nav aria-label="Navigation principale">
         <div className="nav-inner">
           <a href="/" className="logo" aria-label={`Accueil ${site.name}`}>
-            <img className="logo-img" src="/img/xyneo-logo.webp" alt="" height={44} loading="eager" />
+            <img
+              className="logo-img"
+              src="/img/xyneo-logo.webp"
+              alt=""
+              width={120}
+              height={44}
+              loading="eager"
+            />
             <div className="logo-text">
               <strong>{site.name}</strong>
               <span>{site.tagline}</span>
@@ -52,19 +59,19 @@ export default function Header() {
               ),
             )}
             <li role="none">
-              <a href="/#devis" className="nav-cta">
-                Mon devis en 24 h
+              <a href="/#hero-form" className="nav-cta">
+                Recevoir mon devis sous 24 h
               </a>
             </li>
           </ul>
         </div>
       </nav>
-      <div className="mob-bar" aria-label="Actions rapides">
+      <div className="mob-bar" id="mob-bar" aria-label="Actions rapides">
         <a href={`tel:${site.phoneTel}`} className="mob-tel">
           📞 {site.phone}
         </a>
-        <a href="/#devis" className="mob-dev">
-          Mon devis en 24 h
+        <a href="/#hero-form" className="mob-dev">
+          Recevoir mon devis sous 24 h
         </a>
       </div>
     </>

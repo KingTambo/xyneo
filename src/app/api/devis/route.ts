@@ -12,6 +12,9 @@ type DevisPayload = {
   surface?: string;
   urgence?: string;
   message?: string;
+  date_reception?: string;
+  pieces_diogene?: string;
+  etage_ascenseur?: string;
   page_source?: string;
   utm_source?: string;
   utm_medium?: string;
@@ -31,6 +34,9 @@ function formatAdminEmail(data: DevisPayload) {
     `Prestation : ${data.service || "—"}`,
     `Surface : ${data.surface || "—"}`,
     `Quand : ${data.urgence || "—"}`,
+    `Date réception prévue : ${data.date_reception || "—"}`,
+    `Pièces Diogène : ${data.pieces_diogene || "—"}`,
+    `Étage / ascenseur : ${data.etage_ascenseur || "—"}`,
     `Message : ${data.message || "—"}`,
     "",
     `Page : ${data.page_source || "—"}`,
@@ -45,7 +51,7 @@ function formatProspectEmail(data: DevisPayload) {
     `Bonjour ${data.nom || ""},`.trim(),
     "",
     "Nous avons bien reçu votre demande de devis.",
-    `${site.owner} ou son équipe vous rappelle sous 24 h au numéro indiqué.`,
+    `${site.ownerFormal} ou son équipe vous rappelle sous 24 h au numéro indiqué.`,
     "",
     "Pour nous envoyer des photos de votre logement ou chantier, répondez à cet email ou écrivez-nous par SMS/WhatsApp.",
     "",
