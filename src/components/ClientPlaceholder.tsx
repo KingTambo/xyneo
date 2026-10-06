@@ -6,10 +6,9 @@ type ClientPlaceholderProps = {
   block?: boolean;
 };
 
-/** Emplacement client — bordure pointillée, sans inventer de contenu */
+/** Emplacement client — bordure pointillée, sans inventer de contenu (toujours span pour HTML valide dans p, li, etc.) */
 export default function ClientPlaceholder({ children, className = "", block = false }: ClientPlaceholderProps) {
-  const Tag = block ? "div" : "span";
   return (
-    <Tag className={`ph-slot${block ? " ph-slot-block" : ""}${className ? ` ${className}` : ""}`}>{children}</Tag>
+    <span className={`ph-slot${block ? " ph-slot-block" : ""}${className ? ` ${className}` : ""}`}>{children}</span>
   );
 }

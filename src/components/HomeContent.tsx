@@ -166,9 +166,9 @@ export default function HomeContent() {
                     <figcaption className="chantier-label">Après</figcaption>
                   </figure>
                 </div>
-                <p className="chantier-legend">
+                <div className="chantier-legend">
                   <ClientPlaceholder block>{chantier.legend}</ClientPlaceholder>
-                </p>
+                </div>
               </article>
             ))}
           </div>
