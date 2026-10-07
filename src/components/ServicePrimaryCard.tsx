@@ -71,10 +71,17 @@ export default function ServicePrimaryCard({ service }: { service: Service }) {
     );
   }
 
+  const pendingPhoto = "pendingPhoto" in service && service.pendingPhoto;
+
   return (
     <a href={service.href} className="sc-link">
       <article className="sc">
-        {"imageSrc" in service && service.imageSrc ? (
+        {pendingPhoto ? (
+          <div className="sc-img sc-img-pending" aria-label={service.title}>
+            <span className="sc-img-pending-label">Photo de chantier à venir</span>
+            <span className="sc-badge">{service.badge}</span>
+          </div>
+        ) : "imageSrc" in service && service.imageSrc ? (
           <div className="sc-img sc-img-photo">
             <img src={service.imageSrc} alt={service.title} loading="lazy" width={600} height={360} />
             <span className="sc-badge">{service.badge}</span>

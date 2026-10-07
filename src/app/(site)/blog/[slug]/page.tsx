@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   if (!post) return { title: "Article introuvable" };
 
   return {
-    title: `${post.title} | Blog Xyneo`,
+    title: `${post.title} | ${site.name}`,
     description: post.excerpt,
   };
 }

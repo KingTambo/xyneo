@@ -12,8 +12,7 @@ export const site = {
   rating: "5.0",
   reviews: "2",
   experience: "",
-  region: "Bourg-en-Bresse et 30 km autour",
-  zoneRadiusKm: 30,
+  region: "Bourg-en-Bresse et communes voisines dans l'Ain",
   department: "01",
   city: "Bourg-en-Bresse",
   hours: "Lun–dim 7h–22h · Rappel sous 24 h ouvrées",
@@ -23,7 +22,7 @@ export const site = {
   googleMapsUrl: "https://www.google.com/maps/place/OAO+propret%C3%A9/@46.204677,5.2259015,17z/data=!4m6!3m5!1s0x47f35322c6d74305:0x8c23ba1a9874f6aa!8m2!3d46.204677!4d5.2259015!16s%2Fg%2F11nvt8r6r6",
   logoSrc: "/img/oao-logo.png",
   heroPhotoSrc: "/img/hero.jpg",
-  teamPhotoSrc: "/img/team-vitres.jpg",
+  teamPhotoSrc: "/img/realisation-2.jpg",
   siret: "",
   legalName: "OAO Propreté",
 };
@@ -32,7 +31,7 @@ export const services = [
   {
     href: "/nettoyage-de-fin-de-chantier/",
     imgClass: "sc1",
-    imageSrc: "/img/realisation-2.jpg",
+    pendingPhoto: true,
     badge: "À partir de 600 € HT",
     title: "Nettoyage de fin de chantier",
     tagline:
@@ -63,7 +62,7 @@ export const services = [
   {
     href: "/nettoyage-vitres-et-baies-vitrees/",
     imgClass: "sc8",
-    imageSrc: "/img/hero.jpg",
+    imageSrc: "/img/realisation-3.jpg",
     badge: "Sur devis",
     title: "Nettoyage vitres & baies vitrées",
     tagline:
@@ -195,7 +194,7 @@ export const proDossierItems = [
   "Attestation RC Pro",
   "Attestation de vigilance URSSAF",
   "Kbis",
-  "SIRET",
+  ...(site.siret ? [`SIRET ${site.siret}`] : []),
 ];
 
 /** Extrait d'avis sous le formulaire — Century 21 (Google) */
@@ -257,9 +256,9 @@ export const primaryServices = [
 export const serviceAreas = [
   "Bourg-en-Bresse",
   "Montrevel-en-Bresse",
-  "Oyonnax",
-  "Ambérieu-en-Bugey",
-  "Belley",
+  "Viriat",
+  "Péronnas",
+  "Saint-Denis-lès-Bourg",
 ];
 
 /** Pages zones SEO — à compléter */
@@ -269,31 +268,30 @@ export const showPortfolioSection = true;
 
 export const zones: { href: string; label: string }[] = [];
 
-/** Réalisations — photos Google Business */
+/** Réalisations — photos Google Business (1 photo = 1 usage sur la page) */
 export const realisations = [
   {
     id: 1,
-    imageSrc: "/img/hero.jpg",
-    alt: "Agent OAO Propreté nettoyant une devanture vitrée à Bourg-en-Bresse",
-    legend: "Nettoyage vitres · Devanture commerciale · Bourg-en-Bresse",
+    pending: true,
+    legend: "Fin de chantier — photos avant/après publiées dès la prochaine réception",
   },
   {
     id: 2,
-    imageSrc: "/img/realisation-1.jpg",
-    alt: "Nettoyage vitrine agence immobilière par OAO Propreté",
-    legend: "Nettoyage vitres · Agence immobilière · Bourg-en-Bresse",
-  },
-  {
-    id: 3,
-    imageSrc: "/img/realisation-2.jpg",
-    alt: "Entretien de bureaux par OAO Propreté",
-    legend: "Entretien bureaux · Sols et postes de travail · Bourg-en-Bresse",
-  },
-  {
-    id: 4,
     imageSrc: "/img/realisation-3.jpg",
     alt: "Nettoyage vitrine commerce par OAO Propreté",
     legend: "Nettoyage vitrine · Commerce · Ain",
+  },
+  {
+    id: 3,
+    imageSrc: "/img/realisation-1.jpg",
+    alt: "Nettoyage vitrine agence immobilière par OAO Propreté",
+    legend: "Nettoyage vitres · Agence immobilière · Montrevel-en-Bresse",
+  },
+  {
+    id: 4,
+    imageSrc: "/img/realisation-2.jpg",
+    alt: "Entretien de bureaux par OAO Propreté",
+    legend: "Entretien bureaux · Sols et postes de travail · Bourg-en-Bresse",
   },
 ];
 
@@ -307,7 +305,7 @@ export const testimonials = [
     tag: "Commerce / Agence",
   },
   {
-    img: "/img/hero.jpg",
+    img: "/img/realisation-3.jpg",
     initials: "KM",
     name: "Kevin MOITEAUX",
     city: "Bourg-en-Bresse",
@@ -466,7 +464,7 @@ export const faqs = [
   },
   {
     q: "Dans quelles communes intervenez-vous ?",
-    a: `${site.name} intervient à ${site.region} : Bourg-en-Bresse, Montrevel-en-Bresse, Oyonnax, Ambérieu-en-Bugey, Belley et communes voisines. Votre ville n'est pas listée ? Appelez-nous.`,
+    a: `${site.name} intervient à ${site.region} : ${serviceAreas.join(", ")}. Votre ville n'est pas listée ? Appelez-nous au ${site.phone}.`,
   },
   {
     q: "Proposez-vous le nettoyage Diogène avec discrétion ?",
@@ -576,7 +574,9 @@ export const meshLinks: { href: string; label: string }[] = [];
 export const socialLinks: { href: string; label: string }[] = [];
 
 /** Galerie avant/après — pages services (photos Google) */
-export const beforeAfter = realisations.map((r) => ({
-  src: r.imageSrc,
-  alt: r.alt,
-}));
+export const beforeAfter = realisations
+  .filter((r) => r.imageSrc)
+  .map((r) => ({
+    src: r.imageSrc!,
+    alt: r.alt ?? r.legend,
+  }));

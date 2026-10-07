@@ -1701,13 +1701,24 @@ body {
   max-width: 100%;
 }
 
-/* Hero mobile : ordre DOM = H1 → activité → formulaire → reste */
+/* Hero mobile : ordre DOM = H1 → photo → formulaire → reste */
 @media (max-width: 767px) {
   .hero-split {
     display: flex;
     flex-direction: column;
     padding: 8px 16px 20px;
     gap: 8px;
+  }
+  .hero-photo {
+    width: 100%;
+    align-self: stretch;
+    margin: 4px 0 8px;
+  }
+  .hero-photo img {
+    width: 100%;
+    max-height: min(52vw, 280px);
+    min-height: 180px;
+    object-fit: cover;
   }
   .hero-form-col {
     position: static;
@@ -2374,6 +2385,40 @@ body {
   top: 12px;
   left: 12px;
   z-index: 1;
+}
+.sc-img-pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  background: linear-gradient(135deg, var(--surface-muted) 0%, var(--badge-bg) 100%);
+  border: 1px dashed var(--card-border);
+  position: relative;
+}
+.sc-img-pending-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 16px;
+}
+.sc-img-pending .sc-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+.realisation-card-pending {
+  border-style: dashed;
+}
+.realisation-pending-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  background: linear-gradient(135deg, var(--surface-muted) 0%, var(--badge-bg) 100%);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
 }
 .realisations-grid {
   display: grid;

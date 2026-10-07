@@ -2,6 +2,7 @@ import ServicePageContent from "@/components/ServicePageContent";
 import StaticPageContent from "@/components/StaticPageContent";
 import ZonePageContent from "@/components/ZonePageContent";
 import { getAllSlugs, getPageBySlug } from "@/data/pages";
+import { site } from "@/data/site";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!page) return { title: "Page introuvable" };
 
   return {
-    title: `${page.title} | Xyneo`,
+    title: `${page.title} | ${site.name}`,
     description: page.description,
   };
 }

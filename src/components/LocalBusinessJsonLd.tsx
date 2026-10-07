@@ -1,4 +1,4 @@
-import { site } from "@/data/site";
+import { serviceAreas, site } from "@/data/site";
 
 export default function LocalBusinessJsonLd() {
   const jsonLd = {
@@ -29,20 +29,10 @@ export default function LocalBusinessJsonLd() {
         closes: "22:00",
       },
     ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: site.rating,
-      reviewCount: site.reviews,
-    },
-    areaServed: {
-      "@type": "GeoCircle",
-      geoMidpoint: {
-        "@type": "GeoCoordinates",
-        latitude: 46.204677,
-        longitude: 5.2259015,
-      },
-      geoRadius: `${site.zoneRadiusKm * 1000}`,
-    },
+    areaServed: serviceAreas.map((city) => ({
+      "@type": "City",
+      name: city,
+    })),
     sameAs: [site.googleReviewsUrl],
   };
 

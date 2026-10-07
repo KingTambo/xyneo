@@ -66,8 +66,17 @@ export default function StaticPageContent({ page }: StaticPageContentProps) {
             <div className="section-wrap">
               <div className="realisations-grid">
                 {realisations.map((item) => (
-                  <article className="realisation-card" key={item.id}>
-                    <img src={item.imageSrc} alt={item.alt} loading="lazy" width={600} height={400} />
+                  <article
+                    className={`realisation-card${item.pending ? " realisation-card-pending" : ""}`}
+                    key={item.id}
+                  >
+                    {item.pending ? (
+                      <div className="realisation-pending-slot" aria-hidden="true">
+                        <span>Avant / après</span>
+                      </div>
+                    ) : (
+                      <img src={item.imageSrc} alt={item.alt} loading="lazy" width={600} height={400} />
+                    )}
                     <p className="realisation-legend">{item.legend}</p>
                   </article>
                 ))}
@@ -164,7 +173,7 @@ export default function StaticPageContent({ page }: StaticPageContentProps) {
                   width="100%"
                   height="400"
                   loading="lazy"
-                  title="Carte zones d'intervention Xyneo"
+                  title={`Carte zones d'intervention ${site.name}`}
                   style={{ border: 0, borderRadius: "10px" }}
                   referrerPolicy="no-referrer-when-downgrade"
                   allowFullScreen
@@ -247,7 +256,7 @@ export default function StaticPageContent({ page }: StaticPageContentProps) {
                 Tél : {site.phone} — Email : {site.email}
               </p>
               <h2>Hébergement</h2>
-              <p>Site hébergé par le prestataire d&apos;hébergement du domaine xyneo.fr.</p>
+              <p>Site hébergé par le prestataire d&apos;hébergement du domaine oaoproprete.fr.</p>
               <h2>Propriété intellectuelle</h2>
               <p>
                 L&apos;ensemble du contenu de ce site (textes, images, logo) est la propriété de {site.name} et ne peut être
