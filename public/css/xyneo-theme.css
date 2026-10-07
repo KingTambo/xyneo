@@ -1701,33 +1701,17 @@ body {
   max-width: 100%;
 }
 
-/* Hero mobile : H1 → sous-titre → activité → formulaire → reste */
+/* Hero mobile : ordre DOM = H1 → activité → formulaire → reste */
 @media (max-width: 767px) {
-  .hero-main {
-    display: contents;
-  }
   .hero-split {
     display: flex;
     flex-direction: column;
     padding: 8px 16px 20px;
     gap: 8px;
   }
-  .hero-intro {
-    order: 1;
-  }
-  .hero-segments-block {
-    order: 2;
-  }
   .hero-form-col {
-    order: 3;
     position: static;
     padding: 12px 14px;
-  }
-  .hero-ratings,
-  .hero-badges,
-  .hero-btns,
-  .hero-google-link {
-    order: 4;
   }
   .hero-form-col .cf-wrap h3,
   .hero-form-col .cf-steps {
@@ -1773,16 +1757,34 @@ body {
   .hero-split {
     display: grid;
     grid-template-columns: 1fr min(400px, 40%);
+    grid-template-areas:
+      "ratings form"
+      "intro form"
+      "segments form"
+      "badges form"
+      "btns form";
     padding: 12px 28px 24px;
     gap: 20px;
     align-items: start;
   }
-  .hero-main {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  .hero-ratings {
+    grid-area: ratings;
   }
-  .hero-main-block,
+  .hero-intro {
+    grid-area: intro;
+  }
+  .hero-segments-block {
+    grid-area: segments;
+  }
+  .hero-badges {
+    grid-area: badges;
+  }
+  .hero-btns {
+    grid-area: btns;
+  }
+  .hero-form-col {
+    grid-area: form;
+  }
   .hero-ratings,
   .hero-badges,
   .hero-segments-wrap,
