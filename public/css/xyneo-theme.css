@@ -1701,7 +1701,7 @@ body {
   max-width: 100%;
 }
 
-/* Hero mobile : H1 → sous-titre → formulaire → reste */
+/* Hero mobile : H1 → sous-titre → activité → formulaire → reste */
 @media (max-width: 767px) {
   .hero-main {
     display: contents;
@@ -1715,17 +1715,19 @@ body {
   .hero-intro {
     order: 1;
   }
-  .hero-form-col {
+  .hero-segments-block {
     order: 2;
+  }
+  .hero-form-col {
+    order: 3;
     position: static;
     padding: 12px 14px;
   }
   .hero-ratings,
   .hero-badges,
-  .hero-segments-block,
   .hero-btns,
   .hero-google-link {
-    order: 3;
+    order: 4;
   }
   .hero-form-col .cf-wrap h3,
   .hero-form-col .cf-steps {
