@@ -37,7 +37,12 @@ export default function HomeContent() {
         />
         <div className="hero-split">
           <div className="hero-main">
-            <div className="hero-ratings hero-main-block">
+            <a
+              href={site.googleReviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-ratings hero-ratings-link hero-main-block"
+            >
               <div className="hero-ratings-portrait">
                 <PhotoPlaceholder variant="portrait" />
               </div>
@@ -46,8 +51,11 @@ export default function HomeContent() {
                   ★
                 </span>{" "}
                 {ratingDisplay}/5 · {site.reviews} avis Google · {site.owner}, {site.ownerRole}
+                <span className="hero-ratings-cta">
+                  Voir les {site.reviews} avis sur Google →
+                </span>
               </span>
-            </div>
+            </a>
             <div className="hero-intro hero-main-block">
               <h1 id="h1-hero">
                 Nettoyage après travaux, avant état des lieux ou logement encombré à {site.city}
