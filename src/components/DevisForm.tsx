@@ -183,23 +183,14 @@ export default function DevisForm({
 
       if (!res.ok) {
         setStatus("error");
-        setErrorMessage(
-          json.error ||
-            (site.phoneTel
-              ? `Envoi impossible. Appelez-nous au ${site.phone}.`
-              : `Envoi impossible. Écrivez-nous à ${site.email}.`),
-        );
+        setErrorMessage(json.error || "Envoi impossible. Appelez " + site.ownerFirst + " au " + site.phone);
         return;
       }
 
       router.push("/merci/");
     } catch {
       setStatus("error");
-      setErrorMessage(
-        site.phoneTel
-          ? `Connexion impossible. Appelez-nous au ${site.phone}.`
-          : `Connexion impossible. Écrivez-nous à ${site.email}.`,
-      );
+      setErrorMessage("Connexion impossible. Appelez " + site.ownerFirst + " au " + site.phone);
     }
   }
 

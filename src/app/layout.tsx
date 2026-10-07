@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import ClientScripts from "@/components/ClientScripts";
+import { site } from "@/data/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -16,9 +17,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "OAO Propreté — Nettoyage vitres, fin de chantier, bureaux",
-  description:
-    "OAO Propreté nettoie vos vitres, vos locaux après travaux et vos bureaux. Devis gratuit sous 24 h, sans engagement. Disponible du lundi au samedi.",
+  title: `Nettoyage fin de chantier & remise en état | ${site.name}`,
+  description: `${site.name}, nettoyage professionnel : fin de chantier, remise en état locative, Diogène. Devis gratuit sous 24 h.`,
 };
 
 export const viewport: Viewport = {

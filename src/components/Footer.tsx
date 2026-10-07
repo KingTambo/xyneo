@@ -8,6 +8,8 @@ export default function Footer() {
     return { href: z.href, label };
   });
 
+  const phoneHref = site.phoneTel ? `tel:${site.phoneTel}` : `mailto:${site.email}`;
+
   return (
     <footer>
       <div className="footer-inner">
@@ -15,29 +17,25 @@ export default function Footer() {
           <div className="footer-logo-wrap">
             <a href="/">
               {site.logoSrc ? (
-                <>
-                  <span className="footer-logo-badge">
-                    <img
-                      src={site.logoSrc}
-                      alt={site.name}
-                      className="footer-logo-img"
-                      width={200}
-                      height={48}
-                      loading="lazy"
-                    />
-                  </span>
-                  <span className="f-brand-tagline">{site.tagline}</span>
-                </>
-              ) : (
-                <div className="f-brand-text">
-                  <strong>{site.name}</strong>
-                  <span>{site.tagline}</span>
-                </div>
-              )}
+                <span className="footer-logo-badge">
+                  <img
+                    src={site.logoSrc}
+                    alt={site.name}
+                    className="footer-logo-img"
+                    width={200}
+                    height={48}
+                    loading="lazy"
+                  />
+                </span>
+              ) : null}
+              <div className="f-brand-text">
+                <strong>{site.name}</strong>
+                <span>{site.tagline}</span>
+              </div>
             </a>
           </div>
           <p className="f-brand-desc">
-            Nettoyage de vitres, fin de chantier et bureaux. Devis gratuit sous 24 h, sans engagement.
+            Nettoyage professionnel à {site.city} depuis {site.since} — fin de chantier, remise en état et Diogène dans l&apos;Ain, le Rhône et la Saône-et-Loire.
           </p>
           <p className="f-legal-line">
             SIRET{" "}
@@ -46,7 +44,12 @@ export default function Footer() {
             ) : (
               <ClientPlaceholder>[À FOURNIR]</ClientPlaceholder>
             )}{" "}
-            · {site.legalName}
+            ·{" "}
+            {site.siret && site.legalName ? (
+              site.legalName
+            ) : (
+              <ClientPlaceholder>[Raison sociale À FOURNIR]</ClientPlaceholder>
+            )}
           </p>
           <p className="f-legal-line">
             <a href="/mentions-legales/">Mentions légales</a>
@@ -59,16 +62,14 @@ export default function Footer() {
             </p>
           ) : null}
           <span className="f-contacts-label">Nos contacts</span>
-          {site.phoneTel ? (
-            <div className="f-contact-item">
-              <span className="f-contact-icon">📞</span>
-              <div className="f-contact-text">
-                <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
-                <br />
-                <span style={{ fontSize: ".78rem", color: "rgba(255,255,255,.45)" }}>{site.hours}</span>
-              </div>
+          <div className="f-contact-item">
+            <span className="f-contact-icon">📞</span>
+            <div className="f-contact-text">
+              <a href={phoneHref}>{site.phone}</a>
+              <br />
+              <span style={{ fontSize: ".78rem", color: "rgba(255,255,255,.45)" }}>{site.hours}</span>
             </div>
-          ) : null}
+          </div>
           <div className="f-contact-item">
             <span className="f-contact-icon">✉️</span>
             <div className="f-contact-text">
@@ -78,9 +79,7 @@ export default function Footer() {
           <div className="f-contact-item">
             <span className="f-contact-icon">📍</span>
             <div className="f-contact-text">
-              <address style={{ display: "inline" }}>
-                {site.address.startsWith("[") ? <ClientPlaceholder>{site.address}</ClientPlaceholder> : site.address}
-              </address>
+              <address style={{ display: "inline" }}>{site.address}</address>
             </div>
           </div>
           {socialLinks.length > 0 ? (
@@ -110,26 +109,38 @@ export default function Footer() {
               <a href="/nos-realisations/">Nos réalisations</a>
             </li>
             <li>
-              <a href="/contactez-nous/">Contactez-nous</a>
+              <a href="/blog/">Blog</a>
             </li>
             <li>
-              <a href="/#hero-form">Demander un devis</a>
+              <a href="/contactez-nous/">Contactez nous</a>
+            </li>
+            <li>
+              <a href="/#zones">Zones d&apos;intervention</a>
             </li>
           </ul>
         </div>
         <div className="footer-col">
-          <h4>Contact</h4>
-          <p style={{ fontSize: ".85rem", color: "rgba(255,255,255,.65)", lineHeight: 1.6 }}>
-            <a href={`mailto:${site.email}`} style={{ color: "inherit" }}>
-              {site.email}
+          <h4>Nous trouver</h4>
+          <div className="footer-map">
+            <iframe
+              src="https://maps.google.com/maps?q=46.2051,5.2258&z=14&output=embed&hl=fr"
+              width="100%"
+              height="180"
+              loading="lazy"
+              title={`Localisation ${site.name}`}
+              style={{ border: 0, borderRadius: "8px" }}
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+            <a
+              href="https://www.google.com/maps?q=46.2051,5.2258"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "block", marginTop: "8px", fontSize: ".78rem", color: "rgba(255,255,255,.55)", textAlign: "center" }}
+            >
+              Ouvrir dans Google Maps →
             </a>
-            <br />
-            {site.hours}
-            <br />
-            <a href={site.website} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,.55)" }}>
-              {site.website.replace(/^https?:\/\//, "")}
-            </a>
-          </p>
+          </div>
         </div>
       </div>
       {footerZoneTags.length > 0 ? (
@@ -140,6 +151,9 @@ export default function Footer() {
               {z.label}
             </a>
           ))}
+          <a href="/zones-intervention/" className="ztag ztag-more">
+            Toutes nos communes →
+          </a>
         </div>
       ) : null}
       {meshLinks.length > 0 ? (

@@ -7,9 +7,11 @@ import SectionCta from "./SectionCta";
 
 function matchesFilter(tag: string, filterId: TestimonialFilterId) {
   if (filterId === "all") return true;
-  if (filterId === "vitres") return /vitres/i.test(tag);
-  if (filterId === "fin-chantier") return /fin de chantier|chantier/i.test(tag);
-  if (filterId === "bureaux") return /bureaux/i.test(tag);
+  if (filterId === "fin-chantier") return tag === "Fin de chantier";
+  if (filterId === "remise") return /remise en état/i.test(tag);
+  if (filterId === "textile") {
+    return ["Nettoyage canapé", "Nettoyage textile", "Nettoyage moquette"].includes(tag);
+  }
   return true;
 }
 
@@ -74,7 +76,7 @@ export default function TestimonialSection() {
                 {site.rating}/5 sur Google — {site.reviews} avis
               </>
             ) : (
-              <>Avis clients</>
+              <>Avis clients vérifiés</>
             )}
           </h2>
           {hasReviews ? (

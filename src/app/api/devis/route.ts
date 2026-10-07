@@ -51,13 +51,12 @@ function formatProspectEmail(data: DevisPayload) {
     `Bonjour ${data.nom || ""},`.trim(),
     "",
     "Nous avons bien reçu votre demande de devis.",
-    "Nous revenons vers vous sous 24 h par email, avec une estimation claire.",
+    `${site.ownerFirst} ou son équipe vous rappelle sous 24 h au numéro indiqué.`,
     "",
-    "Pour nous envoyer des photos de vos locaux ou de votre chantier, répondez simplement à cet email.",
+    "Pour nous envoyer des photos de votre logement ou chantier, répondez à cet email ou écrivez-nous par SMS/WhatsApp.",
     "",
-    site.name,
+    `${site.name} — ${site.phone}`,
     site.email,
-    ...(site.phone ? [`${site.phone}`] : []),
   ].join("\n");
 }
 
@@ -113,9 +112,8 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            site.phone
-              ? `Envoi email non configuré. Ajoutez RESEND_API_KEY et DEVIS_TO_EMAIL sur Vercel, ou appelez le ${site.phone}.`
-              : `Envoi email non configuré. Ajoutez RESEND_API_KEY et DEVIS_TO_EMAIL sur Vercel, ou écrivez à ${site.email}.`,
+            "Envoi email non configuré. Ajoutez RESEND_API_KEY et DEVIS_TO_EMAIL sur Vercel, ou appelez le " +
+            site.phone,
         },
         { status: 503 },
       );
@@ -124,7 +122,7 @@ export async function POST(request: Request) {
     if (data.email?.trim()) {
       await sendViaResend({
         to: [data.email.trim()],
-        subject: `Demande reçue — ${site.name} vous répond sous 24 h`,
+        subject: `Demande reçue — ${site.name} vous rappelle sous 24 h`,
         text: formatProspectEmail(data),
         replyTo: site.email,
       });

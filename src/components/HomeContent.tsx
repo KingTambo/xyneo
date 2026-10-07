@@ -53,8 +53,7 @@ export default function HomeContent() {
                     <span className="stars" aria-hidden="true">
                       ★
                     </span>{" "}
-                    {ratingDisplay}/5 · {site.reviews} avis Google
-                    {site.owner ? ` · ${site.owner}, ${site.ownerRole}` : ""}
+                    {ratingDisplay}/5 · {site.reviews} avis Google · {site.owner}, {site.ownerRole}
                   </span>
                   <span className="hero-ratings-cta">
                     Voir les {site.reviews} avis sur Google →
@@ -62,27 +61,32 @@ export default function HomeContent() {
                 </span>
               </a>
             ) : (
-              <div className="hero-trust-badge hero-main-block">
-                <span className="badge badge-trust">Devis gratuit · Réponse sous 24 h · Sans engagement</span>
+              <div className="hero-ratings hero-main-block">
+                <div className="hero-ratings-portrait">
+                  <PhotoPlaceholder variant="portrait" />
+                </div>
+                <span className="hero-ratings-text">
+                  <ClientPlaceholder block>Avis Google · {site.owner} [À FOURNIR]</ClientPlaceholder>
+                </span>
               </div>
             )}
             <div className="hero-intro hero-main-block">
               <h1 id="h1-hero">
-                On enlève la <em>poussière</em>,<br />
-                vous gardez l&apos;<em>éclat</em>.
+                Nettoyage après travaux, avant état des lieux ou logement encombré à {site.city}
               </h1>
               <p className="hero-sub hero-sub-full">
-                {site.name} nettoie vos vitres, vos locaux après travaux et vos bureaux au quotidien. Décrivez votre
-                besoin, recevez un devis gratuit sous 24 h.
+                Votre chantier livré propre pour la réception, votre logement prêt à relouer, ou un logement très
+                encombré remis en état en toute discrétion. Devis gratuit sous 24 h, intervention {site.hours} dans
+                l&apos;Ain, le Rhône et la Saône-et-Loire.
               </p>
               <p className="hero-sub hero-sub-short">
-                Vitres, fin de chantier et bureaux — devis gratuit sous 24 h · {site.hours}
+                Chantier, relocation ou logement difficile — devis gratuit sous 24 h · {site.region}
               </p>
             </div>
             <div className="hero-badges hero-main-block">
-              <span className="badge">Devis gratuit sous 24 h</span>
-              <span className="badge">Matériel professionnel</span>
-              <span className="badge">{site.hours}</span>
+              <span className="badge">Devis écrit sous 24 h</span>
+              <span className="badge">Assuré RC Pro</span>
+              <span className="badge">7j/7</span>
             </div>
             <div className="hero-segments-block hero-main-block">
               <HeroSegments />
@@ -108,37 +112,36 @@ export default function HomeContent() {
           <ClientPlaceholder>[ASSUREUR À FOURNIR]</ClientPlaceholder>
           <span> · SIRET </span>
           <ClientPlaceholder>[À FOURNIR]</ClientPlaceholder>
-          {site.since ? <span> · Depuis {site.since}</span> : null}
-          <span> · {site.address}</span>
+          <span>
+            {" "}
+            · Depuis {site.since} · {site.address}
+          </span>
         </div>
       </div>
 
       <section className="services-sec" aria-labelledby="h2-svs-mini">
         <div className="section-wrap">
           <div className="sec-title">
-            <span className="pill">Nos prestations</span>
-            <h2 id="h2-svs-mini">Trois métiers, une seule exigence de netteté</h2>
-            <p>
-              Chaque surface a sa méthode. On adapte le matériel et les produits selon qu&apos;on nettoie du verre, un
-              chantier fraîchement livré, ou un bureau occupé toute la semaine.
-            </p>
+            <span className="pill">Nos prestations phares</span>
+            <h2 id="h2-svs-mini">
+              Votre chantier ou logement remis en état, du devis à la remise des clés — un seul interlocuteur
+            </h2>
+            <p>Fin de chantier, remise en état ou situation difficile — {site.region}</p>
           </div>
           <div className="services-grid services-grid-primary">
             {primaryServices.map((service) => (
               <ServicePrimaryCard key={service.title} service={service} />
             ))}
           </div>
-          {secondaryServiceLinks.length > 0 && (
-            <p className="services-also">
-              Aussi :{" "}
-              {secondaryServiceLinks.map((link, i) => (
-                <span key={link.href} className="services-also-item">
-                  {i > 0 && <span className="services-also-sep" aria-hidden="true"> · </span>}
-                  <a href={link.href}>{link.label}</a>
-                </span>
-              ))}
-            </p>
-          )}
+          <p className="services-also">
+            Aussi :{" "}
+            {secondaryServiceLinks.map((link, i) => (
+              <span key={link.href} className="services-also-item">
+                {i > 0 && <span className="services-also-sep" aria-hidden="true"> · </span>}
+                <a href={link.href}>{link.label}</a>
+              </span>
+            ))}
+          </p>
           <SectionCta formHref="#hero-form" />
         </div>
       </section>
@@ -198,6 +201,7 @@ export default function HomeContent() {
               <ul className="engagements-list">
                 {commitments.map((text) => (
                   <li className="engagement-item" key={text}>
+                    <ClientPlaceholder className="engagement-badge">[À VALIDER]</ClientPlaceholder>
                     <p>{text}</p>
                   </li>
                 ))}
@@ -212,29 +216,32 @@ export default function HomeContent() {
         <div className="section-wrap">
           <div className="sec-title">
             <span className="pill">Zones d&apos;intervention</span>
-            <h2 id="h2-zones">Zone d&apos;intervention</h2>
-            <p>
-              <ClientPlaceholder block>{site.region}</ClientPlaceholder> · Devis gratuit sous 24 h
-            </p>
+            <h2 id="h2-zones">On intervient chez vous : Ain, Rhône, Saône-et-Loire</h2>
+            <p>Intervention dans l&apos;Ain, le Rhône et la Saône-et-Loire · Devis gratuit sous 24 h</p>
           </div>
-          {featuredZones.length > 0 ? (
-            <>
-              <div className="zones-pills">
-                {featuredZones.map((zone) => (
-                  <a key={zone.href} href={zone.href} className="zone main">
-                    📍 {zone.label}
-                  </a>
-                ))}
-              </div>
-              <p className="zones-more-link">
-                <a href="/zones-intervention/">Voir toutes nos communes d&apos;intervention →</a>
-              </p>
-            </>
-          ) : (
-            <p className="zones-placeholder">
+          <div className="zones-pills">
+            {featuredZones.length > 0 ? (
+              featuredZones.map((zone) => (
+                <a key={zone.href} href={zone.href} className="zone main">
+                  📍 {zone.label}
+                </a>
+              ))
+            ) : (
               <ClientPlaceholder block>Communes desservies [À FOURNIR]</ClientPlaceholder>
-            </p>
-          )}
+            )}
+          </div>
+          <p className="zones-more-link">
+            <a href="/zones-intervention/">Voir toutes nos communes d&apos;intervention →</a>
+          </p>
+          <div className="zones-map-full">
+            <iframe
+              src="https://maps.google.com/maps?q=46.2051,5.2258&z=10&output=embed&hl=fr"
+              loading="lazy"
+              title={`Zone d'intervention ${site.name}`}
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
         </div>
       </section>
 
@@ -248,8 +255,7 @@ export default function HomeContent() {
             <span className="pill">Devis gratuit</span>
             <h2 id="devis-h2">Recevez votre devis sous 24 h</h2>
             <p>
-              Réponse sous 24 h par email · Sans engagement
-              {site.phoneTel ? ` · ☎ ${site.phone}` : ` · ✉ ${site.email}`}
+              {site.region} · Réponse sous 24 h · Sans engagement · ☎ {site.phone}
             </p>
           </div>
           <div className="devis-form-center">

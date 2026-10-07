@@ -15,9 +15,8 @@ export const serviceParamPresets: Record<string, FormPreset> = Object.fromEntrie
 
 serviceParamPresets["nettoyage-matelas"] = { service: "Nettoyage canapé / tapis / matelas" };
 serviceParamPresets["nettoyage-tapis"] = { service: "Nettoyage canapé / tapis / matelas" };
-serviceParamPresets["fin-chantier"] = profilePresets.chantier;
-serviceParamPresets["vitres"] = profilePresets.vitres;
-serviceParamPresets["bureaux"] = profilePresets.bureaux;
+serviceParamPresets["fin-chantier"] = profilePresets.btp;
+serviceParamPresets["remise-en-etat"] = profilePresets.agence;
 
 export const discreetServiceSlugs = new Set(["nettoyage-diogene", "nettoyage-apres-deces"]);
 
