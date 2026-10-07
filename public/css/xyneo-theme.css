@@ -1127,6 +1127,13 @@ footer {
   font-weight: 600;
   color: var(--blue-deep);
 }
+.hero-ratings-line {
+  display: block;
+  line-height: 1.35;
+}
+.hero-ratings-line .stars {
+  display: inline;
+}
 
 /* ── Bandeau confiance ── */
 .trust-band {
@@ -1652,8 +1659,8 @@ body {
   .hero-split {
     display: flex;
     flex-direction: column;
-    padding: 12px 16px 20px;
-    gap: 12px;
+    padding: 8px 16px 20px;
+    gap: 8px;
   }
   .hero-intro {
     order: 1;
@@ -1678,14 +1685,25 @@ body {
     margin-bottom: 4px;
   }
   .hero h1 {
-    font-size: clamp(1.32rem, 5.2vw, 1.65rem);
-    margin-bottom: 8px;
+    font-size: 1.75rem;
+    margin-bottom: 4px;
     line-height: 1.2;
   }
-  .hero-sub {
-    margin-bottom: 10px;
-    font-size: 0.9rem;
+  .hero-sub,
+  .hero-sub-short {
+    margin-bottom: 6px;
+    font-size: 1rem;
     line-height: 1.5;
+  }
+  .hero-intro .hero-sub-full {
+    display: none;
+  }
+  .hero-intro .hero-sub-short {
+    display: block;
+  }
+  .sec-title h2 {
+    font-size: 1.25rem !important;
+    line-height: 1.25 !important;
   }
   .hero-ratings {
     margin-top: 4px;
@@ -1718,6 +1736,11 @@ body {
   .hero-segments-wrap,
   .hero-segments-block {
     margin-bottom: 0;
+  }
+  .hero-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
   .hero h1 {
     font-size: clamp(2.25rem, 3.2vw, 3rem);

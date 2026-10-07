@@ -47,10 +47,12 @@ export default function HomeContent() {
                 <PhotoPlaceholder variant="portrait" />
               </div>
               <span className="hero-ratings-text">
-                <span className="stars" aria-hidden="true">
-                  ★
-                </span>{" "}
-                {ratingDisplay}/5 · {site.reviews} avis Google · {site.owner}, {site.ownerRole}
+                <span className="hero-ratings-line">
+                  <span className="stars" aria-hidden="true">
+                    ★
+                  </span>{" "}
+                  {ratingDisplay}/5 · {site.reviews} avis Google · {site.owner}, {site.ownerRole}
+                </span>
                 <span className="hero-ratings-cta">
                   Voir les {site.reviews} avis sur Google →
                 </span>
