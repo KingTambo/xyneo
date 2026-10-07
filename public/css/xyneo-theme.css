@@ -1758,9 +1758,9 @@ body {
     display: grid;
     grid-template-columns: 1fr min(400px, 40%);
     grid-template-areas:
-      "ratings form"
       "intro form"
-      "segments form"
+      "photo form"
+      "ratings form"
       "badges form"
       "btns form";
     padding: 12px 28px 24px;
@@ -1773,8 +1773,8 @@ body {
   .hero-intro {
     grid-area: intro;
   }
-  .hero-segments-block {
-    grid-area: segments;
+  .hero-photo {
+    grid-area: photo;
   }
   .hero-badges {
     grid-area: badges;
@@ -2307,5 +2307,225 @@ body {
   }
   .chantiers-scroll {
     overflow: visible;
+  }
+}
+
+/* ── Audit CRO OAO — photos Google, réalisations, CTA ── */
+.hero-photo {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(20, 38, 53, 0.12);
+}
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: cover;
+  object-position: center 30%;
+}
+@media (min-width: 768px) {
+  .hero-photo img {
+    max-height: 200px;
+  }
+}
+.hero-ratings-compact {
+  padding: 10px 14px;
+  font-size: 0.82rem;
+}
+.hero-ratings-compact .hero-ratings-cta {
+  display: none;
+}
+.btn-call-dark,
+.cta-pair .btn-wh {
+  color: var(--blue-deep) !important;
+  border: 2px solid var(--card-border) !important;
+  background: var(--surface) !important;
+}
+.btn-call-dark:hover,
+.cta-pair .btn-wh:hover {
+  border-color: var(--blue-primary) !important;
+  background: var(--badge-bg) !important;
+  color: var(--blue-deep) !important;
+}
+.services-grid-quad {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 1024px) {
+  .services-grid-quad {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.sc-img-photo {
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+  background: var(--surface-muted);
+}
+.sc-img-photo img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+.sc-img-photo .sc-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+}
+.realisations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 640px) {
+  .realisations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.realisation-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+}
+.realisation-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+.realisation-legend {
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--blue-deep);
+  margin: 0;
+}
+.realisations-more {
+  text-align: center;
+  margin-top: 20px;
+}
+.engagements-photo img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+}
+.engagements-steps {
+  list-style: none;
+  padding: 0;
+  counter-reset: none;
+}
+.engagements-steps .engagement-check {
+  background: var(--blue-primary);
+  color: #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.pro-dossier-card {
+  margin-top: 32px;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  background: var(--surface-muted);
+  text-align: center;
+}
+.pro-dossier-card h3 {
+  margin: 8px 0 16px;
+  font-size: 1.1rem;
+}
+.pro-dossier-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--blue-deep);
+}
+.zones-map-lazy {
+  text-align: center;
+  padding: 24px 0;
+}
+.zones-map-btn {
+  display: inline-flex;
+}
+.testi-sec-compact .sec-title {
+  margin-bottom: 16px;
+}
+.testi-grid-static {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  overflow: visible;
+}
+@media (min-width: 768px) {
+  .testi-grid-static {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.testi-grid-static .testi-card {
+  scroll-snap-align: unset;
+  min-width: unset;
+}
+.devis-social-mini {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 560px;
+  margin: 0 auto 24px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--surface-muted);
+  border: 1px solid var(--card-border);
+}
+.devis-social-mini img {
+  width: 80px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.devis-social-mini blockquote {
+  margin: 0;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+.cf-reassurance {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+.merci-lead {
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto 24px;
+  color: var(--text-muted);
+}
+.nav-phone a {
+  font-weight: 700;
+  color: var(--blue-deep);
+  white-space: nowrap;
+}
+@media (max-width: 960px) {
+  .nav-phone {
+    display: none;
   }
 }

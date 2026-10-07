@@ -74,9 +74,16 @@ export default function ServicePrimaryCard({ service }: { service: Service }) {
   return (
     <a href={service.href} className="sc-link">
       <article className="sc">
-        <div className={`sc-img ${service.imgClass}`} role="img" aria-label={service.title}>
-          <span className="sc-badge">{service.badge}</span>
-        </div>
+        {"imageSrc" in service && service.imageSrc ? (
+          <div className="sc-img sc-img-photo">
+            <img src={service.imageSrc} alt={service.title} loading="lazy" width={600} height={360} />
+            <span className="sc-badge">{service.badge}</span>
+          </div>
+        ) : (
+          <div className={`sc-img ${service.imgClass}`} role="img" aria-label={service.title}>
+            <span className="sc-badge">{service.badge}</span>
+          </div>
+        )}
         <div className="sc-body">
           <ServiceCardBody service={service} />
           <div className="sc-foot">

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import ClientScripts from "@/components/ClientScripts";
+import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -17,8 +18,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: `Fin de chantier, vitres & bureaux pour les pros | ${site.name}`,
-  description: `${site.name}, partenaire BTP, commerces et agences : fin de chantier, vitres professionnelles, remise locative et entretien de bureaux. Devis sous 24 h.`,
+  title: `Nettoyage fin de chantier, vitres et bureaux à ${site.city} · ${site.name}`,
+  description: `${site.name} : nettoyage de fin de chantier, vitres professionnelles, remise locative et entretien de bureaux à ${site.city}. Devis gratuit — rappel sous 24 h ouvrées.`,
 };
 
 export const viewport: Viewport = {
@@ -34,7 +35,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <link rel="stylesheet" href="/css/xyneo-theme.css" />
         <link rel="icon" href="/img/oao-logo.png" type="image/png" />
         <link rel="preload" as="image" href="/img/oao-logo.png" type="image/png" />
-        <link rel="preload" as="image" href="/img/hero.webp" type="image/webp" />
+        <link rel="preload" as="image" href="/img/hero.jpg" />
+        <LocalBusinessJsonLd />
       </head>
       <body>
         {children}

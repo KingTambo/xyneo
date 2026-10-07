@@ -9,6 +9,8 @@ type DevisPayload = {
   ville?: string;
   service?: string;
   client_type?: string;
+  need_type?: string;
+  societe?: string;
   surface?: string;
   urgence?: string;
   message?: string;
@@ -31,6 +33,8 @@ function formatAdminEmail(data: DevisPayload) {
     `Email : ${data.email || "—"}`,
     `Ville : ${data.ville || "—"}`,
     `Profil : ${data.client_type || "—"}`,
+    `Société : ${data.societe || "—"}`,
+    `Besoin : ${data.need_type || "—"}`,
     `Prestation : ${data.service || "—"}`,
     `Surface : ${data.surface || "—"}`,
     `Quand : ${data.urgence || "—"}`,
@@ -51,7 +55,7 @@ function formatProspectEmail(data: DevisPayload) {
     `Bonjour ${data.nom || ""},`.trim(),
     "",
     "Nous avons bien reçu votre demande de devis.",
-    `${site.ownerFirst} ou son équipe vous rappelle sous 24 h au numéro indiqué.`,
+    `Nous vous rappelons sous 24 h ouvrées depuis le ${site.phone}.`,
     "",
     "Pour nous envoyer des photos de votre logement ou chantier, répondez à cet email ou écrivez-nous par SMS/WhatsApp.",
     "",

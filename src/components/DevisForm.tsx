@@ -2,9 +2,9 @@
 
 import { FORM_PRESET_EVENT, readFormPresetFromUrl, type FormPreset } from "@/lib/form-presets";
 import { isValidFrPhone, PHONE_ERROR_MSG } from "@/lib/phone";
-import { formSocialProof, serviceOptions, site } from "@/data/site";
+import { formSocialProof, servicesByClientType, site } from "@/data/site";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type DevisFormProps = {
   idPrefix: string;
@@ -28,6 +28,8 @@ const surfaceOptions = [
   "Je ne sais pas",
 ];
 
+const vitrineOptions = ["1 – 3 vitrines", "4 – 8 vitrines", "Plus de 8 vitrines", "Je ne sais pas"];
+
 const urgencyOptions = [
   "Urgent (sous 72 h)",
   "Sous 2 semaines",
@@ -35,7 +37,13 @@ const urgencyOptions = [
   "Flexible",
 ];
 
+const needTypeOptions = [
+  { value: "ponctuel", label: "Ponctuel (une fois)" },
+  { value: "regulier", label: "Régulier (hebdo, mensuel)" },
+];
+
 const DIOGENE_SERVICE = "Nettoyage Diogène";
+const VITRES_SERVICE = "Nettoyage vitres & baies vitrées";
 
 function applyPreset(
   preset: FormPreset,
@@ -56,10 +64,19 @@ export default function DevisForm({
   const [step, setStep] = useState(1);
   const [clientType, setClientType] = useState("");
   const [service, setService] = useState(defaultService);
+  const [needType, setNeedType] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
+
+  const filteredServices = useMemo(() => {
+    if (!clientType) return servicesByClientType.btp;
+    return servicesByClientType[clientType] ?? servicesByClientType.btp;
+  }, [clientType]);
+
+  const isPro = clientType && clientType !== "particulier";
+  const isVitres = service === VITRES_SERVICE;
 
   const loadPresetsFromUrl = useCallback(() => {
     const preset = readFormPresetFromUrl();
@@ -90,6 +107,12 @@ export default function DevisForm({
     window.addEventListener(FORM_PRESET_EVENT, onPreset);
     return () => window.removeEventListener(FORM_PRESET_EVENT, onPreset);
   }, []);
+
+  useEffect(() => {
+    if (service && clientType && !filteredServices.includes(service)) {
+      setService("");
+    }
+  }, [clientType, filteredServices, service]);
 
   useEffect(() => {
     const form = formRef.current;
@@ -149,8 +172,9 @@ export default function DevisForm({
     const serviceEl = form.elements.namedItem("service") as HTMLSelectElement | null;
     const ville = form.elements.namedItem("ville") as HTMLInputElement | null;
     const urgence = form.elements.namedItem("urgence") as HTMLSelectElement | null;
-    if (!serviceEl?.value || !ville?.value.trim() || !urgence?.value) {
+    if (!serviceEl?.value || !ville?.value.trim() || !urgence?.value || !needType) {
       if (!serviceEl?.value) serviceEl?.focus();
+      else if (!needType) form.querySelector(`input[name="${idPrefix}-need"]`)?.dispatchEvent(new Event("focus"));
       else if (!ville?.value.trim()) ville?.focus();
       else urgence?.focus();
       form.reportValidity();
@@ -173,6 +197,7 @@ export default function DevisForm({
     const fd = new FormData(form);
     const payload = Object.fromEntries(fd.entries()) as Record<string, string>;
     payload.client_type = clientType;
+    payload.need_type = needType;
 
     try {
       const res = await fetch("/api/devis/", {
@@ -184,21 +209,21 @@ export default function DevisForm({
 
       if (!res.ok) {
         setStatus("error");
-        setErrorMessage(json.error || "Envoi impossible. Appelez " + site.ownerFirst + " au " + site.phone);
+        setErrorMessage(json.error || "Envoi impossible. Appelez-nous au " + site.phone);
         return;
       }
 
       router.push("/merci/");
     } catch {
       setStatus("error");
-      setErrorMessage("Connexion impossible. Appelez " + site.ownerFirst + " au " + site.phone);
+      setErrorMessage("Connexion impossible. Appelez-nous au " + site.phone);
     }
   }
 
   const hasReviews = Boolean(site.googleReviewsUrl && site.rating && site.reviews);
   const ratingLine = hasReviews
-    ? `★ ${site.rating.replace(".", ",")}/5 · ${site.reviews} avis Google`
-    : "Devis gratuit · Réponse sous 24 h";
+    ? `★ ${site.rating.replace(".", ",")} sur Google`
+    : "Devis gratuit · Rappel sous 24 h ouvrées";
 
   return (
     <div className="cf-wrap" data-devis-form="true">
@@ -275,13 +300,31 @@ export default function DevisForm({
                 required
               >
                 <option value="">Choisir une prestation…</option>
-                {serviceOptions.map((option) => (
+                {filteredServices.map((option) => (
                   <option key={option} value={option}>
                     {option}
                   </option>
                 ))}
               </select>
             </div>
+            <fieldset className="cf-fieldset">
+              <legend>Besoin *</legend>
+              <div className="cf-chips">
+                {needTypeOptions.map((option) => (
+                  <label key={option.value} className={`cf-chip${needType === option.value ? " selected" : ""}`}>
+                    <input
+                      type="radio"
+                      name={`${idPrefix}-need`}
+                      value={option.value}
+                      checked={needType === option.value}
+                      onChange={() => setNeedType(option.value)}
+                      required
+                    />
+                    {option.label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
             {clientType === "btp" && (
               <div className="cf">
                 <label htmlFor={`${idPrefix}-date-reception`}>Date de réception prévue (facultatif)</label>
@@ -323,7 +366,9 @@ export default function DevisForm({
               />
             </div>
             <div className="cf">
-              <label htmlFor={`${idPrefix}-urgence`}>Quand ? *</label>
+              <label htmlFor={`${idPrefix}-urgence`}>
+                {clientType === "btp" ? "Date de réception / urgence *" : "Quand ? *"}
+              </label>
               <select id={`${idPrefix}-urgence`} name="urgence" defaultValue="" required>
                 <option value="">Choisir…</option>
                 {urgencyOptions.map((option) => (
@@ -353,13 +398,28 @@ export default function DevisForm({
                   autoComplete="name"
                 />
               </div>
+              {isPro ? (
+                <div className="cf">
+                  <label htmlFor={`${idPrefix}-societe`}>Société *</label>
+                  <input
+                    type="text"
+                    id={`${idPrefix}-societe`}
+                    name="societe"
+                    placeholder="Nom de votre entreprise"
+                    required
+                    autoComplete="organization"
+                  />
+                </div>
+              ) : null}
+            </div>
+            <div className="form-row">
               <div className="cf">
                 <label htmlFor={`${idPrefix}-tel`}>Téléphone *</label>
                 <input
                   type="tel"
                   id={`${idPrefix}-tel`}
                   name="tel"
-                  placeholder="06 66 90 39 61"
+                  placeholder="06 12 34 56 78"
                   required
                   autoComplete="tel"
                   aria-invalid={phoneError ? "true" : undefined}
@@ -373,22 +433,24 @@ export default function DevisForm({
                   </p>
                 )}
               </div>
+              <div className="cf">
+                <label htmlFor={`${idPrefix}-email`}>Email</label>
+                <input
+                  type="email"
+                  id={`${idPrefix}-email`}
+                  name="email"
+                  placeholder="votre@email.fr"
+                  autoComplete="email"
+                />
+              </div>
             </div>
             <div className="cf">
-              <label htmlFor={`${idPrefix}-email`}>Email</label>
-              <input
-                type="email"
-                id={`${idPrefix}-email`}
-                name="email"
-                placeholder="votre@email.fr"
-                autoComplete="email"
-              />
-            </div>
-            <div className="cf">
-              <label htmlFor={`${idPrefix}-surface`}>Surface approximative (facultatif)</label>
+              <label htmlFor={`${idPrefix}-surface`}>
+                {isVitres ? "Nombre de vitrines (facultatif)" : "Surface approximative (facultatif)"}
+              </label>
               <select id={`${idPrefix}-surface`} name="surface" defaultValue="">
                 <option value="">Choisir…</option>
-                {surfaceOptions.map((option) => (
+                {(isVitres ? vitrineOptions : surfaceOptions).map((option) => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -405,9 +467,13 @@ export default function DevisForm({
                 ← Retour
               </button>
               <button type="submit" className="btn-submit" disabled={status === "loading"}>
-                {status === "loading" ? "Envoi en cours…" : "Recevoir mon devis sous 24 h"}
+                {status === "loading" ? "Envoi en cours…" : "Envoyer ma demande"}
               </button>
             </div>
+            <p className="cf-reassurance">
+              Gratuit, sans engagement. Rappel sous 24 h ouvrées au {site.phone}. Vos données servent uniquement à
+              vous répondre.
+            </p>
             <div className="cf-social-proof">
               <p className="cf-social-rating">{ratingLine}</p>
               <blockquote className="cf-social-quote">

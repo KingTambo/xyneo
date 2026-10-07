@@ -13,7 +13,7 @@ export default function CtaPair({ formHref = "#hero-form", variant = "default", 
   const primaryLabel =
     variant === "discreet"
       ? "Parler de votre situation en toute discrétion"
-      : "Recevoir mon devis sous 24 h";
+      : "Demander mon devis gratuit";
 
   function handlePrimaryClick(event: React.MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
@@ -25,8 +25,8 @@ export default function CtaPair({ formHref = "#hero-form", variant = "default", 
       <a href={formHref} className="btn-or" onClick={handlePrimaryClick}>
         {primaryLabel}
       </a>
-      <a href={`tel:${site.phoneTel}`} className="btn-wh">
-        Appeler {site.ownerFirst || site.name}
+      <a href={`tel:${site.phoneTel}`} className="btn-wh btn-call-dark">
+        {site.phone}
       </a>
     </div>
   );

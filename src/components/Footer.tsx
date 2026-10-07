@@ -34,9 +34,8 @@ export default function Footer() {
             </a>
           </div>
           <p className="f-brand-desc">
-            Partenaire des professionnels à {site.city}
-            {site.since ? ` depuis ${site.since}` : ""} — fin de chantier, vitres, remise locative et entretien
-            de bureaux dans l&apos;Ain.
+            Nettoyage professionnel à {site.city} — fin de chantier, vitres, remise locative et entretien de
+            bureaux dans l&apos;Ain.
           </p>
           {(site.siret || site.legalName) && (
             <p className="f-legal-line">
@@ -46,11 +45,13 @@ export default function Footer() {
           )}
           <p className="f-legal-line">
             <a href="/mentions-legales/">Mentions légales</a>
+            {" · "}
+            <a href="/on-recrute/">On recrute →</a>
           </p>
           {site.googleReviewsUrl && site.reviews ? (
             <p className="f-legal-line">
               <a href={site.googleReviewsUrl} target="_blank" rel="noopener noreferrer">
-                Voir nos {site.reviews} avis Google →
+                Voir nos avis Google →
               </a>
             </p>
           ) : null}
@@ -78,7 +79,13 @@ export default function Footer() {
           {socialLinks.length > 0 ? (
             <div style={{ display: "flex", gap: "12px", marginTop: "12px" }}>
               {socialLinks.map((s) => (
-                <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: ".78rem", color: "rgba(255,255,255,.55)" }}>
+                <a
+                  key={s.href}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ fontSize: ".78rem", color: "rgba(255,255,255,.55)" }}
+                >
                   {s.label}
                 </a>
               ))}
@@ -102,13 +109,13 @@ export default function Footer() {
               <a href="/nos-realisations/">Nos réalisations</a>
             </li>
             <li>
-              <a href="/blog/">Blog</a>
-            </li>
-            <li>
-              <a href="/contactez-nous/">Contactez nous</a>
+              <a href="/on-recrute/">On recrute</a>
             </li>
             <li>
               <a href="/#zones">Zones d&apos;intervention</a>
+            </li>
+            <li>
+              <a href="/#hero-form">Demander un devis</a>
             </li>
           </ul>
         </div>
@@ -126,10 +133,16 @@ export default function Footer() {
               allowFullScreen
             />
             <a
-              href="https://www.google.com/maps?q=2+Rue+Gambetta+01000+Bourg-en-Bresse"
+              href={site.googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: "block", marginTop: "8px", fontSize: ".78rem", color: "rgba(255,255,255,.55)", textAlign: "center" }}
+              style={{
+                display: "block",
+                marginTop: "8px",
+                fontSize: ".78rem",
+                color: "rgba(255,255,255,.55)",
+                textAlign: "center",
+              }}
             >
               Ouvrir dans Google Maps →
             </a>

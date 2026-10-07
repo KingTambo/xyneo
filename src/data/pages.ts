@@ -48,7 +48,7 @@ export type StaticPageData = {
   slug: string;
   title: string;
   description: string;
-  template: "contact" | "blog" | "realisations" | "zones" | "prix" | "legal-privacy" | "legal-mentions";
+  template: "contact" | "blog" | "realisations" | "zones" | "prix" | "legal-privacy" | "legal-mentions" | "recrute";
 };
 
 export type PageData = ServicePageData | ZonePageData | StaticPageData;
@@ -137,8 +137,15 @@ const staticPages: StaticPageData[] = [
     type: "static",
     slug: "nos-realisations",
     title: "Nos réalisations",
-    description: `Découvrez les réalisations de ${site.name} : fin de chantier, remise en état, Diogène et nettoyage textile dans l'Ain, le Rhône et la Saône-et-Loire.`,
+    description: `Photos de nos interventions : fin de chantier, vitres, bureaux et remise en état dans l'Ain.`,
     template: "realisations",
+  },
+  {
+    type: "static",
+    slug: "on-recrute",
+    title: "On recrute",
+    description: `${site.name} recrute des agents de nettoyage professionnel dans l'Ain. Rejoignez une équipe en croissance.`,
+    template: "recrute",
   },
   {
     type: "static",

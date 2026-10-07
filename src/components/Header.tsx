@@ -7,12 +7,12 @@ export default function Header() {
     <>
       <div className="topbar">
         <span className="topbar-full">
-          Partenaire BTP, commerces et bureaux · Ain, Rhône et Saône-et-Loire &nbsp;·&nbsp;
+          Nettoyage pro à {site.city} et dans l&apos;Ain &nbsp;·&nbsp;
           <a href={phoneHref}>{site.phone}</a>
-          &nbsp;·&nbsp; {site.hours}
+          &nbsp;·&nbsp; Rappel sous 24 h ouvrées
         </span>
         <span className="topbar-mobile">
-          <a href={phoneHref}>{site.phone}</a> · Devis 24 h
+          <a href={phoneHref}>{site.phone}</a> · Devis gratuit
         </span>
       </div>
       <nav aria-label="Navigation principale">
@@ -63,9 +63,12 @@ export default function Header() {
                 </li>
               ),
             )}
+            <li role="none" className="nav-phone">
+              <a href={phoneHref}>{site.phone}</a>
+            </li>
             <li role="none">
               <a href="/#hero-form" className="nav-cta">
-                Recevoir mon devis sous 24 h
+                Demander mon devis gratuit
               </a>
             </li>
           </ul>
@@ -75,8 +78,8 @@ export default function Header() {
         <a href={phoneHref} className="mob-tel">
           📞 {site.phone}
         </a>
-        <a href="/#hero-form" className="mob-dev" aria-label="Recevoir mon devis sous 24 h">
-          Mon devis 24 h
+        <a href="/#hero-form" className="mob-dev" aria-label="Demander mon devis gratuit">
+          Devis gratuit
         </a>
       </div>
     </>

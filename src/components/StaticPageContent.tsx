@@ -4,7 +4,7 @@ import {
   type StaticPageData,
   zones,
 } from "@/data/pages";
-import { site } from "@/data/site";
+import { realisations, site } from "@/data/site";
 import Breadcrumb from "./Breadcrumb";
 import DevisForm from "./DevisForm";
 import InnerPageHero from "./InnerPageHero";
@@ -42,8 +42,8 @@ export default function StaticPageContent({ page }: StaticPageContentProps) {
               </p>
               <h2>Zone d&apos;intervention</h2>
               <p>
-                Nous intervenons dans l&apos;Ain, le Rhône et la Saône-et-Loire, autour de {site.city}. Consultez{" "}
-                <a href="/zones-intervention/">toutes nos communes</a>.
+                Nous intervenons à {site.region}. Consultez{" "}
+                <a href="/#zones">notre zone d&apos;intervention</a>.
               </p>
             </article>
             <aside className="page-sidebar">
@@ -59,20 +59,51 @@ export default function StaticPageContent({ page }: StaticPageContentProps) {
           <Breadcrumb items={[{ label: "Accueil", href: "/" }, { label: "Nos réalisations" }]} />
           <InnerPageHero
             title="Nos réalisations"
-            subtitle="Fin de chantier, remise en état, Diogène et nettoyage textile : découvrez le travail de Xyneo."
-            badges={[`${site.rating}/5 Google`, `${site.reviews} avis`]}
+            subtitle="Fin de chantier, vitres, bureaux et remise en état : des interventions réelles dans l'Ain."
+            badges={[`★ ${site.rating} Google`, site.region]}
           />
-          <section className="ba-sec">
+          <section className="realisations-sec">
             <div className="section-wrap">
-              <div className="content" style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center", padding: "48px 0" }}>
-                <p>
-                  Nos photos avant/après de chantiers réels seront publiées prochainement, avec ville, type de prestation
-                  et surface. En attendant, contactez-nous pour des références sur votre secteur.
-                </p>
-                <a href={`tel:${site.phoneTel}`} className="btn-or" style={{ display: "inline-flex", marginTop: "20px" }}>
-                  Appeler {site.ownerFirst}
-                </a>
+              <div className="realisations-grid">
+                {realisations.map((item) => (
+                  <article className="realisation-card" key={item.id}>
+                    <img src={item.imageSrc} alt={item.alt} loading="lazy" width={600} height={400} />
+                    <p className="realisation-legend">{item.legend}</p>
+                  </article>
+                ))}
               </div>
+            </div>
+          </section>
+          <PageDevisSection pageSource={path} />
+        </>
+      );
+
+    case "recrute":
+      return (
+        <>
+          <Breadcrumb items={[{ label: "Accueil", href: "/" }, { label: "On recrute" }]} />
+          <InnerPageHero
+            title="On recrute"
+            subtitle={`${site.name} développe son équipe dans l'Ain. Agents de nettoyage professionnel recherchés.`}
+            badges={["CDD / CDI", site.city]}
+          />
+          <section className="content-sec">
+            <div className="section-wrap content" style={{ maxWidth: "720px" }}>
+              <h2>Rejoignez une équipe en croissance</h2>
+              <p>
+                Fin de chantier, vitres, bureaux, remise en état : nous recrutons des personnes sérieuses, ponctuelles
+                et motivées pour renforcer notre équipe sur {site.region}.
+              </p>
+              <ul>
+                <li>Formation sur les techniques professionnelles</li>
+                <li>Interventions variées (BTP, commerces, bureaux)</li>
+                <li>Équipe à taille humaine, gérant joignable</li>
+              </ul>
+              <p>
+                Envoyez votre candidature par email à{" "}
+                <a href={`mailto:${site.email}`}>{site.email}</a> ou appelez le{" "}
+                <a href={`tel:${site.phoneTel}`}>{site.phone}</a>.
+              </p>
             </div>
           </section>
           <PageDevisSection pageSource={path} />

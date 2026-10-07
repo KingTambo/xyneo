@@ -44,7 +44,7 @@ export default function HomePricingSection() {
         <div className="sec-title">
           <span className="pill">Tarifs</span>
           <h2 id="h2-rp">Combien ça coûte ? Nos prix de départ</h2>
-          <p>Tarifs indicatifs TTC · Devis personnalisé gratuit après visite sur place</p>
+          <p>Prix de départ HT pour les pros. Le prix exact dépend de la surface et de l&apos;état ; fixé après visite gratuite.</p>
         </div>
       </div>
       <div className="rp-blocks-wrap">
@@ -65,7 +65,7 @@ export default function HomePricingSection() {
                 <thead>
                   <tr>
                     <th>Critère / Prestation</th>
-                    <th>Tarif indicatif TTC</th>
+                    <th>Tarif indicatif HT</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -83,7 +83,7 @@ export default function HomePricingSection() {
           </details>
         ))}
       </div>
-      <p className="rp-disclaimer">Tarifs indicatifs TTC. Devis gratuit et personnalisé sous 24 h.</p>
+      <p className="rp-disclaimer">Tarifs indicatifs HT. Devis gratuit et personnalisé — rappel sous 24 h ouvrées.</p>
       <div className="section-wrap">
         <SectionCta formHref="#hero-form" />
         <p className="rp-full-link">
