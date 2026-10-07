@@ -14,6 +14,7 @@ import DevisForm from "./DevisForm";
 import HomePricingSection from "./HomePricingSection";
 import LazyMap from "./LazyMap";
 import SectionCta from "./SectionCta";
+import RealisationCard from "./RealisationCard";
 import ServicePrimaryCard from "./ServicePrimaryCard";
 import TestimonialSection from "./TestimonialSection";
 
@@ -131,19 +132,7 @@ export default function HomeContent() {
             </div>
             <div className="realisations-grid">
               {realisations.map((item) => (
-                <article
-                  className={`realisation-card${item.pending ? " realisation-card-pending" : ""}`}
-                  key={item.id}
-                >
-                  {item.pending ? (
-                    <div className="realisation-pending-slot" aria-hidden="true">
-                      <span>Avant / après</span>
-                    </div>
-                  ) : (
-                    <img src={item.imageSrc} alt={item.alt} loading="lazy" width={600} height={400} />
-                  )}
-                  <p className="realisation-legend">{item.legend}</p>
-                </article>
+                <RealisationCard key={item.id} item={item} />
               ))}
             </div>
             <p className="realisations-more">
