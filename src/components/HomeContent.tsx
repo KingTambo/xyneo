@@ -5,6 +5,8 @@ import {
   commitments,
   proReference,
   recentChantiers,
+  serviceAreas,
+  showPortfolioSection,
   secondaryServiceLinks,
   site,
 } from "@/data/site";
@@ -45,15 +47,20 @@ export default function HomeContent() {
                 rel="noopener noreferrer"
                 className="hero-ratings hero-ratings-link hero-main-block"
               >
-                <div className="hero-ratings-portrait">
-                  <PhotoPlaceholder variant="portrait" />
+                <div className="hero-ratings-portrait hero-ratings-logo">
+                  {site.logoSrc ? (
+                    <img src={site.logoSrc} alt="" width={52} height={52} loading="eager" />
+                  ) : (
+                    <PhotoPlaceholder variant="portrait" />
+                  )}
                 </div>
                 <span className="hero-ratings-text">
                   <span className="hero-ratings-line">
                     <span className="stars" aria-hidden="true">
                       ★
                     </span>{" "}
-                    {ratingDisplay}/5 · {site.reviews} avis Google · {site.owner}, {site.ownerRole}
+                    {ratingDisplay}/5 · {site.reviews} avis Google · {site.owner || site.name}
+                    {site.owner ? `, ${site.ownerRole}` : ""}
                   </span>
                   <span className="hero-ratings-cta">
                     Voir les {site.reviews} avis sur Google →
@@ -72,21 +79,21 @@ export default function HomeContent() {
             )}
             <div className="hero-intro hero-main-block">
               <h1 id="h1-hero">
-                Nettoyage après travaux, avant état des lieux ou logement encombré à {site.city}
+                Fin de chantier, vitres et bureaux pour les professionnels à {site.city}
               </h1>
               <p className="hero-sub hero-sub-full">
-                Votre chantier livré propre pour la réception, votre logement prêt à relouer, ou un logement très
-                encombré remis en état en toute discrétion. Devis gratuit sous 24 h, intervention {site.hours} dans
-                l&apos;Ain, le Rhône et la Saône-et-Loire.
+                Entreprises du BTP, commerces, agences immobilières et bureaux : votre site livré propre pour la
+                réception, vos vitrines éclatantes et vos locaux entretenus sans perturber votre activité. Devis
+                gratuit sous 24 h dans l&apos;Ain, le Rhône et la Saône-et-Loire.
               </p>
               <p className="hero-sub hero-sub-short">
-                Chantier, relocation ou logement difficile — devis gratuit sous 24 h · {site.region}
+                BTP, commerces et bureaux — devis sous 24 h · {site.region}
               </p>
             </div>
             <div className="hero-badges hero-main-block">
               <span className="badge">Devis écrit sous 24 h</span>
               <span className="badge">Assuré RC Pro</span>
-              <span className="badge">7j/7</span>
+              <span className="badge">Matériel professionnel</span>
             </div>
             <div className="hero-segments-block hero-main-block">
               <HeroSegments />
@@ -108,14 +115,10 @@ export default function HomeContent() {
 
       <div className="trust-band">
         <div className="trust-band-inner">
-          <span>Assuré RC Pro </span>
-          <ClientPlaceholder>[ASSUREUR À FOURNIR]</ClientPlaceholder>
-          <span> · SIRET </span>
-          <ClientPlaceholder>[À FOURNIR]</ClientPlaceholder>
-          <span>
-            {" "}
-            · Depuis {site.since} · {site.address}
-          </span>
+          <span>Assuré RC Pro</span>
+          <span> · {site.address}</span>
+          <span> · ☎ {site.phone}</span>
+          {site.since ? <span> · Depuis {site.since}</span> : null}
         </div>
       </div>
 
@@ -124,9 +127,9 @@ export default function HomeContent() {
           <div className="sec-title">
             <span className="pill">Nos prestations phares</span>
             <h2 id="h2-svs-mini">
-              Votre chantier ou logement remis en état, du devis à la remise des clés — un seul interlocuteur
+              Un partenaire unique pour vos chantiers, vitrines et remises en état — du devis à la livraison
             </h2>
-            <p>Fin de chantier, remise en état ou situation difficile — {site.region}</p>
+            <p>Fin de chantier, vitres professionnelles et remise locative pour agences — {site.region}</p>
           </div>
           <div className="services-grid services-grid-primary">
             {primaryServices.map((service) => (
@@ -146,54 +149,60 @@ export default function HomeContent() {
         </div>
       </section>
 
-      <section className="chantiers-sec" aria-labelledby="h2-chantiers">
-        <div className="section-wrap">
-          <div className="sec-title">
-            <span className="pill">Réalisations</span>
-            <h2 id="h2-chantiers">Chantiers récents</h2>
-            <p>Avant / après sur des interventions réelles — photos à venir</p>
-          </div>
-          <div className="chantiers-scroll">
-            <div className="chantiers-grid">
-            {recentChantiers.map((chantier) => (
-              <article className="chantier-card" key={chantier.id}>
-                <div className="chantier-photos">
-                  <figure className="chantier-photo">
-                    <div className="chantier-photo-slot">
-                      <PhotoPlaceholder />
-                    </div>
-                    <figcaption className="chantier-label">Avant</figcaption>
-                  </figure>
-                  <figure className="chantier-photo">
-                    <div className="chantier-photo-slot">
-                      <PhotoPlaceholder />
-                    </div>
-                    <figcaption className="chantier-label">Après</figcaption>
-                  </figure>
-                </div>
-                <div className="chantier-legend">
-                  <ClientPlaceholder block>{chantier.legend}</ClientPlaceholder>
-                </div>
-              </article>
-            ))}
+      {showPortfolioSection ? (
+        <section className="chantiers-sec" aria-labelledby="h2-chantiers">
+          <div className="section-wrap">
+            <div className="sec-title">
+              <span className="pill">Réalisations</span>
+              <h2 id="h2-chantiers">Chantiers récents</h2>
+              <p>Avant / après sur des interventions réelles</p>
             </div>
+            <div className="chantiers-scroll">
+              <div className="chantiers-grid">
+                {recentChantiers.map((chantier) => (
+                  <article className="chantier-card" key={chantier.id}>
+                    <div className="chantier-photos">
+                      <figure className="chantier-photo">
+                        <div className="chantier-photo-slot">
+                          <PhotoPlaceholder />
+                        </div>
+                        <figcaption className="chantier-label">Avant</figcaption>
+                      </figure>
+                      <figure className="chantier-photo">
+                        <div className="chantier-photo-slot">
+                          <PhotoPlaceholder />
+                        </div>
+                        <figcaption className="chantier-label">Après</figcaption>
+                      </figure>
+                    </div>
+                    <div className="chantier-legend">
+                      <ClientPlaceholder block>{chantier.legend}</ClientPlaceholder>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+            <article className="pro-ref-card" aria-labelledby="h3-pro-ref">
+              <span className="pill">Référence professionnelle</span>
+              <h3 id="h3-pro-ref" className="visually-hidden">
+                Référence professionnelle
+              </h3>
+              <ClientPlaceholder block>{proReference.text}</ClientPlaceholder>
+            </article>
+            <SectionCta formHref="#hero-form" />
           </div>
-          <article className="pro-ref-card" aria-labelledby="h3-pro-ref">
-            <span className="pill">Référence professionnelle</span>
-            <h3 id="h3-pro-ref" className="visually-hidden">
-              Référence professionnelle
-            </h3>
-            <ClientPlaceholder block>{proReference.text}</ClientPlaceholder>
-          </article>
-          <SectionCta formHref="#hero-form" />
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="engagements-sec why-sec" aria-labelledby="h2-engagements">
         <div className="section-wrap">
           <div className="engagements-grid">
-            <div className="engagements-photo">
-              <PhotoPlaceholder />
+            <div className="engagements-photo engagements-photo-logo">
+              {site.logoSrc ? (
+                <img src={site.logoSrc} alt={site.name} width={220} height={80} loading="lazy" />
+              ) : (
+                <PhotoPlaceholder />
+              )}
             </div>
             <div className="engagements-content">
               <span className="pill">Nos engagements</span>
@@ -201,7 +210,9 @@ export default function HomeContent() {
               <ul className="engagements-list">
                 {commitments.map((text) => (
                   <li className="engagement-item" key={text}>
-                    <ClientPlaceholder className="engagement-badge">[À VALIDER]</ClientPlaceholder>
+                    <span className="engagement-check" aria-hidden="true">
+                      ✓
+                    </span>
                     <p>{text}</p>
                   </li>
                 ))}
@@ -216,26 +227,30 @@ export default function HomeContent() {
         <div className="section-wrap">
           <div className="sec-title">
             <span className="pill">Zones d&apos;intervention</span>
-            <h2 id="h2-zones">On intervient chez vous : Ain, Rhône, Saône-et-Loire</h2>
-            <p>Intervention dans l&apos;Ain, le Rhône et la Saône-et-Loire · Devis gratuit sous 24 h</p>
+            <h2 id="h2-zones">On intervient auprès des pros dans l&apos;Ain</h2>
+            <p>{site.region} · Devis gratuit sous 24 h · Déplacement sur site</p>
           </div>
           <div className="zones-pills">
-            {featuredZones.length > 0 ? (
-              featuredZones.map((zone) => (
-                <a key={zone.href} href={zone.href} className="zone main">
-                  📍 {zone.label}
-                </a>
-              ))
-            ) : (
-              <ClientPlaceholder block>Communes desservies [À FOURNIR]</ClientPlaceholder>
-            )}
+            {featuredZones.length > 0
+              ? featuredZones.map((zone) => (
+                  <a key={zone.href} href={zone.href} className="zone main">
+                    📍 {zone.label}
+                  </a>
+                ))
+              : serviceAreas.map((area) => (
+                  <span key={area} className="zone main zone-static">
+                    📍 {area}
+                  </span>
+                ))}
           </div>
-          <p className="zones-more-link">
-            <a href="/zones-intervention/">Voir toutes nos communes d&apos;intervention →</a>
-          </p>
+          {featuredZones.length > 0 ? (
+            <p className="zones-more-link">
+              <a href="/zones-intervention/">Voir toutes nos communes d&apos;intervention →</a>
+            </p>
+          ) : null}
           <div className="zones-map-full">
             <iframe
-              src="https://maps.google.com/maps?q=46.2051,5.2258&z=10&output=embed&hl=fr"
+              src="https://maps.google.com/maps?q=2+Rue+Gambetta+01000+Bourg-en-Bresse&z=11&output=embed&hl=fr"
               loading="lazy"
               title={`Zone d'intervention ${site.name}`}
               referrerPolicy="no-referrer-when-downgrade"

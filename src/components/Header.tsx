@@ -7,12 +7,12 @@ export default function Header() {
     <>
       <div className="topbar">
         <span className="topbar-full">
-          Intervention dans l&apos;Ain, le Rhône et la Saône-et-Loire &nbsp;·&nbsp;
+          Partenaire BTP, commerces et bureaux · Ain, Rhône et Saône-et-Loire &nbsp;·&nbsp;
           <a href={phoneHref}>{site.phone}</a>
           &nbsp;·&nbsp; {site.hours}
         </span>
         <span className="topbar-mobile">
-          <a href={phoneHref}>{site.phone}</a> · 7j/7
+          <a href={phoneHref}>{site.phone}</a> · Devis 24 h
         </span>
       </div>
       <nav aria-label="Navigation principale">
@@ -23,8 +23,8 @@ export default function Header() {
                 className="logo-img"
                 src={site.logoSrc}
                 alt={site.name}
-                width={200}
-                height={48}
+                width={280}
+                height={58}
                 loading="eager"
               />
             ) : (

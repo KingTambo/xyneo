@@ -7,6 +7,7 @@ import SectionCta from "./SectionCta";
 
 function matchesFilter(tag: string, filterId: TestimonialFilterId) {
   if (filterId === "all") return true;
+  if (filterId === "vitres") return /vitres|commerce/i.test(tag);
   if (filterId === "fin-chantier") return tag === "Fin de chantier";
   if (filterId === "remise") return /remise en état/i.test(tag);
   if (filterId === "textile") {
@@ -26,7 +27,7 @@ export default function TestimonialSection() {
     [activeFilter],
   );
 
-  const showPlaceholder = activeFilter === "all";
+  const showPlaceholder = activeFilter === "all" && testimonials.length === 0;
   const slideCount = filtered.length + (showPlaceholder ? 1 : 0);
 
   useEffect(() => {
@@ -123,7 +124,7 @@ export default function TestimonialSection() {
                     </div>
                   </div>
                   <p className="testi-text">{t.text}</p>
-                  <span className="testi-tag">{t.tag}</span>
+                  <span className="testi-tag">{t.tag} · Avis Google</span>
                 </div>
               </article>
             ))}

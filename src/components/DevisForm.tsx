@@ -14,9 +14,10 @@ type DevisFormProps = {
 };
 
 const clientTypes = [
-  { value: "particulier", label: "Particulier" },
-  { value: "agence", label: "Agence, syndic ou bailleur" },
   { value: "btp", label: "Entreprise du bâtiment ou MOE" },
+  { value: "commerce", label: "Commerce, bureau ou local pro" },
+  { value: "agence", label: "Agence, syndic ou bailleur" },
+  { value: "particulier", label: "Particulier" },
 ];
 
 const surfaceOptions = [

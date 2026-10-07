@@ -1,23 +1,23 @@
 export const site = {
   name: "OAO Propreté",
-  tagline: "Basé à [À FOURNIR] — [Zone d'intervention À FOURNIR]",
-  phone: "[À FOURNIR]",
-  phoneTel: "",
+  tagline: "Partenaire des pros · BTP, commerces et bureaux — Ain",
+  phone: "06 02 53 27 67",
+  phoneTel: "+33602532767",
   email: "contact.oaopreprete@gmail.com",
-  address: "[À FOURNIR]",
-  owner: "[À FOURNIR]",
-  ownerFirst: "[À FOURNIR]",
+  address: "2 Rue Gambetta, 01000 Bourg-en-Bresse",
+  owner: "",
+  ownerFirst: "",
   ownerRole: "gérant",
-  since: "[À FOURNIR]",
-  rating: "",
-  reviews: "",
+  since: "",
+  rating: "5.0",
+  reviews: "2",
   experience: "",
-  region: "[Zone d'intervention À FOURNIR]",
-  department: "",
-  city: "[À FOURNIR]",
-  hours: "7h30 – 21h · 7j/7",
+  region: "Ain et environs",
+  department: "01",
+  city: "Bourg-en-Bresse",
+  hours: "Devis sous 24 h · intervention rapide",
   website: "https://oaoproprete.fr",
-  googleReviewsUrl: "",
+  googleReviewsUrl: "https://share.google/EYnhEXfIJoKSj3NkT",
   logoSrc: "/img/oao-logo.png",
   /** À compléter — affiché dans le footer quand renseigné */
   siret: "",
@@ -39,7 +39,7 @@ export const services = [
     imgClass: "sc2",
     badge: "À partir de 200€",
     title: "Remise en état locative",
-    tagline: "Logement propre et conforme entre deux locataires, avant l'état des lieux.",
+    tagline: "Agences et bailleurs : logement conforme entre deux locataires, avant l'état des lieux.",
     comprisTitle: "Compris dans votre prestation remise en état",
     checklist: ["Nettoyage complet de toutes les pièces", "Cuisine, salle de bain et sanitaires", "Sols, vitres et plinthes", "Conformité avant état des lieux"],
   },
@@ -93,7 +93,7 @@ export const services = [
     imgClass: "sc8",
     badge: "Sur devis",
     title: "Nettoyage vitres & baies vitrées",
-    tagline: "Vitres, huisseries et volets roulants nettoyés minutieusement, intérieur et extérieur.",
+    tagline: "Devantures, vitrines et baies vitrées — intérieur et extérieur, sans perturber votre activité.",
     comprisTitle: "Compris dans votre prestation vitres",
     checklist: ["Baies vitrées intérieur et extérieur", "Huisseries et volets roulants", "Sans traces ni auréoles", "Matériel professionnel adapté"],
   },
@@ -117,57 +117,87 @@ export const navLinks = [
   { href: "/contactez-nous/", label: "Contact" },
 ];
 
-/** 3 engagements — accueil (promesses à valider par le client) */
+/** 3 engagements — accueil */
 export const commitments = [
-  "Devis écrit sous 24 h, après visite gratuite sur place",
-  "Intervention possible sous 72 h, week-end compris, pour tenir votre date de réception ou d'état des lieux",
-  "Logement rendu prêt à livrer ou à relouer. S'il manque quelque chose, on revient gratuitement.",
+  "Devis écrit sous 24 h, après visite gratuite sur site",
+  "Planning adapté à vos horaires d'ouverture et à la date de réception de chantier",
+  "Matériel professionnel, assuré RC Pro — attestation transmise sur demande pour vos dossiers",
 ];
 
-/** Extrait d'avis sous le formulaire */
+/** Extrait d'avis sous le formulaire — Century 21 (Google) */
 export const formSocialProof = {
-  excerpt: "« [Avis client À FOURNIR] »",
-  author: "[Prénom N.]",
+  excerpt:
+    "« Très satisfaite du travail sur les vitrines de notre agence Century 21 ! Une équipe professionnelle, sérieuse. »",
+  author: "Giulia M. · Century 21",
 };
 
 /** Pré-remplissage formulaire depuis ?profil= */
 export const profilePresets: Record<string, { clientType: string; service: string }> = {
   btp: { clientType: "btp", service: "Nettoyage de fin de chantier" },
+  commerce: { clientType: "commerce", service: "Nettoyage vitres & baies vitrées" },
   agence: { clientType: "agence", service: "Remise en état locative" },
+  bureaux: { clientType: "commerce", service: "Entretien de bureaux" },
   diogene: { clientType: "particulier", service: "Nettoyage Diogène" },
   deces: { clientType: "particulier", service: "Nettoyage après décès" },
 };
 
-/** 3 services principaux — accueil */
-export const primaryServices = services.slice(0, 3);
+/** 3 services principaux — accueil (orientation pro) */
+export const primaryServices = [
+  services.find((s) => s.href === "/nettoyage-de-fin-de-chantier/")!,
+  services.find((s) => s.href === "/nettoyage-vitres-et-baies-vitrees/")!,
+  services.find((s) => s.href === "/remise-en-etat-locative/")!,
+];
 
 /** Services secondaires — ligne « Aussi » sur l'accueil */
 export const secondaryServiceLinks = [
+  { href: "/nettoyage-diogene/", label: "Diogène" },
   { href: "/nettoyage-apres-deces/", label: "Après décès" },
   { href: "/nettoyage-canape/", label: "Canapés & textile" },
-  { href: "/nettoyage-vitres-et-baies-vitrees/", label: "Vitres" },
   { href: "/nettoyage-dappartement-ou-maison/", label: "Ménage ponctuel" },
   { href: "/menage-a-domicile-avance-immediate/", label: "Ménage à domicile" },
 ];
 
-/** 8 villes phares — accueil */
+/** Villes affichées — accueil (zone d'intervention) */
+export const serviceAreas = [
+  "Bourg-en-Bresse",
+  "Montrevel-en-Bresse",
+  "Oyonnax",
+  "Ambérieu-en-Bugey",
+  "Belley",
+];
+
+/** Pages zones SEO — à compléter */
 export const featuredZones: { href: string; label: string }[] = [];
+
+/** Masquer portfolio tant qu'il n'y a pas de photos réelles */
+export const showPortfolioSection = false;
 
 export const zones: { href: string; label: string }[] = [];
 
-export const testimonials: {
-  img: string;
-  initials: string;
-  name: string;
-  city: string;
-  text: string;
-  tag: string;
-}[] = [];
+export const testimonials = [
+  {
+    img: "",
+    initials: "GM",
+    name: "Giulia Morano",
+    city: "Montrevel-en-Bresse",
+    text: "« Très satisfaite du travail réalisé sur les vitrines intérieures et extérieures de notre agence Century 21 à Montrevel-en-Bresse ! Une équipe professionnelle, sérieuse. Je recommande. »",
+    tag: "Commerce / Agence",
+  },
+  {
+    img: "",
+    initials: "KM",
+    name: "Kevin MOITEAUX",
+    city: "Bourg-en-Bresse",
+    text: "« Très bon travail, ma devanture a retrouvé tout son éclat ! Je recommande sans hésitation ! »",
+    tag: "Commerce / Vitres",
+  },
+];
 
-export type TestimonialFilterId = "all" | "fin-chantier" | "remise" | "textile";
+export type TestimonialFilterId = "all" | "vitres" | "fin-chantier" | "remise" | "textile";
 
 export const testimonialFilters: { id: TestimonialFilterId; label: string }[] = [
   { id: "all", label: "Tous" },
+  { id: "vitres", label: "Commerces & vitres" },
   { id: "fin-chantier", label: "Fin de chantier" },
   { id: "remise", label: "Remise en état" },
   { id: "textile", label: "Textile" },
@@ -197,7 +227,9 @@ export const beforeAfter = [
 
 export const serviceOptions = [
   "Nettoyage de fin de chantier",
+  "Nettoyage vitres & baies vitrées",
   "Remise en état locative",
+  "Entretien de bureaux",
   "Nettoyage Diogène",
   "Nettoyage après décès",
   "Nettoyage canapé / tapis / matelas",
@@ -325,12 +357,12 @@ export const faqs = [
   { q: "Sous quel délai pouvez-vous intervenir ?", a: `Le devis vous est remis sous 24 h. Pour l'intervention, nous planifions selon vos contraintes et nos disponibilités — appelez le ${site.phone} pour une demande urgente.` },
 ];
 
-/** 4 questions clés — accueil allégé */
+/** 4 questions clés — accueil allégé (orientation pro) */
 export const homepageFaqs = [
   faqs.find((f) => f.q.startsWith("Êtes-vous"))!,
-  faqs.find((f) => f.q.startsWith("Dois-je"))!,
-  faqs.find((f) => f.q.startsWith("Sous quel"))!,
   faqs.find((f) => f.q.startsWith("Combien coûte un nettoyage de fin"))!,
+  faqs.find((f) => f.q.startsWith("Intervenez-vous en urgence"))!,
+  faqs.find((f) => f.q.startsWith("Combien de temps dure"))!,
 ];
 
 /** 3 grilles tarifaires — accueil (prix de départ) */
@@ -339,9 +371,19 @@ export const homepagePricingBlocks = [
     title: "Nettoyage de fin de chantier",
     href: "/nettoyage-de-fin-de-chantier/",
     rows: [
-      ["T1–T2", "[X–Y] € [À VALIDER]"],
-      ["T3–T4", "[X–Y] € [À VALIDER]"],
-      ["Maison", "sur devis"],
+      ["À partir de", "600 €"],
+      ["Selon surface, état et délais", "sur devis"],
+      ["Local commercial", "sur devis"],
+      ["Visite et devis sur place", "Gratuit", true],
+    ],
+  },
+  {
+    title: "Nettoyage vitres & baies vitrées",
+    href: "/nettoyage-vitres-et-baies-vitrees/",
+    rows: [
+      ["Devanture ou vitrine", "sur devis"],
+      ["Vitres int. + ext.", "sur devis"],
+      ["Baies vitrées et volets", "sur devis"],
       ["Visite et devis sur place", "Gratuit", true],
     ],
   },
@@ -353,15 +395,6 @@ export const homepagePricingBlocks = [
       ["T2", "300 – 450 €"],
       ["T3 et plus", "sur devis"],
       ["Visite et devis sur place", "Gratuit", true],
-    ],
-  },
-  {
-    title: "Nettoyage Diogène",
-    href: "/nettoyage-diogene/",
-    rows: [
-      ["Évaluation sur place", "Gratuite sous 48 h"],
-      ["Tri, évacuation et remise en état", "sur devis"],
-      ["Désinfection", "sur devis", true],
     ],
   },
 ];

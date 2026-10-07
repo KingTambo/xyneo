@@ -819,6 +819,10 @@ footer {
   .logo-text {
     display: none !important;
   }
+  .logo-img {
+    height: 52px;
+    max-width: 240px;
+  }
 }
 
 .services-grid-primary {
@@ -1326,9 +1330,23 @@ footer {
 }
 .engagement-item {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  gap: 12px;
   align-items: flex-start;
+}
+.engagement-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--blue-primary);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 .engagement-badge.ph-slot {
   font-size: 0.68rem;
@@ -1336,11 +1354,43 @@ footer {
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
+.hero-ratings-logo {
+  background: #fff;
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 1px 4px rgba(20, 38, 53, 0.08);
+}
+.hero-ratings-logo img {
+  display: block;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+.zone-static {
+  cursor: default;
+  pointer-events: none;
+}
 .engagement-item p {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.6;
   color: var(--text-muted);
+}
+.engagements-photo-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 32px 24px;
+  min-height: 200px;
+}
+.engagements-photo-logo img {
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 @media (max-width: 900px) {
   .engagements-grid {

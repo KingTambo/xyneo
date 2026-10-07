@@ -17,8 +17,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: `Nettoyage fin de chantier & remise en état | ${site.name}`,
-  description: `${site.name}, nettoyage professionnel : fin de chantier, remise en état locative, Diogène. Devis gratuit sous 24 h.`,
+  title: `Fin de chantier, vitres & bureaux pour les pros | ${site.name}`,
+  description: `${site.name}, partenaire BTP, commerces et agences : fin de chantier, vitres professionnelles, remise locative et entretien de bureaux. Devis sous 24 h.`,
 };
 
 export const viewport: Viewport = {

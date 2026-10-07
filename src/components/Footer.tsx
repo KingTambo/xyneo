@@ -1,5 +1,4 @@
 import { featuredZones, footerServices, meshLinks, site, socialLinks } from "@/data/site";
-import ClientPlaceholder from "./ClientPlaceholder";
 
 export default function Footer() {
   const footerZoneTags = featuredZones.map((z) => {
@@ -35,22 +34,16 @@ export default function Footer() {
             </a>
           </div>
           <p className="f-brand-desc">
-            Nettoyage professionnel à {site.city} depuis {site.since} — fin de chantier, remise en état et Diogène dans l&apos;Ain, le Rhône et la Saône-et-Loire.
+            Partenaire des professionnels à {site.city}
+            {site.since ? ` depuis ${site.since}` : ""} — fin de chantier, vitres, remise locative et entretien
+            de bureaux dans l&apos;Ain.
           </p>
-          <p className="f-legal-line">
-            SIRET{" "}
-            {site.siret ? (
-              site.siret
-            ) : (
-              <ClientPlaceholder>[À FOURNIR]</ClientPlaceholder>
-            )}{" "}
-            ·{" "}
-            {site.siret && site.legalName ? (
-              site.legalName
-            ) : (
-              <ClientPlaceholder>[Raison sociale À FOURNIR]</ClientPlaceholder>
-            )}
-          </p>
+          {(site.siret || site.legalName) && (
+            <p className="f-legal-line">
+              {site.siret ? <>SIRET {site.siret} · </> : null}
+              {site.legalName}
+            </p>
+          )}
           <p className="f-legal-line">
             <a href="/mentions-legales/">Mentions légales</a>
           </p>
@@ -123,7 +116,7 @@ export default function Footer() {
           <h4>Nous trouver</h4>
           <div className="footer-map">
             <iframe
-              src="https://maps.google.com/maps?q=46.2051,5.2258&z=14&output=embed&hl=fr"
+              src="https://maps.google.com/maps?q=2+Rue+Gambetta+01000+Bourg-en-Bresse&z=14&output=embed&hl=fr"
               width="100%"
               height="180"
               loading="lazy"
@@ -133,7 +126,7 @@ export default function Footer() {
               allowFullScreen
             />
             <a
-              href="https://www.google.com/maps?q=46.2051,5.2258"
+              href="https://www.google.com/maps?q=2+Rue+Gambetta+01000+Bourg-en-Bresse"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "block", marginTop: "8px", fontSize: ".78rem", color: "rgba(255,255,255,.55)", textAlign: "center" }}

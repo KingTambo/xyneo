@@ -17,6 +17,8 @@ serviceParamPresets["nettoyage-matelas"] = { service: "Nettoyage canapé / tapis
 serviceParamPresets["nettoyage-tapis"] = { service: "Nettoyage canapé / tapis / matelas" };
 serviceParamPresets["fin-chantier"] = profilePresets.btp;
 serviceParamPresets["remise-en-etat"] = profilePresets.agence;
+serviceParamPresets["vitres"] = profilePresets.commerce;
+serviceParamPresets["nettoyage-vitres-et-baies-vitrees"] = profilePresets.commerce;
 
 export const discreetServiceSlugs = new Set(["nettoyage-diogene", "nettoyage-apres-deces"]);
 

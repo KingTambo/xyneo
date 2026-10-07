@@ -5,7 +5,7 @@ import { site } from "@/data/site";
 import { useEffect } from "react";
 
 const steps = [
-  { title: "Appel de confirmation", text: `${site.ownerFirst} ou son équipe vous contacte pour préciser votre besoin.` },
+  { title: "Appel de confirmation", text: `${site.ownerFirst || site.name} vous contacte pour préciser votre besoin.` },
   { title: "Visite gratuite sur place", text: "Évaluation du logement ou du chantier, sans engagement." },
   { title: "Devis écrit sous 24 h", text: "Tarif clair et détaillé, adapté à votre situation." },
 ];
@@ -21,7 +21,7 @@ export default function MerciContent() {
         <div className="merci-icon" aria-hidden="true">
           ✓
         </div>
-        <h1 id="merci-h1">Demande reçue. {site.ownerFirst} vous rappelle sous 24 h</h1>
+        <h1 id="merci-h1">Demande reçue. {site.ownerFirst || site.name} vous rappelle sous 24 h</h1>
         <ol className="merci-steps">
           {steps.map((step, i) => (
             <li key={step.title}>
@@ -38,7 +38,7 @@ export default function MerciContent() {
           <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
         </p>
         <a href={`tel:${site.phoneTel}`} className="btn-or merci-tel-btn">
-          Appeler {site.ownerFirst}
+          Appeler {site.ownerFirst || site.name}
         </a>
       </div>
     </section>

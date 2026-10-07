@@ -4,10 +4,10 @@ import { profilePresets } from "@/data/site";
 import { dispatchFormPreset, scrollToFormAnchor } from "@/lib/form-presets";
 
 const segments = [
-  { label: "Je suis pro du bâtiment", key: "btp" as const },
-  { label: "Je loue ou gère un logement", key: "agence" as const },
-  { label: "Logement encombré", key: "diogene" as const },
-  { label: "Après décès", key: "deces" as const, discreet: true },
+  { label: "Entreprise du bâtiment", key: "btp" as const },
+  { label: "Commerce ou vitrine", key: "commerce" as const },
+  { label: "Agence immobilière", key: "agence" as const },
+  { label: "Bureaux et locaux pro", key: "bureaux" as const },
 ];
 
 export default function HeroSegments() {
@@ -21,13 +21,13 @@ export default function HeroSegments() {
 
   return (
     <div className="hero-segments-wrap">
-      <p className="hero-segments-label">Votre situation :</p>
+      <p className="hero-segments-label">Votre activité :</p>
       <div className="hero-segments" role="navigation" aria-label="Choisir votre situation">
         {segments.map((seg) => (
           <button
             key={seg.key}
             type="button"
-            className={`hero-seg${seg.discreet ? " hero-seg-discreet" : ""}`}
+            className="hero-seg"
             onClick={() => handleSelect(seg.key)}
           >
             {seg.label}
