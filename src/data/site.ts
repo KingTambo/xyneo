@@ -18,8 +18,13 @@ export const site = {
   hours: "Lun–dim 7h–22h · Rappel sous 24 h ouvrées",
   openingHours: "Mo-Su 07:00-22:00",
   website: "https://oaoproprete.fr",
-  googleReviewsUrl: "https://share.google/EYnhEXfIJoKSj3NkT",
-  googleMapsUrl: "https://www.google.com/maps/place/OAO+propret%C3%A9/@46.204677,5.2259015,17z/data=!4m6!3m5!1s0x47f35322c6d74305:0x8c23ba1a9874f6aa!8m2!3d46.204677!4d5.2259015!16s%2Fg%2F11nvt8r6r6",
+  googleReviewsUrl:
+    "https://www.google.com/maps/place/OAO+propret%C3%A9/@46.204677,5.2259015,17z/data=!4m6!3m5!1s0x47f35322c6d74305:0x8c23ba1a9874f6aa!8m2!3d46.204677!4d5.2259015!16s%2Fg%2F11nvt8r6r6",
+  googleMapsUrl:
+    "https://www.google.com/maps/place/OAO+propret%C3%A9/@46.204677,5.2259015,17z/data=!4m6!3m5!1s0x47f35322c6d74305:0x8c23ba1a9874f6aa!8m2!3d46.204677!4d5.2259015!16s%2Fg%2F11nvt8r6r6",
+  instagramUrl: "https://www.instagram.com/oao_proprete/",
+  facebookUrl:
+    "https://www.facebook.com/people/Oao-Proprete/pfbid037kbpiuxdAJkNPz5WxsDMz98yjBLfyk7zF6pXAD83Pt7GiZKjPn1tKFdo7CfDBGSal/",
   logoSrc: "/img/oao-logo.png",
   heroPhotoSrc: "/img/hero.jpg",
   teamPhotoSrc: "/img/realisation-2.jpg",
@@ -571,7 +576,10 @@ export const footerServices = services.slice(0, 8).map((s) => ({
 
 export const meshLinks: { href: string; label: string }[] = [];
 
-export const socialLinks: { href: string; label: string }[] = [];
+export const socialLinks: { href: string; label: string }[] = [
+  { href: site.instagramUrl, label: "Instagram" },
+  { href: site.facebookUrl, label: "Facebook" },
+];
 
 /** Galerie avant/après — pages services (photos Google) */
 export const beforeAfter = realisations

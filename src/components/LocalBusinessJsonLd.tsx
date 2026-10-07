@@ -1,4 +1,4 @@
-import { serviceAreas, site } from "@/data/site";
+import { serviceAreas, site, socialLinks } from "@/data/site";
 
 export default function LocalBusinessJsonLd() {
   const jsonLd = {
@@ -33,7 +33,7 @@ export default function LocalBusinessJsonLd() {
       "@type": "City",
       name: city,
     })),
-    sameAs: [site.googleReviewsUrl],
+    sameAs: [site.googleMapsUrl, ...socialLinks.map((link) => link.href)],
   };
 
   return (

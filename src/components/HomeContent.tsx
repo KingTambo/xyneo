@@ -42,12 +42,9 @@ export default function HomeContent() {
             <h1 id="h1-hero">
               Nettoyage de fin de chantier, vitres et bureaux pour les pros à {site.city}
             </h1>
-            <p className="hero-sub hero-sub-full">
+            <p className="hero-sub">
               Votre chantier prêt pour la réception, vos vitrines nettes, vos bureaux entretenus — aux horaires
               qui ne gênent pas votre activité. Visite et devis gratuits dans l&apos;Ain.
-            </p>
-            <p className="hero-sub hero-sub-short">
-              Nettoyage fin de chantier, vitres et bureaux à {site.city} — devis gratuit
             </p>
           </div>
 
@@ -99,7 +96,7 @@ export default function HomeContent() {
       <div className="trust-band">
         <div className="trust-band-inner">
           <span>Assuré RC Pro</span>
-          <span> · Attestation URSSAF sur demande</span>
+          <span> · Attestations URSSAF envoyées avec le devis</span>
           <span> · ☎ {site.phone}</span>
           {site.siret ? <span> · SIRET {site.siret}</span> : null}
         </div>
