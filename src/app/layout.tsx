@@ -16,9 +16,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Nettoyage fin de chantier & remise en état à Bourg-en-Bresse | Xyneo",
+  title: "OAO Propreté — Nettoyage vitres, fin de chantier, bureaux",
   description:
-    "Xyneo, nettoyage à Bourg-en-Bresse : fin de chantier, remise en état locative, Diogène. Ain, Rhône, Saône-et-Loire. Devis gratuit sous 24 h.",
+    "OAO Propreté nettoie vos vitres, vos locaux après travaux et vos bureaux. Devis gratuit sous 24 h, sans engagement. Disponible du lundi au samedi.",
 };
 
 export const viewport: Viewport = {
@@ -32,7 +32,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: "window.dataLayer=window.dataLayer||[];" }} />
         <link rel="stylesheet" href="/css/style.css" />
         <link rel="stylesheet" href="/css/xyneo-theme.css" />
-        <link rel="icon" href="/img/xyneo-logo.webp" />
+        <link rel="icon" href="/img/oao-logo.png" type="image/png" />
+        <link rel="preload" as="image" href="/img/oao-logo.png" type="image/png" />
         <link rel="preload" as="image" href="/img/hero.webp" type="image/webp" />
       </head>
       <body>

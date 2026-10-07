@@ -183,18 +183,30 @@ export default function DevisForm({
 
       if (!res.ok) {
         setStatus("error");
-        setErrorMessage(json.error || "Envoi impossible. Appelez " + site.ownerFirst + " au " + site.phone);
+        setErrorMessage(
+          json.error ||
+            (site.phoneTel
+              ? `Envoi impossible. Appelez-nous au ${site.phone}.`
+              : `Envoi impossible. Écrivez-nous à ${site.email}.`),
+        );
         return;
       }
 
       router.push("/merci/");
     } catch {
       setStatus("error");
-      setErrorMessage("Connexion impossible. Appelez " + site.ownerFirst + " au " + site.phone);
+      setErrorMessage(
+        site.phoneTel
+          ? `Connexion impossible. Appelez-nous au ${site.phone}.`
+          : `Connexion impossible. Écrivez-nous à ${site.email}.`,
+      );
     }
   }
 
-  const ratingLine = `★ ${site.rating.replace(".", ",")}/5 · ${site.reviews} avis Google`;
+  const hasReviews = Boolean(site.googleReviewsUrl && site.rating && site.reviews);
+  const ratingLine = hasReviews
+    ? `★ ${site.rating.replace(".", ",")}/5 · ${site.reviews} avis Google`
+    : "Devis gratuit · Réponse sous 24 h";
 
   return (
     <div className="cf-wrap" data-devis-form="true">

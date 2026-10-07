@@ -1,33 +1,39 @@
 import { navLinks, site } from "@/data/site";
 
 export default function Header() {
+  const contactHref = site.phoneTel ? `tel:${site.phoneTel}` : `mailto:${site.email}`;
+  const contactLabel = site.phoneTel ? site.phone : site.email;
+
   return (
     <>
       <div className="topbar">
         <span className="topbar-full">
-          Intervention dans l&apos;Ain, le Rhône et la Saône-et-Loire &nbsp;·&nbsp;
-          <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
+          {site.name} &nbsp;·&nbsp;
+          <a href={contactHref}>{contactLabel}</a>
           &nbsp;·&nbsp; {site.hours}
         </span>
         <span className="topbar-mobile">
-          <a href={`tel:${site.phoneTel}`}>{site.phone}</a> · 7j/7
+          <a href={contactHref}>{contactLabel}</a> · {site.hours}
         </span>
       </div>
       <nav aria-label="Navigation principale">
         <div className="nav-inner">
           <a href="/" className="logo" aria-label={`Accueil ${site.name}`}>
-            <img
-              className="logo-img"
-              src="/img/xyneo-logo.webp"
-              alt=""
-              width={120}
-              height={44}
-              loading="eager"
-            />
-            <div className="logo-text">
-              <strong>{site.name}</strong>
-              <span>{site.tagline}</span>
-            </div>
+            {site.logoSrc ? (
+              <img
+                className="logo-img"
+                src={site.logoSrc}
+                alt={site.name}
+                width={200}
+                height={48}
+                loading="eager"
+              />
+            ) : (
+              <div className="logo-text">
+                <strong>{site.name}</strong>
+                <span>{site.tagline}</span>
+              </div>
+            )}
           </a>
           <input type="checkbox" id="nt" aria-hidden="true" />
           <label htmlFor="nt" className="hbg">
@@ -60,17 +66,23 @@ export default function Header() {
             )}
             <li role="none">
               <a href="/#hero-form" className="nav-cta">
-                Recevoir mon devis sous 24 h
+                Demander un devis gratuit
               </a>
             </li>
           </ul>
         </div>
       </nav>
       <div className="mob-bar" id="mob-bar" aria-label="Actions rapides">
-        <a href={`tel:${site.phoneTel}`} className="mob-tel">
-          📞 {site.phone}
-        </a>
-        <a href="/#hero-form" className="mob-dev" aria-label="Recevoir mon devis sous 24 h">
+        {site.phoneTel ? (
+          <a href={`tel:${site.phoneTel}`} className="mob-tel">
+            📞 {site.phone}
+          </a>
+        ) : (
+          <a href={`mailto:${site.email}`} className="mob-tel">
+            ✉ {site.email}
+          </a>
+        )}
+        <a href="/#hero-form" className="mob-dev" aria-label="Demander un devis gratuit">
           Mon devis 24 h
         </a>
       </div>

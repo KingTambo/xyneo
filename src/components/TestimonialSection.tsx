@@ -7,15 +7,14 @@ import SectionCta from "./SectionCta";
 
 function matchesFilter(tag: string, filterId: TestimonialFilterId) {
   if (filterId === "all") return true;
-  if (filterId === "fin-chantier") return tag === "Fin de chantier";
-  if (filterId === "remise") return /remise en état/i.test(tag);
-  if (filterId === "textile") {
-    return ["Nettoyage canapé", "Nettoyage textile", "Nettoyage moquette"].includes(tag);
-  }
+  if (filterId === "vitres") return /vitres/i.test(tag);
+  if (filterId === "fin-chantier") return /fin de chantier|chantier/i.test(tag);
+  if (filterId === "bureaux") return /bureaux/i.test(tag);
   return true;
 }
 
 export default function TestimonialSection() {
+  const hasReviews = Boolean(site.googleReviewsUrl && site.rating && site.reviews);
   const [activeFilter, setActiveFilter] = useState<TestimonialFilterId>("all");
   const [activeSlide, setActiveSlide] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -70,13 +69,25 @@ export default function TestimonialSection() {
         <div className="sec-title">
           <span className="pill">Avis clients vérifiés</span>
           <h2 id="h2-testi">
-            {site.rating}/5 sur Google — {site.reviews} avis
+            {hasReviews ? (
+              <>
+                {site.rating}/5 sur Google — {site.reviews} avis
+              </>
+            ) : (
+              <>Avis clients</>
+            )}
           </h2>
-          <p className="testi-rating-line">
-            <a href={site.googleReviewsUrl} target="_blank" rel="noopener noreferrer">
-              Voir les {site.reviews} avis sur Google →
-            </a>
-          </p>
+          {hasReviews ? (
+            <p className="testi-rating-line">
+              <a href={site.googleReviewsUrl} target="_blank" rel="noopener noreferrer">
+                Voir les {site.reviews} avis sur Google →
+              </a>
+            </p>
+          ) : (
+            <p className="testi-rating-line">
+              <ClientPlaceholder block>Avis Google [À FOURNIR]</ClientPlaceholder>
+            </p>
+          )}
         </div>
 
         <div className="testi-tabs" role="tablist" aria-label="Filtrer les avis par prestation">

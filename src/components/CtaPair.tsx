@@ -13,20 +13,27 @@ export default function CtaPair({ formHref = "#hero-form", variant = "default", 
   const primaryLabel =
     variant === "discreet"
       ? "Parler de votre situation en toute discrétion"
-      : "Recevoir mon devis sous 24 h";
+      : "Demander un devis gratuit";
 
   function handlePrimaryClick(event: React.MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
     scrollToFormAnchor(formHref);
   }
 
+  const secondaryHref = site.phoneTel ? `tel:${site.phoneTel}` : `mailto:${site.email}`;
+  const secondaryLabel = site.phoneTel
+    ? site.ownerFirst
+      ? `Appeler ${site.ownerFirst}`
+      : "Nous appeler"
+    : "Nous écrire";
+
   return (
     <div className={`cta-pair${className ? ` ${className}` : ""}`}>
       <a href={formHref} className="btn-or" onClick={handlePrimaryClick}>
         {primaryLabel}
       </a>
-      <a href={`tel:${site.phoneTel}`} className="btn-wh">
-        Appeler {site.ownerFirst}
+      <a href={secondaryHref} className="btn-wh">
+        {secondaryLabel}
       </a>
     </div>
   );

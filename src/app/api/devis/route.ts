@@ -24,7 +24,7 @@ type DevisPayload = {
 
 function formatAdminEmail(data: DevisPayload) {
   const lines = [
-    "Nouvelle demande de devis — Xyneo",
+    `Nouvelle demande de devis — ${site.name}`,
     "",
     `Nom : ${data.nom || "—"}`,
     `Téléphone : ${data.tel || "—"}`,
@@ -51,12 +51,13 @@ function formatProspectEmail(data: DevisPayload) {
     `Bonjour ${data.nom || ""},`.trim(),
     "",
     "Nous avons bien reçu votre demande de devis.",
-    `${site.ownerFirst} ou son équipe vous rappelle sous 24 h au numéro indiqué.`,
+    "Nous revenons vers vous sous 24 h par email, avec une estimation claire.",
     "",
-    "Pour nous envoyer des photos de votre logement ou chantier, répondez à cet email ou écrivez-nous par SMS/WhatsApp.",
+    "Pour nous envoyer des photos de vos locaux ou de votre chantier, répondez simplement à cet email.",
     "",
-    `${site.name} — ${site.phone}`,
+    site.name,
     site.email,
+    ...(site.phone ? [`${site.phone}`] : []),
   ].join("\n");
 }
 
@@ -103,7 +104,7 @@ export async function POST(request: Request) {
     const toEmail = process.env.DEVIS_TO_EMAIL || site.email;
     const adminSent = await sendViaResend({
       to: [toEmail],
-      subject: `[Devis Xyneo] ${data.service} — ${data.ville} — ${data.nom}`,
+      subject: `[Devis ${site.name}] ${data.service} — ${data.ville} — ${data.nom}`,
       text: formatAdminEmail(data),
       replyTo: data.email?.trim() || undefined,
     });
@@ -112,8 +113,9 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            "Envoi email non configuré. Ajoutez RESEND_API_KEY et DEVIS_TO_EMAIL sur Vercel, ou appelez le " +
-            site.phone,
+            site.phone
+              ? `Envoi email non configuré. Ajoutez RESEND_API_KEY et DEVIS_TO_EMAIL sur Vercel, ou appelez le ${site.phone}.`
+              : `Envoi email non configuré. Ajoutez RESEND_API_KEY et DEVIS_TO_EMAIL sur Vercel, ou écrivez à ${site.email}.`,
         },
         { status: 503 },
       );
@@ -122,7 +124,7 @@ export async function POST(request: Request) {
     if (data.email?.trim()) {
       await sendViaResend({
         to: [data.email.trim()],
-        subject: `Demande reçue — ${site.name} vous rappelle sous 24 h`,
+        subject: `Demande reçue — ${site.name} vous répond sous 24 h`,
         text: formatProspectEmail(data),
         replyTo: site.email,
       });

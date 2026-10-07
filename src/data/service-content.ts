@@ -18,62 +18,34 @@ type ServiceContent = {
 export const serviceContent: Record<string, ServiceContent> = {
   "nettoyage-de-fin-de-chantier": {
     heroSubtitle:
-      "Vous venez de terminer un chantier ou des travaux de rénovation ? Xyneo prend en charge la remise en état complète de vos espaces dans l'Ain, le Rhône et la Saône-et-Loire. Devis gratuit sur place sous 24 h.",
-    badge: "À partir de 600€",
-    imgClass: "sc1",
+      "Élimination de la poussière et des résidus après travaux, avant remise des clés. Devis gratuit sous 24 h par email.",
+    badge: "Sur devis",
+    imgClass: "sc2",
     sections: [
       {
         h2: "Ce que comprend notre nettoyage de fin de chantier",
         paragraphs: [
-          `Entreprise locale basée à ${site.city}, ${site.name} propose un service après travaux professionnel, rigoureux et fiable, adapté aux particuliers, entreprises du BTP, architectes, promoteurs ou agences immobilières.`,
-          "Grâce à des équipements professionnels (autolaveuse, monobrosse, aspirateur de chantier), nous garantissons un résultat soigné, conforme aux exigences des opérations préalables à la réception (OPR).",
+          `${site.name} prend en charge le nettoyage fin de chantier : dépoussiérage des sols, murs et plafonds, retrait des traces de peinture, colle ou plâtre, remise en état des vitres et sanitaires.`,
+          "Nous utilisons du matériel professionnel adapté pour livrer un chantier propre avant remise des clés.",
         ],
         list: [
-          "Dépoussiérage et nettoyage des sols (carrelage, béton, parquet…)",
-          "Lessivage des murs et des plinthes",
-          "Nettoyage des vitres, encadrements et rebords, avec suppression des traces de peinture",
-          "Désinfection des sanitaires et des pièces humides",
-          "Entretien des extérieurs : terrasses, entrées, escaliers",
-          "Aspiration des poussières fines et traitement post-construction",
-        ],
-      },
-      {
-        h2: "Entreprise locale : notre zone d'intervention",
-        paragraphs: [
-          "Nous intervenons sur l'ensemble de l'Ain (01), du Rhône (69) et de la Saône-et-Loire (71), pour des chantiers de toute taille : logements, locaux professionnels, commerces, immeubles.",
-          "Chaque chantier est différent : volume de poussières, résidus de plâtre ou de peinture, matériaux délicats. C'est pourquoi nous nous déplaçons sur place pour évaluer votre chantier avant de chiffrer, afin de vous donner un prix juste et un délai tenu avant la réception ou la livraison.",
-        ],
-      },
-      {
-        h2: "Pour qui ?",
-        paragraphs: [
-          "Particuliers, entreprises du BTP, architectes, promoteurs immobiliers, agences et syndics : nous adaptons notre intervention à chaque type de chantier, qu'il s'agisse d'une construction neuve, d'une rénovation ou d'un aménagement.",
+          "Dépoussiérage sols, murs, plafonds",
+          "Traces de peinture, colle, plâtre",
+          "Vitres et sanitaires livrés propres",
         ],
       },
     ],
     faqs: [
       {
-        q: "Combien coûte un nettoyage de fin de chantier à Bourg-en-Bresse ?",
-        a: "Chez Xyneo, un nettoyage de fin de chantier démarre à 600 €, selon la surface, l'état du chantier et les délais. Le devis précis est établi après une visite gratuite sur place, sous 24 h.",
+        q: "Comment obtenir un devis fin de chantier ?",
+        a: "Décrivez votre besoin via le formulaire : type de prestation, adresse et coordonnées. Nous revenons vers vous sous 24 h par email.",
       },
       {
-        q: "Xyneo intervient-elle en urgence avant une réception de travaux ?",
-        a: "Oui. Xyneo s'adapte aux délais de livraison de chantier, y compris pour des interventions rapides avant les OPR ou la remise des clés.",
-      },
-      {
-        q: "Le devis de nettoyage de fin de chantier se fait-il sur place ?",
-        a: "Oui. Xyneo se déplace gratuitement pour évaluer le chantier et établir un devis précis, adapté au volume de poussières et aux matériaux.",
-      },
-      {
-        q: "Xyneo évacue-t-elle les déchets de chantier ?",
-        a: "Oui, sur devis : cartons, emballages, chutes et petits gravats sont évacués en déchetterie. Pour les gros volumes, une benne est organisée.",
-      },
-      {
-        q: "Xyneo travaille-t-elle avec les entreprises du BTP et les architectes ?",
-        a: "Oui. Xyneo intervient avant la réception des travaux en respectant le planning du chantier, avec facturation professionnelle et attestation d'assurance sur demande.",
+        q: "Intervenez-vous avant remise des clés ?",
+        a: "Oui. Le nettoyage fin de chantier élimine poussières et résidus après travaux, pour une livraison propre.",
       },
     ],
-    relatedSlugs: ["remise-en-etat-locative", "nettoyage-vitres-et-baies-vitrees", "nettoyage-dappartement-ou-maison"],
+    relatedSlugs: ["nettoyage-vitres-et-baies-vitrees", "nettoyage-bureaux"],
   },
   "remise-en-etat-locative": {
     heroSubtitle:
@@ -410,34 +382,64 @@ export const serviceContent: Record<string, ServiceContent> = {
   },
   "nettoyage-vitres-et-baies-vitrees": {
     heroSubtitle:
-      "Vitres, huisseries et volets roulants nettoyés minutieusement, intérieur et extérieur, autour de Bourg-en-Bresse.",
+      "Vitrines, fenêtres, baies vitrées et façades vitrées, sans traces ni auréoles. Passage régulier ou ponctuel.",
     badge: "Sur devis",
-    imgClass: "sc8",
+    imgClass: "sc1",
     sections: [
       {
-        h2: "Nettoyage de vitres et baies vitrées",
+        h2: "Nettoyage de vitres",
         paragraphs: [
-          `Baies vitrées, huisseries, volets roulants : ${site.ownerFirst} et l'équipe Xyneo interviennent minutieusement et proprement, comme le confirment nos avis Google.`,
-          "Nous utilisons un matériel professionnel adapté pour un résultat sans traces ni auréoles, chez les particuliers comme les professionnels.",
+          `${site.name} nettoie vitrines, fenêtres, baies vitrées et façades vitrées avec un matériel professionnel adapté.`,
+          "Résultat sans traces ni auréoles, en passage régulier ou ponctuel.",
         ],
         list: [
-          "Baies vitrées intérieur et extérieur",
-          "Huisseries et volets roulants",
-          "Encadrements et rebords",
-          "Particuliers et entreprises",
+          "Vitrines commerciales et bureaux",
+          "Fenêtres, baies vitrées, vérandas",
+          "Passage régulier ou ponctuel",
         ],
       },
     ],
     faqs: [
       {
-        q: "Intervenez-vous sur les volets roulants ?",
-        a: "Oui, nous nettoyons vitres, huisseries et volets roulants, intérieur comme extérieur selon l'accès.",
+        q: "Proposez-vous un entretien régulier ?",
+        a: "Oui. Nous intervenons en passage régulier ou ponctuel selon vos besoins.",
       },
       {
         q: "Comment obtenir un devis ?",
-        a: `Contactez-nous au ${site.phone} ou via le formulaire. Devis gratuit sous 24 h après évaluation de vos besoins.`,
+        a: "Décrivez votre besoin via le formulaire. Devis gratuit sous 24 h par email.",
       },
     ],
-    relatedSlugs: ["nettoyage-de-fin-de-chantier", "nettoyage-dappartement-ou-maison", "remise-en-etat-locative"],
+    relatedSlugs: ["nettoyage-de-fin-de-chantier", "nettoyage-bureaux"],
+  },
+  "nettoyage-bureaux": {
+    heroSubtitle:
+      "Entretien régulier des espaces de travail, sans perturber votre activité. Passages hors horaires si besoin.",
+    badge: "Sur devis",
+    imgClass: "sc3",
+    sections: [
+      {
+        h2: "Nettoyage de bureaux",
+        paragraphs: [
+          `${site.name} assure l'entretien régulier de vos bureaux : postes de travail, sols, sanitaires et espaces communs.`,
+          "Nous planifions les passages pour ne pas perturber votre activité, y compris hors horaires de bureau si besoin.",
+        ],
+        list: [
+          "Postes de travail et sols",
+          "Sanitaires et espaces communs",
+          "Passages hors horaires si besoin",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Pouvez-vous intervenir hors horaires de bureau ?",
+        a: "Oui. Des passages en dehors des heures d'activité peuvent être organisés si besoin.",
+      },
+      {
+        q: "Comment obtenir un devis ?",
+        a: "Indiquez le type de prestation, l'adresse d'intervention et vos disponibilités via le formulaire. Réponse sous 24 h par email.",
+      },
+    ],
+    relatedSlugs: ["nettoyage-vitres-et-baies-vitrees", "nettoyage-de-fin-de-chantier"],
   },
 };

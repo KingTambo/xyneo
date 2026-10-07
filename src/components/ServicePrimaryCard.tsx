@@ -2,10 +2,7 @@ import { profilePresets, site, type services } from "@/data/site";
 
 type Service = (typeof services)[number];
 
-const discreetProfileByHref: Record<string, keyof typeof profilePresets> = {
-  "/nettoyage-diogene/": "diogene",
-  "/nettoyage-apres-deces/": "deces",
-};
+const discreetProfileByHref: Partial<Record<string, keyof typeof profilePresets>> = {};
 
 function isDiscreetService(href: string) {
   return href in discreetProfileByHref;
@@ -63,8 +60,8 @@ export default function ServicePrimaryCard({ service }: { service: Service }) {
           <a href={`/?profil=${profilKey}#hero-form`} className="sc-lnk sc-lnk-discreet">
             Parler de votre situation en toute discrétion
           </a>
-          <a href={`tel:${site.phoneTel}`} className="sc-lnk-tel">
-            Appeler {site.ownerFirst}
+          <a href={site.phoneTel ? `tel:${site.phoneTel}` : `mailto:${site.email}`} className="sc-lnk-tel">
+            {site.phoneTel ? (site.ownerFirst ? `Appeler ${site.ownerFirst}` : "Nous appeler") : "Nous écrire"}
           </a>
         </div>
       </article>
